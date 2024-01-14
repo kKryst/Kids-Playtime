@@ -1,0 +1,593 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */; };
+		AFD5452F2B5411A60063C820 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5452E2B5411A60063C820 /* ContentView.swift */; };
+		AFD545312B5411A70063C820 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545302B5411A70063C820 /* Assets.xcassets */; };
+		AFD545342B5411A70063C820 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545332B5411A70063C820 /* Preview Assets.xcassets */; };
+		AFD5453E2B5411A70063C820 /* Kids_PlaytimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5453D2B5411A70063C820 /* Kids_PlaytimeTests.swift */; };
+		AFD545482B5411A70063C820 /* Kids_PlaytimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545472B5411A70063C820 /* Kids_PlaytimeUITests.swift */; };
+		AFD5454A2B5411A70063C820 /* Kids_PlaytimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545492B5411A70063C820 /* Kids_PlaytimeUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AFD5453A2B5411A70063C820 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFD545212B5411A60063C820 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFD545282B5411A60063C820;
+			remoteInfo = "Kids Playtime";
+		};
+		AFD545442B5411A70063C820 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFD545212B5411A60063C820 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFD545282B5411A60063C820;
+			remoteInfo = "Kids Playtime";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AFD545292B5411A60063C820 /* Kids Playtime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kids Playtime.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeApp.swift; sourceTree = "<group>"; };
+		AFD5452E2B5411A60063C820 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AFD545302B5411A70063C820 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AFD545332B5411A70063C820 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		AFD545392B5411A70063C820 /* Kids PlaytimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kids PlaytimeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFD5453D2B5411A70063C820 /* Kids_PlaytimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeTests.swift; sourceTree = "<group>"; };
+		AFD545432B5411A70063C820 /* Kids PlaytimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kids PlaytimeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFD545472B5411A70063C820 /* Kids_PlaytimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeUITests.swift; sourceTree = "<group>"; };
+		AFD545492B5411A70063C820 /* Kids_PlaytimeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AFD545262B5411A60063C820 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFD545362B5411A70063C820 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFD545402B5411A70063C820 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AFD545202B5411A60063C820 = {
+			isa = PBXGroup;
+			children = (
+				AFD5452B2B5411A60063C820 /* Kids Playtime */,
+				AFD5453C2B5411A70063C820 /* Kids PlaytimeTests */,
+				AFD545462B5411A70063C820 /* Kids PlaytimeUITests */,
+				AFD5452A2B5411A60063C820 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AFD5452A2B5411A60063C820 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AFD545292B5411A60063C820 /* Kids Playtime.app */,
+				AFD545392B5411A70063C820 /* Kids PlaytimeTests.xctest */,
+				AFD545432B5411A70063C820 /* Kids PlaytimeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AFD5452B2B5411A60063C820 /* Kids Playtime */ = {
+			isa = PBXGroup;
+			children = (
+				AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */,
+				AFD5452E2B5411A60063C820 /* ContentView.swift */,
+				AFD545302B5411A70063C820 /* Assets.xcassets */,
+				AFD545322B5411A70063C820 /* Preview Content */,
+			);
+			path = "Kids Playtime";
+			sourceTree = "<group>";
+		};
+		AFD545322B5411A70063C820 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				AFD545332B5411A70063C820 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		AFD5453C2B5411A70063C820 /* Kids PlaytimeTests */ = {
+			isa = PBXGroup;
+			children = (
+				AFD5453D2B5411A70063C820 /* Kids_PlaytimeTests.swift */,
+			);
+			path = "Kids PlaytimeTests";
+			sourceTree = "<group>";
+		};
+		AFD545462B5411A70063C820 /* Kids PlaytimeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AFD545472B5411A70063C820 /* Kids_PlaytimeUITests.swift */,
+				AFD545492B5411A70063C820 /* Kids_PlaytimeUITestsLaunchTests.swift */,
+			);
+			path = "Kids PlaytimeUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AFD545282B5411A60063C820 /* Kids Playtime */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFD5454D2B5411A70063C820 /* Build configuration list for PBXNativeTarget "Kids Playtime" */;
+			buildPhases = (
+				AFD545252B5411A60063C820 /* Sources */,
+				AFD545262B5411A60063C820 /* Frameworks */,
+				AFD545272B5411A60063C820 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Kids Playtime";
+			productName = "Kids Playtime";
+			productReference = AFD545292B5411A60063C820 /* Kids Playtime.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AFD545382B5411A70063C820 /* Kids PlaytimeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFD545502B5411A70063C820 /* Build configuration list for PBXNativeTarget "Kids PlaytimeTests" */;
+			buildPhases = (
+				AFD545352B5411A70063C820 /* Sources */,
+				AFD545362B5411A70063C820 /* Frameworks */,
+				AFD545372B5411A70063C820 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFD5453B2B5411A70063C820 /* PBXTargetDependency */,
+			);
+			name = "Kids PlaytimeTests";
+			productName = "Kids PlaytimeTests";
+			productReference = AFD545392B5411A70063C820 /* Kids PlaytimeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AFD545422B5411A70063C820 /* Kids PlaytimeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFD545532B5411A70063C820 /* Build configuration list for PBXNativeTarget "Kids PlaytimeUITests" */;
+			buildPhases = (
+				AFD5453F2B5411A70063C820 /* Sources */,
+				AFD545402B5411A70063C820 /* Frameworks */,
+				AFD545412B5411A70063C820 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFD545452B5411A70063C820 /* PBXTargetDependency */,
+			);
+			name = "Kids PlaytimeUITests";
+			productName = "Kids PlaytimeUITests";
+			productReference = AFD545432B5411A70063C820 /* Kids PlaytimeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFD545212B5411A60063C820 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					AFD545282B5411A60063C820 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					AFD545382B5411A70063C820 = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = AFD545282B5411A60063C820;
+					};
+					AFD545422B5411A70063C820 = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = AFD545282B5411A60063C820;
+					};
+				};
+			};
+			buildConfigurationList = AFD545242B5411A60063C820 /* Build configuration list for PBXProject "Kids Playtime" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AFD545202B5411A60063C820;
+			productRefGroup = AFD5452A2B5411A60063C820 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AFD545282B5411A60063C820 /* Kids Playtime */,
+				AFD545382B5411A70063C820 /* Kids PlaytimeTests */,
+				AFD545422B5411A70063C820 /* Kids PlaytimeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AFD545272B5411A60063C820 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFD545342B5411A70063C820 /* Preview Assets.xcassets in Resources */,
+				AFD545312B5411A70063C820 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFD545372B5411A70063C820 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFD545412B5411A70063C820 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFD545252B5411A60063C820 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFD5452F2B5411A60063C820 /* ContentView.swift in Sources */,
+				AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFD545352B5411A70063C820 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFD5453E2B5411A70063C820 /* Kids_PlaytimeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFD5453F2B5411A70063C820 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFD5454A2B5411A70063C820 /* Kids_PlaytimeUITestsLaunchTests.swift in Sources */,
+				AFD545482B5411A70063C820 /* Kids_PlaytimeUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AFD5453B2B5411A70063C820 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFD545282B5411A60063C820 /* Kids Playtime */;
+			targetProxy = AFD5453A2B5411A70063C820 /* PBXContainerItemProxy */;
+		};
+		AFD545452B5411A70063C820 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFD545282B5411A60063C820 /* Kids Playtime */;
+			targetProxy = AFD545442B5411A70063C820 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AFD5454B2B5411A70063C820 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AFD5454C2B5411A70063C820 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AFD5454E2B5411A70063C820 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Kids Playtime/Preview Content\"";
+				DEVELOPMENT_TEAM = UNB5M72KA3;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.krystiankonieczko.Kids-Playtime";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AFD5454F2B5411A70063C820 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Kids Playtime/Preview Content\"";
+				DEVELOPMENT_TEAM = UNB5M72KA3;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.krystiankonieczko.Kids-Playtime";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AFD545512B5411A70063C820 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNB5M72KA3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.krystiankonieczko.Kids-PlaytimeTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kids Playtime.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kids Playtime";
+			};
+			name = Debug;
+		};
+		AFD545522B5411A70063C820 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNB5M72KA3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.krystiankonieczko.Kids-PlaytimeTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kids Playtime.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kids Playtime";
+			};
+			name = Release;
+		};
+		AFD545542B5411A70063C820 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNB5M72KA3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.krystiankonieczko.Kids-PlaytimeUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Kids Playtime";
+			};
+			name = Debug;
+		};
+		AFD545552B5411A70063C820 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UNB5M72KA3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.krystiankonieczko.Kids-PlaytimeUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Kids Playtime";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AFD545242B5411A60063C820 /* Build configuration list for PBXProject "Kids Playtime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFD5454B2B5411A70063C820 /* Debug */,
+				AFD5454C2B5411A70063C820 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFD5454D2B5411A70063C820 /* Build configuration list for PBXNativeTarget "Kids Playtime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFD5454E2B5411A70063C820 /* Debug */,
+				AFD5454F2B5411A70063C820 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFD545502B5411A70063C820 /* Build configuration list for PBXNativeTarget "Kids PlaytimeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFD545512B5411A70063C820 /* Debug */,
+				AFD545522B5411A70063C820 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFD545532B5411A70063C820 /* Build configuration list for PBXNativeTarget "Kids PlaytimeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFD545542B5411A70063C820 /* Debug */,
+				AFD545552B5411A70063C820 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AFD545212B5411A60063C820 /* Project object */;
+}
