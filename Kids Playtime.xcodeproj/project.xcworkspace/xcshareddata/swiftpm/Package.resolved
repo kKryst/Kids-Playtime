@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "fortunewheel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sameersyd/FortuneWheel.git",
+      "state" : {
+        "revision" : "900461e1c22ca70ee0b0e15cf97e3cef4132d84b",
+        "version" : "0.1.5"
+      }
+    },
+    {
+      "identity" : "swiftfortunewheel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sh-khashimov/SwiftFortuneWheel",
+      "state" : {
+        "revision" : "a0646fc23fbd3be8014f3436715b06be665c4016",
+        "version" : "1.4.4"
+      }
+    }
+  ],
+  "version" : 2
+}

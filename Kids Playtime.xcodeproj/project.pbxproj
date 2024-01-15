@@ -8,12 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */; };
-		AFD5452F2B5411A60063C820 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5452E2B5411A60063C820 /* ContentView.swift */; };
+		AFD5452F2B5411A60063C820 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5452E2B5411A60063C820 /* DiscoverView.swift */; };
 		AFD545312B5411A70063C820 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545302B5411A70063C820 /* Assets.xcassets */; };
 		AFD545342B5411A70063C820 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545332B5411A70063C820 /* Preview Assets.xcassets */; };
 		AFD5453E2B5411A70063C820 /* Kids_PlaytimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5453D2B5411A70063C820 /* Kids_PlaytimeTests.swift */; };
 		AFD545482B5411A70063C820 /* Kids_PlaytimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545472B5411A70063C820 /* Kids_PlaytimeUITests.swift */; };
 		AFD5454A2B5411A70063C820 /* Kids_PlaytimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545492B5411A70063C820 /* Kids_PlaytimeUITestsLaunchTests.swift */; };
+		AFD5455B2B541D350063C820 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5455A2B541D350063C820 /* AppColors.swift */; };
+		AFD5455E2B541DC70063C820 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5455D2B541DC70063C820 /* Color+Extensions.swift */; };
+		AFD5456E2B543F900063C820 /* Amiko-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFD5456B2B543F900063C820 /* Amiko-SemiBold.ttf */; };
+		AFD5456F2B543F900063C820 /* Amiko-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFD5456C2B543F900063C820 /* Amiko-Bold.ttf */; };
+		AFD545702B543F900063C820 /* Amiko-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFD5456D2B543F900063C820 /* Amiko-Regular.ttf */; };
+		AFD545742B5440640063C820 /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545732B5440640063C820 /* AppFonts.swift */; };
+		AFD545782B5452F80063C820 /* UserHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545772B5452F80063C820 /* UserHomeView.swift */; };
+		AFD5457A2B5453020063C820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545792B5453020063C820 /* SettingsView.swift */; };
+		AFD5457C2B5455A30063C820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5457B2B5455A30063C820 /* HomeView.swift */; };
+		AFD545842B5468470063C820 /* SwiftFortuneWheel in Frameworks */ = {isa = PBXBuildFile; productRef = AFD545832B5468470063C820 /* SwiftFortuneWheel */; };
+		AFD545872B549A0D0063C820 /* FortuneWheel in Frameworks */ = {isa = PBXBuildFile; productRef = AFD545862B549A0D0063C820 /* FortuneWheel */; };
+		AFD545892B55577E0063C820 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545882B55577E0063C820 /* CustomTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +48,7 @@
 /* Begin PBXFileReference section */
 		AFD545292B5411A60063C820 /* Kids Playtime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kids Playtime.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeApp.swift; sourceTree = "<group>"; };
-		AFD5452E2B5411A60063C820 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AFD5452E2B5411A60063C820 /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		AFD545302B5411A70063C820 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AFD545332B5411A70063C820 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AFD545392B5411A70063C820 /* Kids PlaytimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kids PlaytimeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +56,17 @@
 		AFD545432B5411A70063C820 /* Kids PlaytimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Kids PlaytimeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD545472B5411A70063C820 /* Kids_PlaytimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeUITests.swift; sourceTree = "<group>"; };
 		AFD545492B5411A70063C820 /* Kids_PlaytimeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		AFD5455A2B541D350063C820 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		AFD5455D2B541DC70063C820 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		AFD545662B543C9A0063C820 /* Kids-Playtime-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Kids-Playtime-Info.plist"; sourceTree = SOURCE_ROOT; };
+		AFD5456B2B543F900063C820 /* Amiko-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Amiko-SemiBold.ttf"; sourceTree = "<group>"; };
+		AFD5456C2B543F900063C820 /* Amiko-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Amiko-Bold.ttf"; sourceTree = "<group>"; };
+		AFD5456D2B543F900063C820 /* Amiko-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Amiko-Regular.ttf"; sourceTree = "<group>"; };
+		AFD545732B5440640063C820 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
+		AFD545772B5452F80063C820 /* UserHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeView.swift; sourceTree = "<group>"; };
+		AFD545792B5453020063C820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AFD5457B2B5455A30063C820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		AFD545882B55577E0063C820 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFD545872B549A0D0063C820 /* FortuneWheel in Frameworks */,
+				AFD545842B5468470063C820 /* SwiftFortuneWheel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +103,7 @@
 				AFD5453C2B5411A70063C820 /* Kids PlaytimeTests */,
 				AFD545462B5411A70063C820 /* Kids PlaytimeUITests */,
 				AFD5452A2B5411A60063C820 /* Products */,
+				AFD545852B549A0D0063C820 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,8 +120,12 @@
 		AFD5452B2B5411A60063C820 /* Kids Playtime */ = {
 			isa = PBXGroup;
 			children = (
+				AFD545662B543C9A0063C820 /* Kids-Playtime-Info.plist */,
+				AFD545592B541D1A0063C820 /* Utils */,
+				AFD545582B541D110063C820 /* ViewModel */,
+				AFD545572B541D0B0063C820 /* View */,
+				AFD545562B541D020063C820 /* Model */,
 				AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */,
-				AFD5452E2B5411A60063C820 /* ContentView.swift */,
 				AFD545302B5411A70063C820 /* Assets.xcassets */,
 				AFD545322B5411A70063C820 /* Preview Content */,
 			);
@@ -127,6 +157,68 @@
 			path = "Kids PlaytimeUITests";
 			sourceTree = "<group>";
 		};
+		AFD545562B541D020063C820 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AFD545572B541D0B0063C820 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AFD5452E2B5411A60063C820 /* DiscoverView.swift */,
+				AFD545772B5452F80063C820 /* UserHomeView.swift */,
+				AFD545792B5453020063C820 /* SettingsView.swift */,
+				AFD5457B2B5455A30063C820 /* HomeView.swift */,
+				AFD545882B55577E0063C820 /* CustomTabView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AFD545582B541D110063C820 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		AFD545592B541D1A0063C820 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				AFD5455F2B543BFB0063C820 /* Fonts */,
+				AFD5455C2B541D920063C820 /* Extensions */,
+				AFD5455A2B541D350063C820 /* AppColors.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		AFD5455C2B541D920063C820 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AFD5455D2B541DC70063C820 /* Color+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AFD5455F2B543BFB0063C820 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				AFD5456C2B543F900063C820 /* Amiko-Bold.ttf */,
+				AFD5456D2B543F900063C820 /* Amiko-Regular.ttf */,
+				AFD5456B2B543F900063C820 /* Amiko-SemiBold.ttf */,
+				AFD545732B5440640063C820 /* AppFonts.swift */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		AFD545852B549A0D0063C820 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +235,10 @@
 			dependencies = (
 			);
 			name = "Kids Playtime";
+			packageProductDependencies = (
+				AFD545832B5468470063C820 /* SwiftFortuneWheel */,
+				AFD545862B549A0D0063C820 /* FortuneWheel */,
+			);
 			productName = "Kids Playtime";
 			productReference = AFD545292B5411A60063C820 /* Kids Playtime.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +311,10 @@
 				Base,
 			);
 			mainGroup = AFD545202B5411A60063C820;
+			packageReferences = (
+				AFD5457F2B5464AB0063C820 /* XCRemoteSwiftPackageReference "FortuneWheel" */,
+				AFD545822B5468470063C820 /* XCRemoteSwiftPackageReference "SwiftFortuneWheel" */,
+			);
 			productRefGroup = AFD5452A2B5411A60063C820 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -231,6 +331,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFD545702B543F900063C820 /* Amiko-Regular.ttf in Resources */,
+				AFD5456E2B543F900063C820 /* Amiko-SemiBold.ttf in Resources */,
+				AFD5456F2B543F900063C820 /* Amiko-Bold.ttf in Resources */,
 				AFD545342B5411A70063C820 /* Preview Assets.xcassets in Resources */,
 				AFD545312B5411A70063C820 /* Assets.xcassets in Resources */,
 			);
@@ -257,8 +360,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFD5452F2B5411A60063C820 /* ContentView.swift in Sources */,
+				AFD5457A2B5453020063C820 /* SettingsView.swift in Sources */,
+				AFD545742B5440640063C820 /* AppFonts.swift in Sources */,
+				AFD5455B2B541D350063C820 /* AppColors.swift in Sources */,
+				AFD5452F2B5411A60063C820 /* DiscoverView.swift in Sources */,
+				AFD545782B5452F80063C820 /* UserHomeView.swift in Sources */,
+				AFD5457C2B5455A30063C820 /* HomeView.swift in Sources */,
+				AFD545892B55577E0063C820 /* CustomTabView.swift in Sources */,
 				AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */,
+				AFD5455E2B541DC70063C820 /* Color+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,11 +535,12 @@
 				DEVELOPMENT_TEAM = UNB5M72KA3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Kids-Playtime-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -454,11 +565,12 @@
 				DEVELOPMENT_TEAM = UNB5M72KA3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Kids-Playtime-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -588,6 +700,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AFD5457F2B5464AB0063C820 /* XCRemoteSwiftPackageReference "FortuneWheel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sameersyd/FortuneWheel.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.5;
+			};
+		};
+		AFD545822B5468470063C820 /* XCRemoteSwiftPackageReference "SwiftFortuneWheel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sh-khashimov/SwiftFortuneWheel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AFD545832B5468470063C820 /* SwiftFortuneWheel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFD545822B5468470063C820 /* XCRemoteSwiftPackageReference "SwiftFortuneWheel" */;
+			productName = SwiftFortuneWheel;
+		};
+		AFD545862B549A0D0063C820 /* FortuneWheel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFD5457F2B5464AB0063C820 /* XCRemoteSwiftPackageReference "FortuneWheel" */;
+			productName = FortuneWheel;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AFD545212B5411A60063C820 /* Project object */;
 }
