@@ -9,25 +9,26 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State private var tabSelection = 1
+    @State private var tabSelection = 2
     
     var body: some View {
         TabView (selection: $tabSelection) {
             UserHomeView()
-                .navigationBarBackButtonHidden()
                 .tag(1)
+                .toolbarBackground(.hidden, for: .tabBar)
             DiscoverView()
+                .toolbarBackground(.hidden, for: .tabBar)
                 .tag(2)
             SettingsView()
-                .navigationBarBackButtonHidden()
                 .tag(3)
+                .toolbarBackground(.hidden, for: .tabBar)
         }
+       
         .overlay(alignment: .bottom) {
             CustomTabView(tabSelection: $tabSelection)
-                .offset(y: 10)
+                .offset(y: 20)
         }
     }
-        
 }
 
 #Preview {

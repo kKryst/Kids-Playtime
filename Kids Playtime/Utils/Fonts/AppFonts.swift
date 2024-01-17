@@ -16,9 +16,13 @@ struct AppFonts {
     static func amikoSemiBold(withSize size: CGFloat) -> Font {
         return Font.custom("Amiko-SemiBold", size: size)
     }
-
+    
     static func amikoRegular(withSize size: CGFloat) -> Font {
         return Font.custom("Amiko-Regular", size: size)
+    }
+    
+    static func bayonRegular(withSize size: CGFloat) -> Font {
+        return Font.custom("Bayon-Regular", size: size)
     }
 }
 

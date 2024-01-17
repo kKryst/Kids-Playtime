@@ -35,12 +35,12 @@ struct CustomTabView: View {
                             
                             if index + 1 == tabSelection {
                                 Capsule()
-                                    .frame(height: 4)
+                                    .frame(height: 8)
                                     .matchedGeometryEffect(id: "SelectedTabId", in:  animationNamespace)
                                     .offset(y: -2)
                             } else {
                                 Capsule()
-                                    .frame(height: 8)
+                                    .frame(height: 4)
                                     .foregroundStyle(.clear)
                                     .offset(y: 3)
                                 

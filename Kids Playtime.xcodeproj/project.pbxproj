@@ -23,9 +23,13 @@
 		AFD545782B5452F80063C820 /* UserHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545772B5452F80063C820 /* UserHomeView.swift */; };
 		AFD5457A2B5453020063C820 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545792B5453020063C820 /* SettingsView.swift */; };
 		AFD5457C2B5455A30063C820 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5457B2B5455A30063C820 /* HomeView.swift */; };
-		AFD545842B5468470063C820 /* SwiftFortuneWheel in Frameworks */ = {isa = PBXBuildFile; productRef = AFD545832B5468470063C820 /* SwiftFortuneWheel */; };
-		AFD545872B549A0D0063C820 /* FortuneWheel in Frameworks */ = {isa = PBXBuildFile; productRef = AFD545862B549A0D0063C820 /* FortuneWheel */; };
 		AFD545892B55577E0063C820 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545882B55577E0063C820 /* CustomTabView.swift */; };
+		AFD5458F2B56D8240063C820 /* WheelFortune.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5458E2B56D8240063C820 /* WheelFortune.swift */; };
+		AFD545912B56D82F0063C820 /* WheelFortuneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545902B56D82F0063C820 /* WheelFortuneViewModel.swift */; };
+		AFD545962B56D85B0063C820 /* WheelSpinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545952B56D85B0063C820 /* WheelSpinCell.swift */; };
+		AFD545982B56D86A0063C820 /* WheelSpinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545972B56D86A0063C820 /* WheelSpinView.swift */; };
+		AFD5459A2B584FFA0063C820 /* HorizontalGameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD545992B584FFA0063C820 /* HorizontalGameCardView.swift */; };
+		AFD5459C2B5865790063C820 /* Bayon-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFD5459B2B5864900063C820 /* Bayon-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +71,12 @@
 		AFD545792B5453020063C820 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		AFD5457B2B5455A30063C820 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		AFD545882B55577E0063C820 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
+		AFD5458E2B56D8240063C820 /* WheelFortune.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelFortune.swift; sourceTree = "<group>"; };
+		AFD545902B56D82F0063C820 /* WheelFortuneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelFortuneViewModel.swift; sourceTree = "<group>"; };
+		AFD545952B56D85B0063C820 /* WheelSpinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelSpinCell.swift; sourceTree = "<group>"; };
+		AFD545972B56D86A0063C820 /* WheelSpinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelSpinView.swift; sourceTree = "<group>"; };
+		AFD545992B584FFA0063C820 /* HorizontalGameCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalGameCardView.swift; sourceTree = "<group>"; };
+		AFD5459B2B5864900063C820 /* Bayon-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bayon-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,8 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFD545872B549A0D0063C820 /* FortuneWheel in Frameworks */,
-				AFD545842B5468470063C820 /* SwiftFortuneWheel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,11 +175,13 @@
 		AFD545572B541D0B0063C820 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AFD5458D2B56D8130063C820 /* WheelFortune */,
 				AFD5452E2B5411A60063C820 /* DiscoverView.swift */,
 				AFD545772B5452F80063C820 /* UserHomeView.swift */,
 				AFD545792B5453020063C820 /* SettingsView.swift */,
 				AFD5457B2B5455A30063C820 /* HomeView.swift */,
 				AFD545882B55577E0063C820 /* CustomTabView.swift */,
+				AFD545992B584FFA0063C820 /* HorizontalGameCardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -204,6 +214,7 @@
 		AFD5455F2B543BFB0063C820 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				AFD5459B2B5864900063C820 /* Bayon-Regular.ttf */,
 				AFD5456C2B543F900063C820 /* Amiko-Bold.ttf */,
 				AFD5456D2B543F900063C820 /* Amiko-Regular.ttf */,
 				AFD5456B2B543F900063C820 /* Amiko-SemiBold.ttf */,
@@ -217,6 +228,25 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AFD5458D2B56D8130063C820 /* WheelFortune */ = {
+			isa = PBXGroup;
+			children = (
+				AFD545922B56D8330063C820 /* WheelSpin */,
+				AFD5458E2B56D8240063C820 /* WheelFortune.swift */,
+				AFD545902B56D82F0063C820 /* WheelFortuneViewModel.swift */,
+			);
+			path = WheelFortune;
+			sourceTree = "<group>";
+		};
+		AFD545922B56D8330063C820 /* WheelSpin */ = {
+			isa = PBXGroup;
+			children = (
+				AFD545952B56D85B0063C820 /* WheelSpinCell.swift */,
+				AFD545972B56D86A0063C820 /* WheelSpinView.swift */,
+			);
+			path = WheelSpin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,8 +266,6 @@
 			);
 			name = "Kids Playtime";
 			packageProductDependencies = (
-				AFD545832B5468470063C820 /* SwiftFortuneWheel */,
-				AFD545862B549A0D0063C820 /* FortuneWheel */,
 			);
 			productName = "Kids Playtime";
 			productReference = AFD545292B5411A60063C820 /* Kids Playtime.app */;
@@ -336,6 +364,7 @@
 				AFD5456F2B543F900063C820 /* Amiko-Bold.ttf in Resources */,
 				AFD545342B5411A70063C820 /* Preview Assets.xcassets in Resources */,
 				AFD545312B5411A70063C820 /* Assets.xcassets in Resources */,
+				AFD5459C2B5865790063C820 /* Bayon-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,13 +389,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFD5459A2B584FFA0063C820 /* HorizontalGameCardView.swift in Sources */,
 				AFD5457A2B5453020063C820 /* SettingsView.swift in Sources */,
 				AFD545742B5440640063C820 /* AppFonts.swift in Sources */,
 				AFD5455B2B541D350063C820 /* AppColors.swift in Sources */,
 				AFD5452F2B5411A60063C820 /* DiscoverView.swift in Sources */,
 				AFD545782B5452F80063C820 /* UserHomeView.swift in Sources */,
+				AFD5458F2B56D8240063C820 /* WheelFortune.swift in Sources */,
+				AFD545912B56D82F0063C820 /* WheelFortuneViewModel.swift in Sources */,
 				AFD5457C2B5455A30063C820 /* HomeView.swift in Sources */,
 				AFD545892B55577E0063C820 /* CustomTabView.swift in Sources */,
+				AFD545962B56D85B0063C820 /* WheelSpinCell.swift in Sources */,
+				AFD545982B56D86A0063C820 /* WheelSpinView.swift in Sources */,
 				AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */,
 				AFD5455E2B541DC70063C820 /* Color+Extensions.swift in Sources */,
 			);
@@ -719,19 +753,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		AFD545832B5468470063C820 /* SwiftFortuneWheel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AFD545822B5468470063C820 /* XCRemoteSwiftPackageReference "SwiftFortuneWheel" */;
-			productName = SwiftFortuneWheel;
-		};
-		AFD545862B549A0D0063C820 /* FortuneWheel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AFD5457F2B5464AB0063C820 /* XCRemoteSwiftPackageReference "FortuneWheel" */;
-			productName = FortuneWheel;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AFD545212B5411A60063C820 /* Project object */;
 }
