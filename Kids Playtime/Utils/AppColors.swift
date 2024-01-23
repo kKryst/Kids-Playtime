@@ -11,6 +11,7 @@ struct AppColors {
     // background
     static let gradientColor = Color.init(hexString: "d9e8e2")
     static let background = LinearGradient(gradient: Gradient(colors: [AppColors.white, AppColors.pink]), startPoint: .bottom, endPoint: .top)
+    static let alertBackground = LinearGradient(gradient: Gradient(colors: [AppColors.lightBlue, AppColors.orange]), startPoint: .bottom, endPoint: .top)
     
     // app colors
     static let orange = Color.init(hexString: "df5431")
