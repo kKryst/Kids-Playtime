@@ -10,6 +10,8 @@ import SwiftUI
 struct GameInfoDialogView: View {
     
     @Binding var isActive: Bool
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
         ZStack {
@@ -23,7 +25,8 @@ struct GameInfoDialogView: View {
                     .foregroundStyle(AppColors.darkBlue.opacity(0.9))
                 HStack (spacing: 10) {
                     Button(action: {
-                        close()
+                        viewRouter.shouldDisplayTabView = true
+                        presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Maybe later")
                             .fontWeight(.bold)
@@ -37,8 +40,7 @@ struct GameInfoDialogView: View {
                             )
                     })
                     NavigationLink {
-                        GameInfoView()
-                            .navigationBarBackButtonHidden()
+                        DiscoverView()
                     } label: {
                         Text("Sure")
                             .fontWeight(.bold)

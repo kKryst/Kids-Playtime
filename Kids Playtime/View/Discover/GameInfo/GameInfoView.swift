@@ -9,7 +9,11 @@ import SwiftUI
 
 struct GameInfoView: View {
     
+    @EnvironmentObject var viewRouter: ViewRouter
+    
+    #warning("Hide Tab Bar here")
     @State private var isDialogPresenting = false
+    
     var body: some View {
         ZStack {
             // Background full-size image with blur effect
@@ -61,8 +65,14 @@ struct GameInfoView: View {
                     })
             }
         }
+        .onAppear {
+            viewRouter.shouldDisplayTabView = false
+        }
+        .onDisappear(perform: {
+            viewRouter.shouldDisplayTabView = true
+        })
+        
     }
-    
 }
 
 #Preview {

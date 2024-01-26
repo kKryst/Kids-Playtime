@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GameDialogView: View {
-    
     @Binding var isActive: Bool
     let title: String
     let players: String

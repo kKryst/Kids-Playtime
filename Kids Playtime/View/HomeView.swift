@@ -9,7 +9,9 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @EnvironmentObject var viewRouter: ViewRouter
     @State private var tabSelection = 2 //handles currently selected View
+    @State private var tabViewOffset: CGFloat = 20
     
     var body: some View {
         // tab bar destinations. Each has a hidden background for
@@ -24,10 +26,22 @@ struct HomeView: View {
                 .tag(3)
                 .toolbarBackground(.hidden, for: .tabBar)
         }
-       
+        
         .overlay(alignment: .bottom) { // overlays this view with currently selected TabItem
             CustomTabView(tabSelection: $tabSelection)
-                .offset(y: 20)
+                .offset(y: tabViewOffset)
+        }
+        // change the tabView's offset (hide / unhinde) depending on the EnvObj value 
+        .onChange(of: viewRouter.shouldDisplayTabView) { newValue in
+            if newValue {
+                withAnimation(.spring) {
+                    tabViewOffset = 20
+                }
+            } else {
+                withAnimation(.spring) {
+                    tabViewOffset = 500
+                }
+            }
         }
     }
 }

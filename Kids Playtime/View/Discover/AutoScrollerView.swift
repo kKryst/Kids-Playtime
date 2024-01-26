@@ -38,6 +38,7 @@ struct AutoScrollerView: View {
                                         .frame(width: 200, height: 200)
                                         .clipShape(RoundedRectangle(cornerRadius: 20.0))
                                         .padding()
+                                        .shadow(radius: 5) // image's shadow
                                         .onTapGesture {
                                             onTapGesture()
                                         }
@@ -64,7 +65,7 @@ struct AutoScrollerView: View {
                                     seconds = 0
                                 }
                             }
-                            .shadow(radius: 5) // image's shadow
+                            
                         }
                     }
                     // resets timer when current card is changed by user or automatically

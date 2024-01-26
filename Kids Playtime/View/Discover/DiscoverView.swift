@@ -20,6 +20,8 @@ struct DiscoverView: View {
     @State private var scale: CGFloat = 1.0
     @State private var isWheelSpinning = false
     
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     #warning("will be handled by VM")
     var games = ["🤫", "🤐", "🤐", "🤐", "🤐", "🤐"]
     
@@ -42,17 +44,17 @@ struct DiscoverView: View {
                                 .scaleEffect(scale)
                                 .padding()
                                 .onAppear {
-                                    withAnimation(self.repeatingScaleAnimation) {self.scale = 1.1}
+                                    withAnimation(self.repeatingScaleAnimation) {
+                                        self.scale = 1.1
+                                    }
                                 }
                             WheelFortune(titles: games, size: 320, onSpinEnd: { index in
-                                isWheelSpinning = false
                                 isGameDialogActive = true
                             }, colors: colors, onSpinStart: {
-                                isWheelSpinning = true
                             })
                             .padding()
                             .overlay {
-                                // adds icon to the wheel
+                                // adds icon on the wheel
                                 VStack {
                                     Image(systemName: "hand.tap.fill")
                                         .resizable()
@@ -71,7 +73,11 @@ struct DiscoverView: View {
                             isGameDialogActive = true
                         }
                         // spacer to allow scrolling below TabBar
-                        Rectangle().frame(height: 20).padding(20).background(Color.clear).foregroundStyle(Color.clear)
+                        Rectangle()
+                            .frame(height:20)
+                            .padding(20)
+                            .background(Color.clear)
+                            .foregroundStyle(Color.clear)
                     }
                 }
                 .scrollIndicators(.hidden) // hides trailing scroll bar

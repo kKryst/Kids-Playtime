@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct Kids_PlaytimeApp: App {
+    
+    var viewRouter = ViewRouter()
+    
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(viewRouter)
             
         }
     }
