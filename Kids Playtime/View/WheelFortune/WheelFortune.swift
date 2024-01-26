@@ -53,15 +53,9 @@ public struct WheelFortune: View {
                             .foregroundColor(strokeColor)
                     )
                     .rotationEffect(.degrees(viewModel.degree))
-                    .gesture(
-                        DragGesture().onChanged({ (value) in
-                            if value.translation.width < 0 {
-                                viewModel.degree = Double(-value.translation.width)
-                            }
-                        }).onEnded({ (value) in
-                            viewModel.spinWheel()
-                        })
-                    )
+                    .onTapGesture {
+                        viewModel.spinWheel()
+                    }
                 SpinWheelBolt()
             }
             SpinWheelPointer(pointerColor: pointerColor).offset(x: 0, y: -25)

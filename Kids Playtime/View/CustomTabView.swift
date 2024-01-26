@@ -12,6 +12,7 @@ struct CustomTabView: View {
     @Binding var tabSelection: Int
     @Namespace private var animationNamespace
     
+    // selectable directions in tab bar
     let tabBarItems: [(image: String, title: String)]  = [
         ("house","Home"),
         ("book","Discover"),
@@ -24,7 +25,7 @@ struct CustomTabView: View {
                 .frame(height: 80)
                 .foregroundStyle(AppColors.darkBlue)
             HStack {
-                ForEach (0..<3) { index in
+                ForEach (0..<tabBarItems.count) { index in
                     Button(action: {
                         tabSelection = index + 1
                     }, label: {
@@ -32,9 +33,9 @@ struct CustomTabView: View {
                             Spacer()
                             Image(systemName: tabBarItems[index].image)
                             Text(tabBarItems[index].title).font(AppFonts.amikoSemiBold(withSize: 16))
-                            
+                            // animation whenever user taps on different tabBar item
                             if index + 1 == tabSelection {
-                                Capsule()
+                                Capsule() // white Capsule below tabBar item
                                     .frame(height: 8)
                                     .matchedGeometryEffect(id: "SelectedTabId", in:  animationNamespace)
                                     .offset(y: -2)

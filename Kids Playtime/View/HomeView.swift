@@ -9,9 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State private var tabSelection = 2
+    @State private var tabSelection = 2 //handles currently selected View
     
     var body: some View {
+        // tab bar destinations. Each has a hidden background for
         TabView (selection: $tabSelection) {
             UserHomeView()
                 .tag(1)
@@ -24,7 +25,7 @@ struct HomeView: View {
                 .toolbarBackground(.hidden, for: .tabBar)
         }
        
-        .overlay(alignment: .bottom) {
+        .overlay(alignment: .bottom) { // overlays this view with currently selected TabItem
             CustomTabView(tabSelection: $tabSelection)
                 .offset(y: 20)
         }

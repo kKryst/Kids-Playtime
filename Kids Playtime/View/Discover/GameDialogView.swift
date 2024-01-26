@@ -21,7 +21,7 @@ struct GameDialogView: View {
         ZStack {
             Color.black.opacity(0.5)
                 .onTapGesture {
-                    close()
+                    close() // allows user to hide this dialog whenever he taps outside the view
                 }
             VStack (spacing: 10) {
                 Image(image)
@@ -60,7 +60,8 @@ struct GameDialogView: View {
                             )
                     })
                     NavigationLink {
-                        GameInfoView()
+                        GameInfoView() // navigate to GameInfoView
+                            .navigationBarBackButtonHidden()
                     } label: {
                         Text("Start playing")
                             .fontWeight(.bold)
@@ -71,9 +72,7 @@ struct GameDialogView: View {
                             .background(AppColors.lightBlue)
                             .cornerRadius(12)
                     }
-
                 }
-                
             }
             .fixedSize(horizontal: false, vertical: true)
             .padding()
@@ -93,8 +92,8 @@ struct GameDialogView: View {
     
     func close() {
         withAnimation(.spring) {
-            offset = 1000
             isActive = false
+            offset = 1000
         }
     }
     
