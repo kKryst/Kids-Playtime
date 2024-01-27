@@ -62,7 +62,6 @@ struct DiscoverView: View {
                                         .scaleEffect(scale)
                                         .foregroundStyle(AppColors.darkBlue)
                                 }
-                                .disabled(true)
                             }
                             #warning("Small images instead of emojis")
                         }

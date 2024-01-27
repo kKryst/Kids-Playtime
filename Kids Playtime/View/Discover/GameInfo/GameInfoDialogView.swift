@@ -10,6 +10,7 @@ import SwiftUI
 struct GameInfoDialogView: View {
     
     @Binding var isActive: Bool
+    @Binding var shouldPresentOpinionSheet: Bool
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewRouter: ViewRouter
     
@@ -39,8 +40,9 @@ struct GameInfoDialogView: View {
                                     .stroke(AppColors.lightBlue, lineWidth: 1)
                             )
                     })
-                    NavigationLink {
-                        DiscoverView()
+                    Button {
+                        close()
+                        shouldPresentOpinionSheet = true
                     } label: {
                         Text("Sure")
                             .fontWeight(.bold)
@@ -73,5 +75,5 @@ struct GameInfoDialogView: View {
 }
 
 #Preview {
-    GameInfoDialogView(isActive: .constant(true))
+    GameInfoDialogView(isActive: .constant(true), shouldPresentOpinionSheet: .constant(false))
 }

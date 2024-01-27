@@ -11,8 +11,8 @@ struct GameInfoView: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
     
-    #warning("Hide Tab Bar here")
     @State private var isDialogPresenting = false
+    @State private var shouldPresentOpinionSheet = false
     
     var body: some View {
         ZStack {
@@ -59,12 +59,16 @@ struct GameInfoView: View {
                 .shadow(radius: 20)
             }
             else  { // shows either game description or dialog
-                GameInfoDialogView(isActive: $isDialogPresenting)
+                GameInfoDialogView(isActive: $isDialogPresenting, shouldPresentOpinionSheet: $shouldPresentOpinionSheet)
                     .onDisappear(perform: {
                         isDialogPresenting = false
                     })
             }
         }
+        .sheet(isPresented: $shouldPresentOpinionSheet, content: {
+            GameOpinionView()
+                .preferredColorScheme(.light)
+        })
         .onAppear {
             viewRouter.shouldDisplayTabView = false
         }
@@ -76,5 +80,9 @@ struct GameInfoView: View {
 }
 
 #Preview {
-    GameInfoView()
+    GameInfoView().environmentObject({ () -> ViewRouter in
+        let envObj = ViewRouter()
+        envObj.shouldDisplayTabView = false
+        return envObj
+    }() )
 }
