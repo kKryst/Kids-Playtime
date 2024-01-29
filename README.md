@@ -1,4 +1,4 @@
-Hi there and welcome to Kids-Playtime
+<h2> Hi there and welcome to Kids-Playtime </h2>
 
 The aim of this application is to facilitate parents in inventing creative ways to play/interact with their children. 
 Inspired by my colleague's statement that "coming up with games to play with children instead of handing them a phone to occupy themselves is about as challenging as figuring out what to have for dinner for another consecutive day," 
@@ -20,6 +20,7 @@ https://github.com/kKryst/Kids-Playtime/assets/92850700/df41fcd2-05cb-403f-bc5c-
 
 https://github.com/kKryst/Kids-Playtime/assets/92850700/030c843e-127f-41b7-854d-a0497df2e942
 
+<h2> A brief section on technical details </h2>
 
 Interface: SwiftUI
 Application architecture: MVVM
