@@ -22,11 +22,12 @@ https://github.com/kKryst/Kids-Playtime/assets/92850700/030c843e-127f-41b7-854d-
 
 <h2> A brief section on technical details </h2>
 
-Interface: SwiftUI
-Application architecture: MVVM
-Minimum iOS version: 16.0
-External libraries: as few as possible, Firebase
-Application languages: English, (soon) Polish
+
+Interface: SwiftUI <br>
+Application architecture: MVVM<br>
+Minimum iOS version: 16.0<br>
+External libraries: as few as possible, Firebase<br>
+Application languages: English, (soon) Polish<br>
 
 
 To be continued...
