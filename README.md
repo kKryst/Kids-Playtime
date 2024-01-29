@@ -1,8 +1,8 @@
 <h2> Hi there and welcome to Kids-Playtime </h2>
 
-The aim of this application is to facilitate parents in inventing creative ways to play/interact with their children. 
+The aim of this application is to help parents in inventing creative ways to play/interact with their children. 
 Inspired by my colleague's statement that "coming up with games to play with children instead of handing them a phone to occupy themselves is about as challenging as figuring out what to have for dinner for another consecutive day," 
-and the growing popularity of content generation using ChatGPT, I decided to combine these two elements and create an application that addresses the needs of parents struggling to maintain a high level of creativity :).
+and the growing popularity of text generation using ChatGPT, I decided to combine these two elements and create an application that addresses the needs of parents struggling to maintain a high level of creativity :).
 
 The app's interface is primarily built on the screen of my iPad, but it slowly makes its way into the app using SwiftUI. Here are a few screens from the app:
 
