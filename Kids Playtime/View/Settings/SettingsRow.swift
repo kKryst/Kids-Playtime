@@ -16,6 +16,7 @@ struct SettingsRow: View {
     let title: String
     let imageName: String
     var isOn: Binding<Bool>?
+    var destinationView: (() -> AnyView)?
     var action: (() -> Void)?
     
     var body: some View {
@@ -38,16 +39,27 @@ struct SettingsRow: View {
                     .font(AppFonts.amikoSemiBold(withSize: 16))
                     .foregroundStyle(AppColors.darkBlue)
                     .padding(.horizontal)
+                    .frame(minWidth: 100)
                 
                 Spacer()
                 
+                if let destinationView = destinationView {
+                    NavigationLink(destination: destinationView()) {
+                        EmptyView()
+                    }.frame(width: 0).opacity(0)
+                    
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(AppColors.orange)
+                        .padding(.horizontal)
+                }
                 if let action = action {
-                    Button(action: action, label: {
+                    Button(action: action) {
                         Image(systemName: "chevron.right")
                             .foregroundStyle(AppColors.orange)
-                            .padding(.horizontal, 28)
-                    })
+                            .padding(.horizontal)
+                    }
                 }
+                
             }
         }
         .background(RoundedRectangle(cornerRadius: 25).fill(AppColors.lightBlue.opacity(0.1)))
@@ -55,5 +67,5 @@ struct SettingsRow: View {
 }
 
 #Preview {
-    SettingsRow(title: "Dark mode", imageName: "moon", isOn: .constant(true))
+    SettingsRow(title: "Report a bug", imageName: "moon", destinationView: {AnyView(TermsAndConditionsView())})
 }

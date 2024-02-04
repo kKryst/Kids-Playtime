@@ -21,12 +21,7 @@ struct AutoScrollerView: View {
     var body: some View {
         VStack {
             ZStack {
-                VStack (){ // image + texts
-                    Text("Games for today")
-                        .font(AppFonts.bayonRegular(withSize: 30))
-                        .foregroundStyle(AppColors.darkBlue)
-                        .padding()
-                    
+                VStack { // image + texts
                     TabView(selection: $selectedImageIndex) {
                         //Iterate Through Images
                         ForEach(0..<imageNames.count, id: \.self) { index in
@@ -92,12 +87,12 @@ struct AutoScrollerView: View {
                                 }
                             }
                     } // places the capsules below the images
-                    .offset(y: 240)
+                    .offset(y: 200)
                 }
                 .padding(.horizontal)
             }   
         }
-        .frame(height: 460)
+        .frame(height: 380)
         // recieved each second
         .onReceive(timer) { _ in
             withAnimation(.default) {

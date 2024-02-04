@@ -13,38 +13,47 @@ struct SettingsView: View {
     @State var notificationsOn: Bool = false
     
     var body: some View {
-        ZStack {
-            AppColors.white.ignoresSafeArea()
-            VStack {
-                List {
-                    Section(
-                        header: Text("Settings").font(AppFonts.amikoSemiBold(withSize: 20)).foregroundStyle(AppColors.darkBlue))
-                    {
-                        SettingsRow(title: "Dark mode", imageName: "moon", isOn: $darkModeToggle)
+        NavigationStack {
+            ZStack {
+                AppColors.white.ignoresSafeArea()
+                VStack {
+                    List {
+                        Section(
+                            header: Text("Settings").font(AppFonts.amikoSemiBold(withSize: 20)).foregroundStyle(AppColors.darkBlue))
+                        {
+                            SettingsRow(title: "Dark mode", imageName: "moon", isOn: $darkModeToggle)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                                .padding(.vertical, 8)
+                            
+                            SettingsRow(title: "Notifications", imageName: "bell", isOn: $notificationsOn)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                                .padding(.vertical, 8)
+                            
+                            SettingsRow(title: "Report a bug", imageName: "exclamationmark.triangle", destinationView: {
+                                AnyView(TermsAndConditionsView())
+                            })
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                             .padding(.vertical, 8)
-                        SettingsRow(title: "Notifications", imageName: "bell", isOn: $notificationsOn)
+                            
+                            SettingsRow(title: "Logout", imageName: "rectangle.portrait.and.arrow.right", action: {print("Logout button pressed")})
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                             .padding(.vertical, 8)
-                        SettingsRow(title: "Report a bug", imageName: "exclamationmark.triangle", action: {print("Action on report a bug pressed")})
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-                            .padding(.vertical, 8)
-                        SettingsRow(title: "Logout", imageName: "rectangle.portrait.and.arrow.right", action: {print("Logout pressed")})
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-                            .padding(.vertical, 8)
+                            
+                        }
                         
+                        .scrollContentBackground(.hidden)
+                        .background(AppColors.white)
                     }
                     
+                    .buttonStyle(.plain)
                     .scrollContentBackground(.hidden)
                     .background(AppColors.white)
+                    .padding(.vertical)
                 }
-                .scrollContentBackground(.hidden)
-                .background(AppColors.white)
-                .padding(.vertical)
             }
         }
     }

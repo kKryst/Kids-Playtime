@@ -31,7 +31,7 @@ struct DiscoverView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                AppColors.background.ignoresSafeArea()
+                AppColors.white.ignoresSafeArea()
                 ScrollView {
                     VStack {
                         VStack { // wheel and text
@@ -65,6 +65,11 @@ struct DiscoverView: View {
                             }
                             #warning("Small images instead of emojis")
                         }
+                        Text("Games for today")
+                            .font(AppFonts.bayonRegular(withSize: 30))
+                            .foregroundStyle(AppColors.darkBlue)
+                            .padding()
+                        
                         // autoscroller
                         AutoScrollerView(
                             imageNames: ["imag", "imag", "imag", "imag", "imag", "imag", "imag", "imag", "imag"])

@@ -44,7 +44,7 @@ struct GameOpinionView: View {
                     }
                     .padding(.horizontal)
                     
-                    RatingView(rating: $rate)
+                    StarRatingView(rating: $rate)
                     
                     Divider()
                         .padding()
