@@ -67,7 +67,6 @@ struct GameInfoView: View {
         }
         .sheet(isPresented: $shouldPresentOpinionSheet, content: {
             GameOpinionView()
-                .preferredColorScheme(.light)
         })
         .onAppear {
             viewRouter.shouldDisplayTabView = false

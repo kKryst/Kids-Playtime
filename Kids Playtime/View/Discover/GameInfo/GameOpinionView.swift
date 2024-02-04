@@ -25,7 +25,6 @@ struct GameOpinionView: View {
         ZStack {
             AppColors.white.ignoresSafeArea()
             VStack {
-                
                 VStack {
                     HStack {
                         Text("Rate this game")
@@ -80,7 +79,6 @@ struct GameOpinionView: View {
                     Button{
                         //TODO: send feedback to database
                         dismiss()
-                        
                     } label: {
                         Text("Submit")
                             .fontWeight(.bold)

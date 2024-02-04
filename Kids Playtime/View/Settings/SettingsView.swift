@@ -9,8 +9,10 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @State var darkModeToggle: Bool = false
+    @AppStorage("isDarkMode") private var darkModeToggle: Bool = false
     @State var notificationsOn: Bool = false
+    
+     var isDarkMode = false
     
     var body: some View {
         NavigationStack {

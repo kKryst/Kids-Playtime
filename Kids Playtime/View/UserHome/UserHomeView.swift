@@ -28,11 +28,6 @@ struct UserHomeView: View {
     @State private var animateChart = false
     @State private var isGameDialogActive = false
     var body: some View {
-        //        Text("a picker to select time frame (day / week / two weeks / month / year)")
-        //        Text("Time spend playing and a goal to set (a button overlaying the circle if not set)")
-        //        Text("games player - animation that goes from 0 to the actual value")
-        //        Text("name of the user on top in one HStack with time frame")
-        //        Text("Chart with minues spend playing each day for of the week (to be synced with timeframe)")
         NavigationStack {
             ZStack {
                 AppColors.white.ignoresSafeArea()
