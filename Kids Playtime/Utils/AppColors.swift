@@ -14,9 +14,11 @@ struct AppColors {
     static let alertBackground = LinearGradient(gradient: Gradient(colors: [AppColors.lightBlue, AppColors.orange]), startPoint: .bottom, endPoint: .top)
     
     // app colors
-    static let orange = Color.init(hexString: "df5431")
-    static let lightBlue = Color.init(hexString: "365fed")
-    static let darkBlue = Color.init(hexString: "10283f")
-    static let white = Color.init(hexString: "eaf2ef")
-    static let pink = Color.init(hexString: "ffadc6")
+    static let orange = Color("orange")
+    static let lightBlue = Color("lightBlue")
+    static let darkBlue = Color("darkBlue")
+    static let white = Color("white")
+    static let pink = Color("pink")
+    static let tabColor = Color("tabColor")
+    static let tabForegroundColor = Color("tabForegroundColor")
 }

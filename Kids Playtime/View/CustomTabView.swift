@@ -23,7 +23,7 @@ struct CustomTabView: View {
         ZStack {
             Capsule()
                 .frame(height: 80)
-                .foregroundStyle(AppColors.darkBlue)
+                .foregroundStyle(AppColors.tabColor)
             HStack {
                 ForEach (0..<tabBarItems.count) { index in
                     Button(action: {
@@ -50,7 +50,7 @@ struct CustomTabView: View {
                     })
                 }
             }
-            .foregroundStyle(AppColors.white)
+            .foregroundStyle(AppColors.tabForegroundColor)
             .frame(height: 80)
             .clipShape(Capsule())
         }
