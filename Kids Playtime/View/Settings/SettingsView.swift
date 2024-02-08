@@ -10,9 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @AppStorage("isDarkMode") private var darkModeToggle: Bool = false
-    @State var notificationsOn: Bool = false
-    
-     var isDarkMode = false
+    @AppStorage("isNotificationsOn") private var notificationsOn: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -33,6 +31,20 @@ struct SettingsView: View {
                                 .listRowSeparator(.hidden)
                                 .padding(.vertical, 8)
                             
+                            SettingsRow(title: "About App", imageName: "info.circle", destinationView: {
+                                AnyView(TermsAndConditionsView())
+                            })
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .padding(.vertical, 8)
+                            
+                            SettingsRow(title: "Terms & Conditions", imageName: "text.book.closed", destinationView: {
+                                AnyView(TermsAndConditionsView())
+                            })
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .padding(.vertical, 8)
+                            
                             SettingsRow(title: "Report a bug", imageName: "exclamationmark.triangle", destinationView: {
                                 AnyView(TermsAndConditionsView())
                             })
@@ -40,10 +52,10 @@ struct SettingsView: View {
                             .listRowSeparator(.hidden)
                             .padding(.vertical, 8)
                             
-                            SettingsRow(title: "Logout", imageName: "rectangle.portrait.and.arrow.right", action: {print("Logout button pressed")})
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-                            .padding(.vertical, 8)
+//                            SettingsRow(title: "Logout", imageName: "rectangle.portrait.and.arrow.right", action: {print("Logout button pressed")})
+//                            .listRowInsets(EdgeInsets())
+//                            .listRowSeparator(.hidden)
+//                            .padding(.vertical, 8)
                             
                         }
                         
@@ -58,6 +70,7 @@ struct SettingsView: View {
                 }
             }
         }
+        .tint(AppColors.darkBlue)
     }
 }
 

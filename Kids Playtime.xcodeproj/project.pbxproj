@@ -31,6 +31,9 @@
 		AF3980442B70206500923CDD /* TextIncreasingValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39803F2B70206500923CDD /* TextIncreasingValue.swift */; };
 		AF3980462B70212100923CDD /* UserStatsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980452B70212100923CDD /* UserStatsData.swift */; };
 		AF3980482B70212F00923CDD /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980472B70212F00923CDD /* ViewRouter.swift */; };
+		AF39804B2B7031D300923CDD /* SettingsPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39804A2B7031D300923CDD /* SettingsPageVM.swift */; };
+		AF39804F2B71710A00923CDD /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39804E2B71710A00923CDD /* UserProfileView.swift */; };
+		AF3980512B756C0B00923CDD /* UserHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980502B756C0B00923CDD /* UserHomeViewModel.swift */; };
 		AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */; };
 		AFD545312B5411A70063C820 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545302B5411A70063C820 /* Assets.xcassets */; };
 		AFD545342B5411A70063C820 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545332B5411A70063C820 /* Preview Assets.xcassets */; };
@@ -90,6 +93,9 @@
 		AF39803F2B70206500923CDD /* TextIncreasingValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextIncreasingValue.swift; sourceTree = "<group>"; };
 		AF3980452B70212100923CDD /* UserStatsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStatsData.swift; sourceTree = "<group>"; };
 		AF3980472B70212F00923CDD /* ViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
+		AF39804A2B7031D300923CDD /* SettingsPageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageVM.swift; sourceTree = "<group>"; };
+		AF39804E2B71710A00923CDD /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		AF3980502B756C0B00923CDD /* UserHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeViewModel.swift; sourceTree = "<group>"; };
 		AFD545292B5411A60063C820 /* Kids Playtime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kids Playtime.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeApp.swift; sourceTree = "<group>"; };
 		AFD545302B5411A70063C820 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -215,8 +221,18 @@
 			children = (
 				AF39803E2B70206500923CDD /* UserHomeView.swift */,
 				AF39803F2B70206500923CDD /* TextIncreasingValue.swift */,
+				AF39804E2B71710A00923CDD /* UserProfileView.swift */,
 			);
 			path = UserHome;
+			sourceTree = "<group>";
+		};
+		AF3980492B7031C100923CDD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AF39804A2B7031D300923CDD /* SettingsPageVM.swift */,
+				AF3980502B756C0B00923CDD /* UserHomeViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		AFD545202B5411A60063C820 = {
@@ -243,6 +259,7 @@
 		AFD5452B2B5411A60063C820 /* Kids Playtime */ = {
 			isa = PBXGroup;
 			children = (
+				AF3980492B7031C100923CDD /* ViewModel */,
 				AFD545662B543C9A0063C820 /* Kids-Playtime-Info.plist */,
 				AFD545592B541D1A0063C820 /* Utils */,
 				AFD545572B541D0B0063C820 /* View */,
@@ -478,6 +495,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF3980512B756C0B00923CDD /* UserHomeViewModel.swift in Sources */,
 				AF39802E2B70205900923CDD /* GameDialogView.swift in Sources */,
 				AF39801A2B70202600923CDD /* WheelFortune.swift in Sources */,
 				AF3980402B70206500923CDD /* TermsAndConditionsView.swift in Sources */,
@@ -486,6 +504,7 @@
 				AFD5455B2B541D350063C820 /* AppColors.swift in Sources */,
 				AF3980462B70212100923CDD /* UserStatsData.swift in Sources */,
 				AF3980322B70205900923CDD /* WheelFortune.swift in Sources */,
+				AF39804B2B7031D300923CDD /* SettingsPageVM.swift in Sources */,
 				AF3980182B70202600923CDD /* WheelSpinView.swift in Sources */,
 				AF3980332B70205900923CDD /* HorizontalGameCardView.swift in Sources */,
 				AF3980442B70206500923CDD /* TextIncreasingValue.swift in Sources */,
@@ -504,6 +523,7 @@
 				AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */,
 				AFD5455E2B541DC70063C820 /* Color+Extensions.swift in Sources */,
 				AF3980312B70205900923CDD /* WheelSpinCell.swift in Sources */,
+				AF39804F2B71710A00923CDD /* UserProfileView.swift in Sources */,
 				AF39802C2B70205900923CDD /* AutoScrollerView.swift in Sources */,
 				AF39802D2B70205900923CDD /* DiscoverView.swift in Sources */,
 				AF3980382B70205900923CDD /* StarRatingView.swift in Sources */,

@@ -10,23 +10,13 @@ import Charts
 
 struct UserHomeView: View {
     
-    @State var data = [
-        UserStatsData(day: "Mon", minutesPlayed: 30, numbersOfGamesPlayed: 2, date: Date()),
-        UserStatsData(day: "Tue", minutesPlayed: 40, numbersOfGamesPlayed: 1, date: Date()),
-        UserStatsData(day: "Wed", minutesPlayed: 33, numbersOfGamesPlayed: 1, date: Date()),
-        UserStatsData(day: "Thu", minutesPlayed: 90, numbersOfGamesPlayed: 3, date: Date()),
-        UserStatsData(day: "Fri", minutesPlayed: 0, numbersOfGamesPlayed: 0, date: Date()),
-        UserStatsData(day: "Sat", minutesPlayed: 0, numbersOfGamesPlayed: 0, date: Date()),
-        UserStatsData(day: "Sun", minutesPlayed: 53, numbersOfGamesPlayed: 2, date: Date())
-    ]
-    
-    @State private var minutesPlayed = 312
+    //TODO: dokończyć resztę ekranów z settingsów
+    //TODO: przygotować projekt na firebase i przygotować dane do sciagniecia do aplikacji
     
     @EnvironmentObject var viewRouter: ViewRouter
     
-    @State private var selectedTimeFrame: TimeFrame = .week
-    @State private var animateChart = false
-    @State private var isGameDialogActive = false
+    @StateObject private var viewModel = ViewModel()
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -34,36 +24,51 @@ struct UserHomeView: View {
                 ScrollView {
                     VStack {
                         HStack {
-                            Image("imag")
+                            Image(systemName: "person.circle")
                                 .resizable()
+                                .foregroundStyle(AppColors.darkBlue)
                                 .clipShape(Circle())
                                 .frame(width: 64, height: 64)
                                 .aspectRatio(contentMode: .fill)
                                 .padding(8)
                                 .shadow(radius: 3)
-                            Text("user name")
+                            Text("Guest")
                                 .font(AppFonts.amikoSemiBold(withSize: 16))
                                 .foregroundStyle(AppColors.darkBlue)
                             Spacer()
-                            
+                            NavigationLink {
+                                UserProfileView()
+                            } label: {
+                                Text("Login")
+                                    .fontWeight(.bold)
+                                    .font(AppFonts.amikoRegular(withSize: 16))
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 5)
+                                    .padding(.horizontal, 15)
+                                    .background(AppColors.orange)
+                                    .cornerRadius(30)
+                                    .padding()
+                            }
                         }
                         .background(RoundedRectangle(cornerRadius: 20, style: .circular).foregroundStyle(AppColors.lightBlue).opacity(0.1))
                         
                         HStack(alignment: .top) {
                             VStack {
-                                
-                                TextIncreasingValue(endValue: minutesPlayed, duration: 1)
+                                TextIncreasingValue(endValue: viewModel.minutesPlayed, duration: 1)
                                     .font(AppFonts.amikoSemiBold(withSize: 28))
                                     .foregroundStyle(AppColors.darkBlue)
                                 Text("Minutes")
                                     .font(AppFonts.amikoRegular(withSize: 14))
                                     .foregroundStyle(AppColors.darkBlue.opacity(0.7))
                                     .multilineTextAlignment(.center)
-                                
                             }
                             .padding(.horizontal)
+                            .onAppear {
+                                viewModel.calculateMinutesPlayed()
+                                viewModel.calculateGamesPlayed()
+                            }
                             VStack {
-                                TextIncreasingValue(endValue: 6, duration: 1)
+                                TextIncreasingValue(endValue: viewModel.gamesPlayed, duration: 1)
                                     .font(AppFonts.amikoSemiBold(withSize: 28))
                                     .foregroundStyle(AppColors.darkBlue)
                                 Text("Games")
@@ -72,7 +77,7 @@ struct UserHomeView: View {
                             }
                             .padding(.horizontal)
                             Spacer()
-                            Picker("TimeFrame", selection: $selectedTimeFrame) {
+                            Picker("TimeFrame", selection: $viewModel.selectedTimeFrame) {
                                 ForEach(TimeFrame.allCases) { timeFrame in
                                     Text(timeFrame.rawValue.capitalized)
                                 }
@@ -83,9 +88,9 @@ struct UserHomeView: View {
                         }
                         .padding()
                         
-                        Chart(data) { d in
+                        Chart(viewModel.data) { d in
                             BarMark(x: .value("Day", d.day),
-                                    y: .value("Minutes", animateChart ? d.minutesPlayed : 0)
+                                    y: .value("Minutes", viewModel.animateChart ? d.minutesPlayed : 0)
                             )
                             .annotation(position: AnnotationPosition.top) {
                                 Text(String(d.minutesPlayed))
@@ -116,7 +121,7 @@ struct UserHomeView: View {
                         .padding()
                         .onAppear {
                             withAnimation(.spring()) {
-                                animateChart = true // Trigger the animation
+                                viewModel.animateChart = true // Trigger the animation
                             }
                         }
                         
@@ -126,7 +131,7 @@ struct UserHomeView: View {
                             .font(AppFonts.amikoSemiBold(withSize: 24))
                             .foregroundStyle(AppColors.darkBlue)
                         AutoScrollerView(imageNames: ["imag", "imag"]) {
-                            isGameDialogActive = true
+                            viewModel.isGameDialogActive = true
                         }
                         
                         Spacer()
@@ -138,12 +143,13 @@ struct UserHomeView: View {
                         .background(Color.clear)
                         .foregroundStyle(Color.clear)
                 }
-                if isGameDialogActive { // pops off when a game is selected / drawn by the wheel
-                    GameDialogView(isActive: $isGameDialogActive, title: "Chosen game", players: "2-4", time: "30 min.", image: "imag")
+                if viewModel.isGameDialogActive { // pops off when a game is selected / drawn by the wheel
+                    GameDialogView(isActive: $viewModel.isGameDialogActive, title: "Chosen game", players: "2-4", time: "30 min.", image: "imag")
                     
                 }
             }
         }
+        .tint(AppColors.darkBlue)
     }
 }
 
