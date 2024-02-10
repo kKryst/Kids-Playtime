@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct TermsAndConditionsView: View {
+    
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     var body: some View {
-        Text("Terms and conditions here...")
+        ZStack {
+            AppColors.white.ignoresSafeArea()
+            VStack {
+                Text("Terms and conditions here...")
+            }
+        }
+        .onAppear {
+            viewRouter.shouldDisplayTabView = false
+        }
+        .onDisappear(perform: {
+            viewRouter.shouldDisplayTabView = true
+        })
     }
 }
 

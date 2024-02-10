@@ -34,6 +34,7 @@
 		AF39804B2B7031D300923CDD /* SettingsPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39804A2B7031D300923CDD /* SettingsPageVM.swift */; };
 		AF39804F2B71710A00923CDD /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39804E2B71710A00923CDD /* UserProfileView.swift */; };
 		AF3980512B756C0B00923CDD /* UserHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980502B756C0B00923CDD /* UserHomeViewModel.swift */; };
+		AF7A324A2B77CCDE0071EFE0 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A32492B77CCDE0071EFE0 /* AboutAppView.swift */; };
 		AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */; };
 		AFD545312B5411A70063C820 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545302B5411A70063C820 /* Assets.xcassets */; };
 		AFD545342B5411A70063C820 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545332B5411A70063C820 /* Preview Assets.xcassets */; };
@@ -96,6 +97,7 @@
 		AF39804A2B7031D300923CDD /* SettingsPageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageVM.swift; sourceTree = "<group>"; };
 		AF39804E2B71710A00923CDD /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		AF3980502B756C0B00923CDD /* UserHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHomeViewModel.swift; sourceTree = "<group>"; };
+		AF7A32492B77CCDE0071EFE0 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		AFD545292B5411A60063C820 /* Kids Playtime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kids Playtime.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeApp.swift; sourceTree = "<group>"; };
 		AFD545302B5411A70063C820 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				AF39803A2B70206500923CDD /* TermsAndConditionsView.swift */,
 				AF39803B2B70206500923CDD /* SettingsView.swift */,
 				AF39803C2B70206500923CDD /* SettingsRow.swift */,
+				AF7A32492B77CCDE0071EFE0 /* AboutAppView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				AF3980192B70202600923CDD /* WheelSpinCell.swift in Sources */,
 				AF3980432B70206500923CDD /* UserHomeView.swift in Sources */,
 				AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */,
+				AF7A324A2B77CCDE0071EFE0 /* AboutAppView.swift in Sources */,
 				AFD5455E2B541DC70063C820 /* Color+Extensions.swift in Sources */,
 				AF3980312B70205900923CDD /* WheelSpinCell.swift in Sources */,
 				AF39804F2B71710A00923CDD /* UserProfileView.swift in Sources */,

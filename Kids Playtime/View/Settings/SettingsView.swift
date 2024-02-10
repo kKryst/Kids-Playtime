@@ -30,9 +30,16 @@ struct SettingsView: View {
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
                                 .padding(.vertical, 8)
+                        }
+                        .scrollContentBackground(.hidden)
+                        .background(AppColors.white)
+                        
+                        Section(
+                            header: Text("Other").font(AppFonts.amikoSemiBold(withSize: 20)).foregroundStyle(AppColors.darkBlue))
+                        {
                             
                             SettingsRow(title: "About App", imageName: "info.circle", destinationView: {
-                                AnyView(TermsAndConditionsView())
+                                AnyView(AboutAppView())
                             })
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
@@ -45,17 +52,13 @@ struct SettingsView: View {
                             .listRowSeparator(.hidden)
                             .padding(.vertical, 8)
                             
-                            SettingsRow(title: "Report a bug", imageName: "exclamationmark.triangle", destinationView: {
-                                AnyView(TermsAndConditionsView())
+                            SettingsRow(title: "Report a bug", imageName: "exclamationmark.triangle", action: {
+                                openEmailApp(toEmail: "krystiankonieczko2@gmail.com", subject: "Bug report", body: "")
                             })
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                             .padding(.vertical, 8)
-                            
-//                            SettingsRow(title: "Logout", imageName: "rectangle.portrait.and.arrow.right", action: {print("Logout button pressed")})
-//                            .listRowInsets(EdgeInsets())
-//                            .listRowSeparator(.hidden)
-//                            .padding(.vertical, 8)
+                        
                             
                         }
                         
@@ -71,6 +74,21 @@ struct SettingsView: View {
             }
         }
         .tint(AppColors.darkBlue)
+    }
+    
+    func openEmailApp(toEmail: String, subject: String, body: String) {
+        guard
+            let subject = subject.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+            let body = "Just testing ...".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        else {
+            print("Error: Can't encode subject or body.")
+            return
+        }
+        
+        let urlString = "mailto:\(toEmail)?subject=\(subject)&body=\(body)"
+        let url = URL(string:urlString)!
+        
+        UIApplication.shared.open(url)
     }
 }
 

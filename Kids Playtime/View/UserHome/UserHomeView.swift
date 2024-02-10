@@ -121,7 +121,7 @@ struct UserHomeView: View {
                         .padding()
                         .onAppear {
                             withAnimation(.spring()) {
-                                viewModel.animateChart = true // Trigger the animation
+                                viewModel.animateChart = true // Trigger the chart animation
                             }
                         }
                         
