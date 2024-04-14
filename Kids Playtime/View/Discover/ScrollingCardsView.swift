@@ -8,20 +8,13 @@
 import SwiftUI
 
 // DOCUMENTATION: card and images are the same things!
-struct AutoScrollerView: View { // find a better name for that
+struct ScrollingCardsView: View { // find a better name for that
     
-    var imageNames: [String]
     // timer that allows cards to be automatically switched every X seconds
     let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
     @State var seconds = 0
-    var onTapGesture: () -> Void
-    private let gameCards = [
-        GameCard(nameOfTheGame: "Game no 1", minNumberOfPlayers: 2, maxNumberOfPlayers: 4, estimatedTime: 45, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-        GameCard(nameOfTheGame: "Game no 2", minNumberOfPlayers: 3, maxNumberOfPlayers: 5, estimatedTime: 120, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-        GameCard(nameOfTheGame: "Game no 3", minNumberOfPlayers: 2, maxNumberOfPlayers: 2, estimatedTime: 20, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-        GameCard(nameOfTheGame: "Game no 4", minNumberOfPlayers: 5, maxNumberOfPlayers: 10, estimatedTime: 240, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-        GameCard(nameOfTheGame: "Game no 5", minNumberOfPlayers: 1, maxNumberOfPlayers: 3, estimatedTime: 50, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg")
-    ]
+    let gameCards: [GameCard]
+    let onTapGesture: (Int) -> Void
     
     @State private var selectedImageIndex: Int = 0 //holds currently displayed card's id.
     
@@ -45,7 +38,8 @@ struct AutoScrollerView: View { // find a better name for that
                                     .padding()
                                     .shadow(radius: 5) // image's shadow
                                     .onTapGesture {
-                                        onTapGesture()
+                                        onTapGesture(index)
+                                        print(index)
                                     }
                                     HStack(alignment: .center) {
                                         Spacer()
@@ -77,7 +71,7 @@ struct AutoScrollerView: View { // find a better name for that
                     .onChange(of: selectedImageIndex, perform: { value in
                         seconds = 0
                         // when timer auto-swaps last image, go to the first one
-                        if selectedImageIndex == imageNames.count + 1 {
+                        if selectedImageIndex == gameCards.count + 1 {
                             selectedImageIndex = 0
                         }
                     })
@@ -107,7 +101,7 @@ struct AutoScrollerView: View { // find a better name for that
         .onReceive(timer) { _ in
             withAnimation(.default) {
                 if seconds == 4 {
-                    selectedImageIndex = (selectedImageIndex + 1) % imageNames.count // swap card
+                    selectedImageIndex = (selectedImageIndex + 1) % gameCards.count // swap card
                 } else {
                     seconds += 1 // increase seconds
                 }
@@ -118,5 +112,5 @@ struct AutoScrollerView: View { // find a better name for that
 
 
 #Preview {
-    AutoScrollerView(imageNames: ["imag", "imag", "imag"], onTapGesture:{})
+    ScrollingCardsView(gameCards: [GameCard(nameOfTheGame: "Preview game 1", minNumberOfPlayers: 2, maxNumberOfPlayers: 4, estimatedTime: 30, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg")], onTapGesture:{_ in })
 }

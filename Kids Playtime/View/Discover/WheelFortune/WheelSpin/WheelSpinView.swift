@@ -70,7 +70,7 @@ struct WheelSpinView: View {
                 ForEach(0..<data.count) { index in
                     WheelSpinCell(startAngle: startAngle(for: index), endAngle: endAngle(for: index))
                         .fill(colors[index % colors.count])
-                    Text(labels[index]).foregroundColor(Color.white).fontWeight(.bold)
+                    Text("\(index+1)").foregroundColor(Color.white).fontWeight(.bold)
                         .offset(viewOffset(for: index, in: geo.size)).zIndex(1)
                 }
             }

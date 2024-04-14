@@ -30,23 +30,25 @@ struct DiscoverView: View {
                             Rectangle().frame(
                                 height: 0
                             ).padding(20).background(Color.clear).foregroundStyle(Color.clear)
-                            if viewModel.valueFromFirebase != nil {
-                                Text(viewModel.valueFromFirebase!)
-                                    
-                            } else {
-                                Text("Draw a game")
-                                    .font(AppFonts.bayonRegular(withSize: 48))
-                                    .foregroundStyle(AppColors.darkBlue)
-                                    .scaleEffect(viewModel.scale)
-                                    .padding()
-                                    .onAppear {
-                                        withAnimation(self.repeatingScaleAnimation) {
-                                            viewModel.scale = 1.1
-                                        }
+//                            if viewModel.valueFromFirebase != nil {
+//                                Text(viewModel.valueFromFirebase!)
+//                                    
+//                            } else {
+//                                
+//                            }
+                            Text("Draw a game")
+                                .font(AppFonts.bayonRegular(withSize: 48))
+                                .foregroundStyle(AppColors.darkBlue)
+                                .scaleEffect(viewModel.scale)
+                                .padding()
+                                .onAppear {
+                                    withAnimation(self.repeatingScaleAnimation) {
+                                        viewModel.scale = 1.1
                                     }
-                            }
-                            WheelFortune(titles: viewModel.games, size: 320, onSpinEnd: { index in
+                                }
+                            WheelFortune(titles: viewModel.getTitles(), size: 320, onSpinEnd: { index in
                                 viewModel.isGameDialogActive = true
+                                viewModel.currentlySelectedGame = viewModel.games[index]
                             }, colors: AppColors.wheelColors, onSpinStart: {
                             })
                             .padding()
@@ -70,10 +72,10 @@ struct DiscoverView: View {
                             .padding()
                         
                         // autoscroller
-                        AutoScrollerView(
-                            imageNames: ["imag", "imag", "imag", "imag", "imag", "imag", "imag", "imag", "imag"])
-                        { //onTap for AutoScroller
+                        ScrollingCardsView(gameCards: viewModel.games)
+                        { index in
                             viewModel.isGameDialogActive = true
+                            viewModel.currentlySelectedGame = viewModel.games[index]
                         }
                         // spacer to allow scrolling below TabBar
                         Rectangle()
@@ -84,8 +86,14 @@ struct DiscoverView: View {
                     }
                 }
                 .scrollIndicators(.hidden) // hides trailing scroll bar
-                if viewModel.isGameDialogActive { // pops off when a game is selected / drawn by the wheel
-                    GameDialogView(isActive: $viewModel.isGameDialogActive, title: "Chosen game", players: "2-4", time: "30 min.", image: "imag")
+                if viewModel.isGameDialogActive && (viewModel.currentlySelectedGame != nil) { // pops off when a game is selected / drawn by the wheel
+                    GameDialogView(
+                        isActive: $viewModel.isGameDialogActive,
+                        title: viewModel.currentlySelectedGame!.nameOfTheGame,
+                        players: "\(viewModel.currentlySelectedGame!.minNumberOfPlayers)-\(viewModel.currentlySelectedGame!.maxNumberOfPlayers)",
+                        time: "\(viewModel.currentlySelectedGame!.estimatedTime) min.",
+                        image: "\(viewModel.currentlySelectedGame!.imageUrl)"
+                    )
                     
                 }
             }

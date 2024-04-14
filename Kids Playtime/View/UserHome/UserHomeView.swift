@@ -130,7 +130,7 @@ struct UserHomeView: View {
                         Text("Saved games")
                             .font(AppFonts.amikoSemiBold(withSize: 24))
                             .foregroundStyle(AppColors.darkBlue)
-                        AutoScrollerView(imageNames: ["imag", "imag"]) {
+                        ScrollingCardsView(gameCards: viewModel.games) { index in
                             viewModel.isGameDialogActive = true
                         }
                         

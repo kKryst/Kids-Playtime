@@ -14,6 +14,7 @@ struct GameDialogView: View {
     let time: String
     let image: String
     @State private var offset: CGFloat = 1000
+    @State private var isImageVisible: Bool = false
     
     
     var body: some View {
@@ -23,11 +24,29 @@ struct GameDialogView: View {
                     close() // allows user to hide this dialog whenever he taps outside the view
                 }
             VStack (spacing: 10) {
-                Image(image)
-                    .resizable()
-                    .clipShape(RoundedRectangle(cornerRadius: 17.0))
-                    .padding(8)
-                    .frame(width: 200, height: 200)
+                AsyncImage(url: URL(string: image)) { phase in
+                    if let image = phase.image {
+                        image.resizable()
+//                            .aspectRatio(contentMode: .fill)
+                    } else if phase.error != nil {
+                        ProgressView()
+                    } else {
+                        ProgressView()
+                    }
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 17.0))
+                .padding(8)
+                .frame(width: 200, height: 200)
+                .opacity(isImageVisible ? 1.0 : 0.0)  // Control visibility based on state
+                .offset(y: offset)
+                .onAppear {
+                    withAnimation(.easeOut(duration: 1.0)) {
+                        offset = 0  // Animate offset to 0
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        isImageVisible = true  // Make the image visible after the offset animation
+                    }
+                }
                 HStack {
                     Spacer()
                     Text(title).font(AppFonts.amikoSemiBold(withSize: 24)).foregroundStyle(AppColors.darkBlue.opacity(0.9))
