@@ -15,7 +15,7 @@ public class DatabaseManager: ObservableObject {
     
     static let shared = DatabaseManager() // Singleton instance
     
-    private var ref = Database.database(url: K.databaseUrl).reference()
+    private var ref = Database.database(url: Constants.databaseUrl).reference()
 
     
     func readValue(completion: @escaping (String?) -> Void) {

@@ -7,6 +7,6 @@
 
 import Foundation
 
-class K {
+class Constants {
     static let databaseUrl = "https://kids-playtime-default-rtdb.europe-west1.firebasedatabase.app"
 }

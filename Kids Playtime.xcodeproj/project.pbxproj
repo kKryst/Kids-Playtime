@@ -14,10 +14,6 @@
 		AF39802C2B70205900923CDD /* AutoScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39801C2B70205900923CDD /* AutoScrollerView.swift */; };
 		AF39802D2B70205900923CDD /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39801D2B70205900923CDD /* DiscoverView.swift */; };
 		AF39802E2B70205900923CDD /* GameDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39801E2B70205900923CDD /* GameDialogView.swift */; };
-		AF39802F2B70205900923CDD /* WheelFortuneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980202B70205900923CDD /* WheelFortuneViewModel.swift */; };
-		AF3980302B70205900923CDD /* WheelSpinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980222B70205900923CDD /* WheelSpinView.swift */; };
-		AF3980312B70205900923CDD /* WheelSpinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980232B70205900923CDD /* WheelSpinCell.swift */; };
-		AF3980322B70205900923CDD /* WheelFortune.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980242B70205900923CDD /* WheelFortune.swift */; };
 		AF3980332B70205900923CDD /* HorizontalGameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980252B70205900923CDD /* HorizontalGameCardView.swift */; };
 		AF3980342B70205900923CDD /* GameOpinionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980272B70205900923CDD /* GameOpinionView.swift */; };
 		AF3980352B70205900923CDD /* GameInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980282B70205900923CDD /* GameInfoView.swift */; };
@@ -44,8 +40,9 @@
 		AF7A32592B7A7EE20071EFE0 /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A32582B7A7EE20071EFE0 /* DiscoverViewModel.swift */; };
 		AF7A325B2B7A83F60071EFE0 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = AF7A325A2B7A83F60071EFE0 /* FirebaseDatabase */; };
 		AF7A325D2B7A83F60071EFE0 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AF7A325C2B7A83F60071EFE0 /* FirebaseDatabaseSwift */; };
-		AF7A325F2B7A86810071EFE0 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A325E2B7A86810071EFE0 /* K.swift */; };
+		AF7A325F2B7A86810071EFE0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A325E2B7A86810071EFE0 /* Constants.swift */; };
 		AF7A32612B7A87620071EFE0 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A32602B7A87620071EFE0 /* DatabaseManager.swift */; };
+		AF7EDAA02BCBD04900285FCE /* GameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7EDA9F2BCBD04900285FCE /* GameCard.swift */; };
 		AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */; };
 		AFD545312B5411A70063C820 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545302B5411A70063C820 /* Assets.xcassets */; };
 		AFD545342B5411A70063C820 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545332B5411A70063C820 /* Preview Assets.xcassets */; };
@@ -88,10 +85,6 @@
 		AF39801C2B70205900923CDD /* AutoScrollerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoScrollerView.swift; sourceTree = "<group>"; };
 		AF39801D2B70205900923CDD /* DiscoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		AF39801E2B70205900923CDD /* GameDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameDialogView.swift; sourceTree = "<group>"; };
-		AF3980202B70205900923CDD /* WheelFortuneViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WheelFortuneViewModel.swift; sourceTree = "<group>"; };
-		AF3980222B70205900923CDD /* WheelSpinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WheelSpinView.swift; sourceTree = "<group>"; };
-		AF3980232B70205900923CDD /* WheelSpinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WheelSpinCell.swift; sourceTree = "<group>"; };
-		AF3980242B70205900923CDD /* WheelFortune.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WheelFortune.swift; sourceTree = "<group>"; };
 		AF3980252B70205900923CDD /* HorizontalGameCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalGameCardView.swift; sourceTree = "<group>"; };
 		AF3980272B70205900923CDD /* GameOpinionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOpinionView.swift; sourceTree = "<group>"; };
 		AF3980282B70205900923CDD /* GameInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameInfoView.swift; sourceTree = "<group>"; };
@@ -111,8 +104,9 @@
 		AF7A32492B77CCDE0071EFE0 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		AF7A324B2B7A7B0A0071EFE0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AF7A32582B7A7EE20071EFE0 /* DiscoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewModel.swift; sourceTree = "<group>"; };
-		AF7A325E2B7A86810071EFE0 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
+		AF7A325E2B7A86810071EFE0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AF7A32602B7A87620071EFE0 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		AF7EDA9F2BCBD04900285FCE /* GameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCard.swift; sourceTree = "<group>"; };
 		AFD545292B5411A60063C820 /* Kids Playtime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kids Playtime.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeApp.swift; sourceTree = "<group>"; };
 		AFD545302B5411A70063C820 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -173,8 +167,7 @@
 				AF3980132B70202600923CDD /* WheelSpin */,
 				AF3980162B70202600923CDD /* WheelFortune.swift */,
 			);
-			name = WheelFortune;
-			path = Discover/WheelFortune;
+			path = WheelFortune;
 			sourceTree = "<group>";
 		};
 		AF3980132B70202600923CDD /* WheelSpin */ = {
@@ -189,33 +182,14 @@
 		AF39801B2B70205900923CDD /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				AF3980112B70202600923CDD /* WheelFortune */,
 				AF39801C2B70205900923CDD /* AutoScrollerView.swift */,
 				AF39801D2B70205900923CDD /* DiscoverView.swift */,
 				AF39801E2B70205900923CDD /* GameDialogView.swift */,
-				AF39801F2B70205900923CDD /* WheelFortune */,
 				AF3980252B70205900923CDD /* HorizontalGameCardView.swift */,
 				AF3980262B70205900923CDD /* GameInfo */,
 			);
 			path = Discover;
-			sourceTree = "<group>";
-		};
-		AF39801F2B70205900923CDD /* WheelFortune */ = {
-			isa = PBXGroup;
-			children = (
-				AF3980202B70205900923CDD /* WheelFortuneViewModel.swift */,
-				AF3980212B70205900923CDD /* WheelSpin */,
-				AF3980242B70205900923CDD /* WheelFortune.swift */,
-			);
-			path = WheelFortune;
-			sourceTree = "<group>";
-		};
-		AF3980212B70205900923CDD /* WheelSpin */ = {
-			isa = PBXGroup;
-			children = (
-				AF3980222B70205900923CDD /* WheelSpinView.swift */,
-				AF3980232B70205900923CDD /* WheelSpinCell.swift */,
-			);
-			path = WheelSpin;
 			sourceTree = "<group>";
 		};
 		AF3980262B70205900923CDD /* GameInfo */ = {
@@ -327,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				AF3980452B70212100923CDD /* UserStatsData.swift */,
+				AF7EDA9F2BCBD04900285FCE /* GameCard.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -337,7 +312,6 @@
 				AF3980392B70206500923CDD /* Settings */,
 				AF39803D2B70206500923CDD /* UserHome */,
 				AF39801B2B70205900923CDD /* Discover */,
-				AF3980112B70202600923CDD /* WheelFortune */,
 				AFD5457B2B5455A30063C820 /* HomeView.swift */,
 				AFD545882B55577E0063C820 /* CustomTabView.swift */,
 			);
@@ -352,7 +326,7 @@
 				AFD5455C2B541D920063C820 /* Extensions */,
 				AFD5455A2B541D350063C820 /* AppColors.swift */,
 				AF3980472B70212F00923CDD /* ViewRouter.swift */,
-				AF7A325E2B7A86810071EFE0 /* K.swift */,
+				AF7A325E2B7A86810071EFE0 /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -540,16 +514,15 @@
 				AF3980352B70205900923CDD /* GameInfoView.swift in Sources */,
 				AFD545742B5440640063C820 /* AppFonts.swift in Sources */,
 				AFD5455B2B541D350063C820 /* AppColors.swift in Sources */,
+				AF7EDAA02BCBD04900285FCE /* GameCard.swift in Sources */,
 				AF3980462B70212100923CDD /* UserStatsData.swift in Sources */,
-				AF3980322B70205900923CDD /* WheelFortune.swift in Sources */,
-				AF7A325F2B7A86810071EFE0 /* K.swift in Sources */,
+				AF7A325F2B7A86810071EFE0 /* Constants.swift in Sources */,
 				AF39804B2B7031D300923CDD /* SettingsPageVM.swift in Sources */,
 				AF3980182B70202600923CDD /* WheelSpinView.swift in Sources */,
 				AF3980332B70205900923CDD /* HorizontalGameCardView.swift in Sources */,
 				AF3980442B70206500923CDD /* TextIncreasingValue.swift in Sources */,
 				AF3980372B70205900923CDD /* FeedbackButton.swift in Sources */,
 				AFD5457C2B5455A30063C820 /* HomeView.swift in Sources */,
-				AF3980302B70205900923CDD /* WheelSpinView.swift in Sources */,
 				AF3980342B70205900923CDD /* GameOpinionView.swift in Sources */,
 				AF7A32592B7A7EE20071EFE0 /* DiscoverViewModel.swift in Sources */,
 				AF7A32612B7A87620071EFE0 /* DatabaseManager.swift in Sources */,
@@ -558,13 +531,11 @@
 				AFD545892B55577E0063C820 /* CustomTabView.swift in Sources */,
 				AF3980172B70202600923CDD /* WheelFortuneViewModel.swift in Sources */,
 				AF3980412B70206500923CDD /* SettingsView.swift in Sources */,
-				AF39802F2B70205900923CDD /* WheelFortuneViewModel.swift in Sources */,
 				AF3980192B70202600923CDD /* WheelSpinCell.swift in Sources */,
 				AF3980432B70206500923CDD /* UserHomeView.swift in Sources */,
 				AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */,
 				AF7A324A2B77CCDE0071EFE0 /* AboutAppView.swift in Sources */,
 				AFD5455E2B541DC70063C820 /* Color+Extensions.swift in Sources */,
-				AF3980312B70205900923CDD /* WheelSpinCell.swift in Sources */,
 				AF39804F2B71710A00923CDD /* UserProfileView.swift in Sources */,
 				AF39802C2B70205900923CDD /* AutoScrollerView.swift in Sources */,
 				AF39802D2B70205900923CDD /* DiscoverView.swift in Sources */,

@@ -8,13 +8,20 @@
 import SwiftUI
 
 // DOCUMENTATION: card and images are the same things!
-struct AutoScrollerView: View {
+struct AutoScrollerView: View { // find a better name for that
     
     var imageNames: [String]
     // timer that allows cards to be automatically switched every X seconds
     let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
     @State var seconds = 0
     var onTapGesture: () -> Void
+    private let gameCards = [
+        GameCard(nameOfTheGame: "Game no 1", minNumberOfPlayers: 2, maxNumberOfPlayers: 4, estimatedTime: 45, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
+        GameCard(nameOfTheGame: "Game no 2", minNumberOfPlayers: 3, maxNumberOfPlayers: 5, estimatedTime: 120, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
+        GameCard(nameOfTheGame: "Game no 3", minNumberOfPlayers: 2, maxNumberOfPlayers: 2, estimatedTime: 20, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
+        GameCard(nameOfTheGame: "Game no 4", minNumberOfPlayers: 5, maxNumberOfPlayers: 10, estimatedTime: 240, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
+        GameCard(nameOfTheGame: "Game no 5", minNumberOfPlayers: 1, maxNumberOfPlayers: 3, estimatedTime: 50, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg")
+    ]
     
     @State private var selectedImageIndex: Int = 0 //holds currently displayed card's id.
     
@@ -24,33 +31,36 @@ struct AutoScrollerView: View {
                 VStack { // image + texts
                     TabView(selection: $selectedImageIndex) {
                         //Iterate Through Images
-                        ForEach(0..<imageNames.count, id: \.self) { index in
+                        ForEach(0..<gameCards.count, id: \.self) { index in
                             ZStack(alignment: .center) {
                                 VStack (alignment: .center){
-                                    Image("\(imageNames[index])")
-                                        .resizable()
-                                        .tag(index)
-                                        .frame(width: 200, height: 200)
-                                        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                                        .padding()
-                                        .shadow(radius: 5) // image's shadow
-                                        .onTapGesture {
-                                            onTapGesture()
-                                        }
+                                    AsyncImage(url: URL(string: "\(gameCards[index].imageUrl)")) { image in
+                                        image.resizable() // Makes the image resizable, cached automatically
+                                    } placeholder: {
+                                        ProgressView() // Placeholder while the image is loading
+                                    }
+                                    .tag(index)
+                                    .frame(width: 200, height: 200)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20.0))
+                                    .padding()
+                                    .shadow(radius: 5) // image's shadow
+                                    .onTapGesture {
+                                        onTapGesture()
+                                    }
                                     HStack(alignment: .center) {
                                         Spacer()
-                                        Text("Name of the game").font(AppFonts.amikoSemiBold(withSize: 24)).foregroundStyle(AppColors.darkBlue)
+                                        Text("\(gameCards[index].nameOfTheGame)").font(AppFonts.amikoSemiBold(withSize: 24)).foregroundStyle(AppColors.darkBlue)
                                         Spacer()
                                     }
                                     HStack (alignment: .top, spacing: 30){
                                         VStack (spacing: 8){
                                             Text("Players").font(AppFonts.amikoSemiBold(withSize: 18)).foregroundStyle(AppColors.darkBlue)
-                                            Text("2-4").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                                            Text("\(gameCards[index].minNumberOfPlayers)-\(gameCards[index].maxNumberOfPlayers)").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
                                         }
                                         .padding()
                                         VStack (spacing: 8){
                                             Text("Est. time").font(AppFonts.amikoSemiBold(withSize: 18)).foregroundStyle(AppColors.darkBlue)
-                                            Text("30 min").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                                            Text("\(gameCards[index].estimatedTime)").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
                                         }
                                         .padding()
                                     }
@@ -76,7 +86,7 @@ struct AutoScrollerView: View {
                 }
                 // capsules below the images
                 HStack {
-                    ForEach(0..<imageNames.count, id: \.self) { index in
+                    ForEach(0..<gameCards.count, id: \.self) { index in
                         Capsule()
                         // paint capsule that represents currently selected card
                             .fill( selectedImageIndex == index ? AppColors.orange : (AppColors.darkBlue.opacity(selectedImageIndex == index ? 1 : 0.33)))
