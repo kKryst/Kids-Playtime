@@ -20,6 +20,7 @@ struct GameOpinionView: View {
     @FocusState private var isFirstResponder :Bool
     
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
         ZStack {
@@ -77,10 +78,9 @@ struct GameOpinionView: View {
                         .focused($isFirstResponder)
                     
                     Button{
-                        let gameRate = GameRate(rate: rate, kidEngagementButton: kidEngagementButton, fitToAgeButton: fitToAgeButton, wasFunGameButton: wasFunGameButton, willPlayAganButton: willPlayAganButton, additionalNote: additionalNote)
-                        print(gameRate)
-                        //TODO: Dismiss to discoverView / homeView
+                        viewRouter.shouldNavigateBackTwice = true
                         dismiss()
+                        
                     } label: {
                         Text("Submit")
                             .fontWeight(.bold)

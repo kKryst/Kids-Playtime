@@ -16,6 +16,8 @@ struct GameInfoView: View {
     @State private var isDialogPresenting = false
     @State private var shouldPresentOpinionSheet = false
     
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         ZStack {
             // Background full-size image with blur effect
@@ -71,6 +73,13 @@ struct GameInfoView: View {
         }
         .sheet(isPresented: $shouldPresentOpinionSheet, content: {
             GameOpinionView()
+                .onDisappear(perform: {
+                    if viewRouter.shouldNavigateBackTwice {
+                        viewRouter.shouldNavigateBackTwice = false
+                        dismiss()
+                    }
+                })
+            
         })
         .onAppear {
             viewRouter.shouldDisplayTabView = false

@@ -9,4 +9,5 @@ import Foundation
 
 class ViewRouter: ObservableObject {
     @Published var shouldDisplayTabView = true
+    @Published var shouldNavigateBackTwice = false
 }
