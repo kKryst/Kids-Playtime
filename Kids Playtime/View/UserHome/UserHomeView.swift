@@ -132,6 +132,7 @@ struct UserHomeView: View {
                             .foregroundStyle(AppColors.darkBlue)
                         ScrollingCardsView(gameCards: viewModel.games) { index in
                             viewModel.isGameDialogActive = true
+                            viewModel.currentlySelectedGame = viewModel.games[index]
                         }
                         
                         Spacer()
@@ -143,9 +144,11 @@ struct UserHomeView: View {
                         .background(Color.clear)
                         .foregroundStyle(Color.clear)
                 }
-                if viewModel.isGameDialogActive { // pops off when a game is selected / drawn by the wheel
-                    GameDialogView(isActive: $viewModel.isGameDialogActive, title: "Chosen game", players: "2-4", time: "30 min.", image: "imag")
-                    
+                if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil{ // pops off when a game is selected
+                    GameDialogView(
+                        gameCard: viewModel.currentlySelectedGame!,
+                        isActive: $viewModel.isGameDialogActive
+                    )
                 }
             }
         }

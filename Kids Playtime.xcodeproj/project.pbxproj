@@ -11,7 +11,7 @@
 		AF3980182B70202600923CDD /* WheelSpinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980142B70202600923CDD /* WheelSpinView.swift */; };
 		AF3980192B70202600923CDD /* WheelSpinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980152B70202600923CDD /* WheelSpinCell.swift */; };
 		AF39801A2B70202600923CDD /* WheelFortune.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980162B70202600923CDD /* WheelFortune.swift */; };
-		AF39802C2B70205900923CDD /* AutoScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39801C2B70205900923CDD /* AutoScrollerView.swift */; };
+		AF39802C2B70205900923CDD /* ScrollingCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39801C2B70205900923CDD /* ScrollingCardsView.swift */; };
 		AF39802D2B70205900923CDD /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39801D2B70205900923CDD /* DiscoverView.swift */; };
 		AF39802E2B70205900923CDD /* GameDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF39801E2B70205900923CDD /* GameDialogView.swift */; };
 		AF3980332B70205900923CDD /* HorizontalGameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980252B70205900923CDD /* HorizontalGameCardView.swift */; };
@@ -43,6 +43,8 @@
 		AF7A325F2B7A86810071EFE0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A325E2B7A86810071EFE0 /* Constants.swift */; };
 		AF7A32612B7A87620071EFE0 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7A32602B7A87620071EFE0 /* DatabaseManager.swift */; };
 		AF7EDAA02BCBD04900285FCE /* GameCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7EDA9F2BCBD04900285FCE /* GameCard.swift */; };
+		AF7EDAA22BCEE45C00285FCE /* GameDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7EDAA12BCEE45C00285FCE /* GameDetails.swift */; };
+		AF7EDAA42BCFAAA600285FCE /* GameRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7EDAA32BCFAAA600285FCE /* GameRate.swift */; };
 		AFD5452D2B5411A60063C820 /* Kids_PlaytimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */; };
 		AFD545312B5411A70063C820 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545302B5411A70063C820 /* Assets.xcassets */; };
 		AFD545342B5411A70063C820 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD545332B5411A70063C820 /* Preview Assets.xcassets */; };
@@ -82,7 +84,7 @@
 		AF3980142B70202600923CDD /* WheelSpinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WheelSpinView.swift; sourceTree = "<group>"; };
 		AF3980152B70202600923CDD /* WheelSpinCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WheelSpinCell.swift; sourceTree = "<group>"; };
 		AF3980162B70202600923CDD /* WheelFortune.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WheelFortune.swift; sourceTree = "<group>"; };
-		AF39801C2B70205900923CDD /* AutoScrollerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoScrollerView.swift; sourceTree = "<group>"; };
+		AF39801C2B70205900923CDD /* ScrollingCardsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingCardsView.swift; sourceTree = "<group>"; };
 		AF39801D2B70205900923CDD /* DiscoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		AF39801E2B70205900923CDD /* GameDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameDialogView.swift; sourceTree = "<group>"; };
 		AF3980252B70205900923CDD /* HorizontalGameCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalGameCardView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,8 @@
 		AF7A325E2B7A86810071EFE0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AF7A32602B7A87620071EFE0 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		AF7EDA9F2BCBD04900285FCE /* GameCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCard.swift; sourceTree = "<group>"; };
+		AF7EDAA12BCEE45C00285FCE /* GameDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetails.swift; sourceTree = "<group>"; };
+		AF7EDAA32BCFAAA600285FCE /* GameRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRate.swift; sourceTree = "<group>"; };
 		AFD545292B5411A60063C820 /* Kids Playtime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kids Playtime.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD5452C2B5411A60063C820 /* Kids_PlaytimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kids_PlaytimeApp.swift; sourceTree = "<group>"; };
 		AFD545302B5411A70063C820 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -183,7 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				AF3980112B70202600923CDD /* WheelFortune */,
-				AF39801C2B70205900923CDD /* AutoScrollerView.swift */,
+				AF39801C2B70205900923CDD /* ScrollingCardsView.swift */,
 				AF39801D2B70205900923CDD /* DiscoverView.swift */,
 				AF39801E2B70205900923CDD /* GameDialogView.swift */,
 				AF3980252B70205900923CDD /* HorizontalGameCardView.swift */,
@@ -302,6 +306,8 @@
 			children = (
 				AF3980452B70212100923CDD /* UserStatsData.swift */,
 				AF7EDA9F2BCBD04900285FCE /* GameCard.swift */,
+				AF7EDAA12BCEE45C00285FCE /* GameDetails.swift */,
+				AF7EDAA32BCFAAA600285FCE /* GameRate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -510,8 +516,10 @@
 				AF3980512B756C0B00923CDD /* UserHomeViewModel.swift in Sources */,
 				AF39802E2B70205900923CDD /* GameDialogView.swift in Sources */,
 				AF39801A2B70202600923CDD /* WheelFortune.swift in Sources */,
+				AF7EDAA42BCFAAA600285FCE /* GameRate.swift in Sources */,
 				AF3980402B70206500923CDD /* TermsAndConditionsView.swift in Sources */,
 				AF3980352B70205900923CDD /* GameInfoView.swift in Sources */,
+				AF7EDAA22BCEE45C00285FCE /* GameDetails.swift in Sources */,
 				AFD545742B5440640063C820 /* AppFonts.swift in Sources */,
 				AFD5455B2B541D350063C820 /* AppColors.swift in Sources */,
 				AF7EDAA02BCBD04900285FCE /* GameCard.swift in Sources */,
@@ -537,7 +545,7 @@
 				AF7A324A2B77CCDE0071EFE0 /* AboutAppView.swift in Sources */,
 				AFD5455E2B541DC70063C820 /* Color+Extensions.swift in Sources */,
 				AF39804F2B71710A00923CDD /* UserProfileView.swift in Sources */,
-				AF39802C2B70205900923CDD /* AutoScrollerView.swift in Sources */,
+				AF39802C2B70205900923CDD /* ScrollingCardsView.swift in Sources */,
 				AF39802D2B70205900923CDD /* DiscoverView.swift in Sources */,
 				AF3980382B70205900923CDD /* StarRatingView.swift in Sources */,
 				AF3980362B70205900923CDD /* GameInfoDialogView.swift in Sources */,

@@ -77,7 +77,9 @@ struct GameOpinionView: View {
                         .focused($isFirstResponder)
                     
                     Button{
-                        //TODO: send feedback to database
+                        let gameRate = GameRate(rate: rate, kidEngagementButton: kidEngagementButton, fitToAgeButton: fitToAgeButton, wasFunGameButton: wasFunGameButton, willPlayAganButton: willPlayAganButton, additionalNote: additionalNote)
+                        print(gameRate)
+                        //TODO: Dismiss to discoverView / homeView
                         dismiss()
                     } label: {
                         Text("Submit")

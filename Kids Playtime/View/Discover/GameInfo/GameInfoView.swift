@@ -9,6 +9,8 @@ import SwiftUI
 
 struct GameInfoView: View {
     
+    let gameDetails: GameDetails
+    
     @EnvironmentObject var viewRouter: ViewRouter
     
     @State private var isDialogPresenting = false
@@ -17,27 +19,29 @@ struct GameInfoView: View {
     var body: some View {
         ZStack {
             // Background full-size image with blur effect
-            Image("imag")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .blur(radius: 10)
-                .ignoresSafeArea()
-                .onTapGesture { // allows user to be able to tap on the image to hide the dialog
-                    if isDialogPresenting {
-                        isDialogPresenting = false
-                    }
+            AsyncImage(url: URL(string: "\(gameDetails.imageUrl)")) { image in
+                image.resizable()
+                image.aspectRatio(contentMode: .fill)// Makes the image resizable, cached automatically
+            } placeholder: {
+                ProgressView() // Placeholder while the image is loading
+            }
+            .blur(radius: 10)
+            .ignoresSafeArea()
+            .onTapGesture { // allows user to be able to tap on the image to hide the dialog
+                if isDialogPresenting {
+                    isDialogPresenting = false
                 }
+            }
             if isDialogPresenting == false { // shows either game description or dialog
                 VStack (spacing: 20){
-                    Text("title of the game")
+                    Text(gameDetails.nameOfTheGame)
                         .font(AppFonts.amikoSemiBold(withSize: 24))
                         .foregroundStyle(AppColors.darkBlue.opacity(0.9))
-                    Text("a bit longer description about the game and how to play it. this description will probably take up to couple of lines of text but that should not be a problem for this view. This text should be formatted properly, having the appfont and proper colors a bit longer description about the game and how to play it. this description will probably take up to couple of lines of text but that should not be a problem for this view. This text should be formatted properly, having the appfont and proper colors "
-                    )
-                        .font(AppFonts.amikoRegular(withSize: 16))
-                        .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
+                    Text(gameDetails.gameDescription)
+                    .font(AppFonts.amikoRegular(withSize: 16))
+                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
                     
                     Button(action: {
                         isDialogPresenting = true
@@ -79,7 +83,7 @@ struct GameInfoView: View {
 }
 
 #Preview {
-    GameInfoView().environmentObject({ () -> ViewRouter in
+    GameInfoView(gameDetails: GameDetails(nameOfTheGame: "Game no 6", minNumberOfPlayers: 2, maxNumberOfPlayers: 3, estimatedTime: 100, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg", gameDescription: "This is a longer description of the game This is a longer description of the game This is a longer description of the game This is a longer description of the game This is a longer description of the game")).environmentObject({ () -> ViewRouter in
         let envObj = ViewRouter()
         envObj.shouldDisplayTabView = false
         return envObj

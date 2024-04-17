@@ -8,14 +8,11 @@
 import SwiftUI
 
 struct GameDialogView: View {
-    @Binding var isActive: Bool
-    let title: String
-    let players: String
-    let time: String
-    let image: String
+    
+    let gameCard: GameCard
     @State private var offset: CGFloat = 1000
     @State private var isImageVisible: Bool = false
-    
+    @Binding var isActive: Bool
     
     var body: some View {
         ZStack {
@@ -24,10 +21,9 @@ struct GameDialogView: View {
                     close() // allows user to hide this dialog whenever he taps outside the view
                 }
             VStack (spacing: 10) {
-                AsyncImage(url: URL(string: image)) { phase in
+                AsyncImage(url: URL(string: gameCard.imageUrl)) { phase in
                     if let image = phase.image {
                         image.resizable()
-//                            .aspectRatio(contentMode: .fill)
                     } else if phase.error != nil {
                         ProgressView()
                     } else {
@@ -49,17 +45,17 @@ struct GameDialogView: View {
                 }
                 HStack {
                     Spacer()
-                    Text(title).font(AppFonts.amikoSemiBold(withSize: 24)).foregroundStyle(AppColors.darkBlue.opacity(0.9))
+                    Text(gameCard.nameOfTheGame).font(AppFonts.amikoSemiBold(withSize: 24)).foregroundStyle(AppColors.darkBlue.opacity(0.9))
                     Spacer()
                 }
                 HStack (spacing: 30){
                     VStack {
                         Text("players").font(AppFonts.amikoSemiBold(withSize: 18)).foregroundStyle(AppColors.darkBlue.opacity(0.9))
-                        Text(players).font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                        Text("\(gameCard.minNumberOfPlayers)-\(gameCard.maxNumberOfPlayers)").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
                     }
                     VStack {
                         Text("est. time").font(AppFonts.amikoSemiBold(withSize: 18)).foregroundStyle(AppColors.darkBlue)
-                        Text(time).font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                        Text("\(gameCard.estimatedTime)").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
                     }
                 }
                 HStack {
@@ -78,7 +74,7 @@ struct GameDialogView: View {
                             )
                     })
                     NavigationLink {
-                        GameInfoView() // navigate to GameInfoView
+                        GameInfoView(gameDetails: GameDetails(gameCard: gameCard, gameDescription: "This is a long description This is a long description This is a long description This is a long description This is a long description This is a long description This is a long description This is a long description")) // navigate to GameInfoView
                             .navigationBarBackButtonHidden()
                     } label: {
                         Text("Start playing")
@@ -114,9 +110,8 @@ struct GameDialogView: View {
             offset = 1000
         }
     }
-    
 }
 
 #Preview {
-    GameDialogView(isActive: .constant(true) ,title: "Name of the game", players: "2-3", time: "30 min", image: "imag")
+    GameDialogView(gameCard: GameCard(nameOfTheGame: "Test 1", minNumberOfPlayers: 3, maxNumberOfPlayers: 5, estimatedTime: 30, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"), isActive: .constant(true))
 }

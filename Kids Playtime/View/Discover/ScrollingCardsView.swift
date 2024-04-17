@@ -39,7 +39,6 @@ struct ScrollingCardsView: View { // find a better name for that
                                     .shadow(radius: 5) // image's shadow
                                     .onTapGesture {
                                         onTapGesture(index)
-                                        print(index)
                                     }
                                     HStack(alignment: .center) {
                                         Spacer()
@@ -54,7 +53,7 @@ struct ScrollingCardsView: View { // find a better name for that
                                         .padding()
                                         VStack (spacing: 8){
                                             Text("Est. time").font(AppFonts.amikoSemiBold(withSize: 18)).foregroundStyle(AppColors.darkBlue)
-                                            Text("\(gameCards[index].estimatedTime)").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                                            Text("\(gameCards[index].estimatedTime) min").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
                                         }
                                         .padding()
                                     }
