@@ -27,6 +27,8 @@ extension UserHomeView {
             GameCard(nameOfTheGame: "Game no 5", minNumberOfPlayers: 1, maxNumberOfPlayers: 3, estimatedTime: 50, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg")]
         @Published var currentlySelectedGame: GameCard? = nil
         
+        #warning("TODO: adjust the Chart in the HomeView to accept and react to different timeframes")
+        
         init() {
             self.data = [
                 UserStatsData(day: "Mon", minutesPlayed: 30, numbersOfGamesPlayed: 2, date: Date()),

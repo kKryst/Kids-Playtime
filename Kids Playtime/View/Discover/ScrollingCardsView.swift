@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 // DOCUMENTATION: card and images are the same things!
 struct ScrollingCardsView: View { // find a better name for that
@@ -27,7 +28,7 @@ struct ScrollingCardsView: View { // find a better name for that
                         ForEach(0..<gameCards.count, id: \.self) { index in
                             ZStack(alignment: .center) {
                                 VStack (alignment: .center){
-                                    AsyncImage(url: URL(string: "\(gameCards[index].imageUrl)")) { image in
+                                    CachedAsyncImage(url: URL(string: "\(gameCards[index].imageUrl)")) { image in
                                         image.resizable() // Makes the image resizable, cached automatically
                                     } placeholder: {
                                         ProgressView() // Placeholder while the image is loading

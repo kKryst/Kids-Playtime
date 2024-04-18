@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF2A6C922BD19129003AE265 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = AF2A6C912BD19129003AE265 /* CachedAsyncImage */; };
 		AF3980172B70202600923CDD /* WheelFortuneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980122B70202600923CDD /* WheelFortuneViewModel.swift */; };
 		AF3980182B70202600923CDD /* WheelSpinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980142B70202600923CDD /* WheelSpinView.swift */; };
 		AF3980192B70202600923CDD /* WheelSpinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3980152B70202600923CDD /* WheelSpinCell.swift */; };
@@ -138,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF7A325D2B7A83F60071EFE0 /* FirebaseDatabaseSwift in Frameworks */,
+				AF2A6C922BD19129003AE265 /* CachedAsyncImage in Frameworks */,
 				AF7A325B2B7A83F60071EFE0 /* FirebaseDatabase in Frameworks */,
 				AF7A32532B7A7BA60071EFE0 /* FirebaseAnalyticsSwift in Frameworks */,
 				AF7A324F2B7A7BA60071EFE0 /* FirebaseAnalytics in Frameworks */,
@@ -388,6 +390,7 @@
 				AF7A32562B7A7BA60071EFE0 /* FirebaseAppCheck */,
 				AF7A325A2B7A83F60071EFE0 /* FirebaseDatabase */,
 				AF7A325C2B7A83F60071EFE0 /* FirebaseDatabaseSwift */,
+				AF2A6C912BD19129003AE265 /* CachedAsyncImage */,
 			);
 			productName = "Kids Playtime";
 			productReference = AFD545292B5411A60063C820 /* Kids Playtime.app */;
@@ -465,6 +468,7 @@
 				AFD5457F2B5464AB0063C820 /* XCRemoteSwiftPackageReference "FortuneWheel" */,
 				AFD545822B5468470063C820 /* XCRemoteSwiftPackageReference "SwiftFortuneWheel" */,
 				AF7A324D2B7A7BA60071EFE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				AF2A6C902BD19129003AE265 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = AFD5452A2B5411A60063C820 /* Products */;
 			projectDirPath = "";
@@ -882,6 +886,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AF2A6C902BD19129003AE265 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 		AF7A324D2B7A7BA60071EFE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -909,6 +921,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AF2A6C912BD19129003AE265 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF2A6C902BD19129003AE265 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
 		AF7A324E2B7A7BA60071EFE0 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AF7A324D2B7A7BA60071EFE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
