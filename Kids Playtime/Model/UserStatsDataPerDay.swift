@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserStatsData: Identifiable {
+struct UserStatsDataPerDay: Identifiable {
     var id = UUID().uuidString
     let day: String
     let minutesPlayed: Int

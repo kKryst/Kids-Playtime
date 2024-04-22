@@ -9,29 +9,28 @@ import SwiftUI
 
 struct TextIncreasingValue: View {
     @State private var value: Int = 0
-    @State private var hasCounted: Bool = false
-    let endValue: Int // Target value
+    var endValue: Int // Target value
     let duration: Double // Duration of the animation
 
     var body: some View {
         Text("\(value)")
             .onAppear {
-                if !hasCounted {
-                    incrementValue()
-                    hasCounted = true
-                }
-                
+                incrementValue(targetValue: self.endValue)
+            }
+            .onChange(of: endValue) { newValue in
+                incrementValue(targetValue: newValue)
             }
     }
 
-    func incrementValue() {
+    private func incrementValue(targetValue: Int) {
         let steps: Int = 100 // Adjust this for smoother or faster animation
         let timeInterval: Double = duration / Double(steps)
+        self.value = 0
 
         for step in 1...steps {
             DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval * Double(step)) {
                 withAnimation {
-                    self.value = Int(Double(endValue) * (Double(step) / Double(steps)))
+                    self.value = Int(Double(targetValue) * (Double(step) / Double(steps)))
                 }
             }
         }
