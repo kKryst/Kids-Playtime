@@ -17,6 +17,6 @@ struct UserStatsDataPerDay: Identifiable {
 }
 
 enum TimeFrame: String, CaseIterable, Identifiable {
-    case day, week, month, year
+    case week, month
     var id: Self { self }
 }

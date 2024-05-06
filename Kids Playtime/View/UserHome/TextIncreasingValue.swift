@@ -18,7 +18,7 @@ struct TextIncreasingValue: View {
                 incrementValue(targetValue: self.endValue)
             }
             .onChange(of: endValue) { newValue in
-                incrementValue(targetValue: newValue)
+                incrementValue(targetValue: newValue) //works
             }
     }
 
