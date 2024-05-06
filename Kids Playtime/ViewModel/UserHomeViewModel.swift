@@ -17,12 +17,24 @@ extension UserHomeView {
         let totalNumberOfMinutesPlayed: Int
     }
     
+    struct TimeFrameData {
+        var xValues: [String]
+        var yValues: [Int]
+    }
+    
     class ViewModel: ObservableObject {
         
         @Published var data: [UserStatsDataPerDay]
         @Published var minutesPlayed = 0
         @Published var gamesPlayed = 0
-        @Published var selectedTimeFrame: TimeFrame = .month
+        @Published var selectedTimeFrame: TimeFrame = .month {
+            didSet {
+                calculateMinutesPlayedPerWeek()
+                calculateGamesPlayedPerWeek()
+                updateChartData()
+            }
+        }
+        @Published var timeFrameData: TimeFrameData?
         @Published var isGameDialogActive = false
         @Published var isLoginDialogActive = false
         @Published var games = [
@@ -52,6 +64,7 @@ extension UserHomeView {
             ]
             calculateMinutesPlayedPerWeek()
             calculateGamesPlayedPerWeek()
+            updateChartData()
 
         }
         
@@ -77,28 +90,33 @@ extension UserHomeView {
             }
         }
         
-        
-//        private func aggregateDataIntoWeeks() -> [WeeklyData] {
-//            var weeklySummaries: [WeeklyData] = []
-//            let weeks = data.count / 7 // Calculate the number of complete weeks
-//            
-//            for week in 0..<weeks {
-//                let startIndex = week * 7
-//                let endIndex = min(startIndex + 6, data.count - 1) // Ensure the index does not go out of bounds
-//                let weekData = data[startIndex...endIndex]
-//                let totalMinutes = weekData.reduce(0) { $0 + $1.minutesPlayed }
-//                let totalGames = weekData.reduce(0) { $0 + $1.numbersOfGamesPlayed }
-//                
-//                let weekSummary = WeeklyData(
-//                    nameOfTheWeek: "Week \(week + 1)",
-//                    totalNumberOfGamesPlayed: totalGames,
-//                    totalNumberOfMinutesPlayed: totalMinutes
-//                )
-//                weeklySummaries.append(weekSummary)
-//            }
-//            
-//            return weeklySummaries
-//        }
-        
+        func updateChartData() {
+                self.timeFrameData = aggregateDataIntoWeeks()
+            }
+
+        private func aggregateDataIntoWeeks() -> TimeFrameData {
+            switch selectedTimeFrame {
+            case .week:
+                let daysData = data.prefix(7).map { $0.day }
+                let minutesPerDay = data.prefix(7).map { $0.minutesPlayed }
+                return TimeFrameData(xValues: daysData, yValues: minutesPerDay)
+                
+            case .month:
+                var weeksLabels = [String]()
+                var totalMinutesPerWeek = [Int]()
+                let weeks = data.count / 7
+                
+                for week in 0..<weeks {
+                    let startIndex = week * 7
+                    let endIndex = min(startIndex + 6, data.count - 1)
+                    let weekData = data[startIndex...endIndex]
+                    let totalMinutes = weekData.reduce(0) { $0 + $1.minutesPlayed }
+                    weeksLabels.append("Week \(week + 1)")
+                    totalMinutesPerWeek.append(totalMinutes)
+                }
+                
+                return TimeFrameData(xValues: weeksLabels, yValues: totalMinutesPerWeek)
+            }
+        }
     }
 }

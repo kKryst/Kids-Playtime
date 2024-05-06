@@ -8,150 +8,156 @@
 import SwiftUI
 import Charts
 
-    struct UserHomeView: View {
-        
-        //TODO: 05.05 zaprogramowac chart aby reagowal na zmiane timeFrame
-        
-        @EnvironmentObject var viewRouter: ViewRouter
-        
-        @StateObject private var viewModel = ViewModel()
-        
-        var body: some View {
-            NavigationStack {
-                ZStack {
-                    AppColors.white.ignoresSafeArea()
-                    ScrollView {
-                        VStack {
-                            HStack {
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .foregroundStyle(AppColors.darkBlue)
-                                    .clipShape(Circle())
-                                    .frame(width: 64, height: 64)
-                                    .aspectRatio(contentMode: .fill)
-                                    .padding(8)
-                                    .shadow(radius: 3)
-                                Text("Guest")
-                                    .font(AppFonts.amikoSemiBold(withSize: 16))
-                                    .foregroundStyle(AppColors.darkBlue)
-                                Spacer()
-                                NavigationLink {
-                                    UserProfileView()
-                                } label: {
-                                    Text("Login")
-                                        .fontWeight(.bold)
-                                        .font(AppFonts.amikoRegular(withSize: 16))
-                                        .foregroundColor(.white)
-                                        .padding(.vertical, 5)
-                                        .padding(.horizontal, 15)
-                                        .background(AppColors.orange)
-                                        .cornerRadius(30)
-                                        .padding()
-                                }
-                            }
-                            .background(RoundedRectangle(cornerRadius: 20, style: .circular).foregroundStyle(AppColors.lightBlue).opacity(0.1))
-                            
-                            HStack(alignment: .top) {
-                                VStack {
-                                    TextIncreasingValue(endValue: viewModel.minutesPlayed, duration: 1)
-                                        .font(AppFonts.amikoSemiBold(withSize: 28))
-                                        .foregroundStyle(AppColors.darkBlue)
-                                        .onChange(of: viewModel.selectedTimeFrame) { newValue in
-                                            viewModel.calculateGamesPlayedPerWeek()
-                                        }
-                                    Text("Minutes")
-                                        .font(AppFonts.amikoRegular(withSize: 14))
-                                        .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                                        .multilineTextAlignment(.center)
-                                }
-                                .padding(.horizontal)
-                                VStack {
-                                    TextIncreasingValue(endValue: viewModel.gamesPlayed, duration: 1)
-                                        .font(AppFonts.amikoSemiBold(withSize: 28))
-                                        .foregroundStyle(AppColors.darkBlue)
-                                        .onChange(of: viewModel.selectedTimeFrame) { newValue in
-                                            viewModel.calculateMinutesPlayedPerWeek()
-                                        }
-                                    Text("Games")
-                                        .font(AppFonts.amikoRegular(withSize: 14))
-                                        .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                                }
-                                .padding(.horizontal)
-                                Spacer()
-                                Picker("TimeFrame", selection: $viewModel.selectedTimeFrame) {
-                                    ForEach(TimeFrame.allCases) { timeFrame in
-                                        Text(timeFrame.rawValue.capitalized)
-                                    }
-                                }
-                                .background(RoundedRectangle(cornerRadius: 20, style: .circular).foregroundStyle(AppColors.lightBlue).opacity(0.1))
-                                .tint(AppColors.darkBlue)
-                                .padding()
-                            }
-                            .padding()
-                            
-                            Chart(viewModel.data) { d in
-                                BarMark(
-                                    x: PlottableValue.value("Day", d.day),
-                                    y: PlottableValue.value("Minutes", d.minutesPlayed)
-                                )
-                                .cornerRadius(8)
-                                .foregroundStyle(AppColors.lightBlue)
-                                .annotation{
-                                    Text("\(d.minutesPlayed)")
-                                        .foregroundStyle(AppColors.darkBlue)
-                                }
-                            }
-                            
-                            .chartXAxis {
-                                AxisMarks(values: .automatic) {
-                                    AxisValueLabel()
-                                        .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                                    AxisGridLine()
-                                        .foregroundStyle(Color.clear)
-                                }
-                            }
-                            .chartYAxis {
-                                AxisMarks(values: .automatic) {
-                                    AxisValueLabel()
-                                        .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                                    AxisGridLine()
-                                        .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                                }
-                            }
-                            .frame(height: 200)
-                            .padding()
-                            
-                            Divider()
-                            
-                            Text("Saved games")
-                                .font(AppFonts.amikoSemiBold(withSize: 24))
-                                .foregroundStyle(AppColors.darkBlue)
-                            ScrollingCardsView(gameCards: viewModel.games) { index in
-                                viewModel.isGameDialogActive = true
-                                viewModel.currentlySelectedGame = viewModel.games[index]
-                            }
-                            
-                            Spacer()
-                        }
-                        .padding()
-                        Rectangle()
-                            .frame(height:20)
-                            .padding(20)
-                            .background(Color.clear)
-                            .foregroundStyle(Color.clear)
-                    }
-                    if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil{ // pops off when a game is selected
-                        GameDialogView(
-                            gameCard: viewModel.currentlySelectedGame!,
-                            isActive: $viewModel.isGameDialogActive
-                        )
-                    }
+struct UserHomeView: View {
+    @EnvironmentObject var viewRouter: ViewRouter
+    @StateObject private var viewModel = ViewModel()
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                AppColors.white.ignoresSafeArea()
+                ScrollView {
+                    contentView
+                }
+                if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil {
+                    GameDialogView(
+                        gameCard: viewModel.currentlySelectedGame!,
+                        isActive: $viewModel.isGameDialogActive
+                    )
                 }
             }
             .tint(AppColors.darkBlue)
         }
     }
 
-    #Preview {
-        UserHomeView()
+    private var contentView: some View {
+        VStack {
+            userHeader
+            statisticsSection
+            chartSection
+            savedGamesSection
+            Rectangle() // bottom spacer to allow scrolling past 
+                .frame(height: 20)
+                .padding(20)
+                .background(Color.clear)
+                .foregroundStyle(Color.clear)
+        }
+        .padding()
     }
+
+    private var userHeader: some View {
+        HStack {
+            Image(systemName: "person.circle")
+                .resizable()
+                .foregroundStyle(AppColors.darkBlue)
+                .clipShape(Circle())
+                .frame(width: 64, height: 64)
+                .aspectRatio(contentMode: .fill)
+                .padding(8)
+                .shadow(radius: 3)
+            Text("Guest")
+                .font(AppFonts.amikoSemiBold(withSize: 16))
+                .foregroundStyle(AppColors.darkBlue)
+            Spacer()
+            NavigationLink(destination: UserProfileView()) {
+                Text("Login")
+                    .fontWeight(.bold)
+                    .font(AppFonts.amikoRegular(withSize: 16))
+                    .foregroundColor(.white)
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 15)
+                    .background(AppColors.orange)
+                    .cornerRadius(30)
+                    .padding()
+            }
+        }
+        .background(RoundedRectangle(cornerRadius: 20, style: .circular).fill(AppColors.lightBlue.opacity(0.1)))
+        .padding(.horizontal, -10)
+    }
+
+    private var statisticsSection: some View {
+        HStack(alignment: .top) {
+            statisticValueView(title: "Minutes", value: viewModel.minutesPlayed)
+            statisticValueView(title: "Games", value: viewModel.gamesPlayed)
+            timeframePicker
+        }
+    }
+
+    private var chartSection: some View {
+        Chart {
+            ForEach(Array(zip(viewModel.timeFrameData?.xValues ?? [], viewModel.timeFrameData?.yValues.map(String.init) ?? [])), id: \.0) { (xValue, yValue) in
+                BarMark(
+                    x: .value("Day", xValue),
+                    y: .value("Minutes", Int(yValue) ?? 0)
+                )
+                .cornerRadius(8)
+                .foregroundStyle(AppColors.lightBlue)
+                .annotation {
+                    Text(yValue)
+                        .foregroundStyle(AppColors.darkBlue)
+                }
+            }
+        }
+        .chartXAxis {
+            AxisMarks(values: .automatic) {
+                AxisValueLabel()
+                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                AxisGridLine()
+                    .foregroundStyle(Color.clear)
+            }
+        }
+        .chartYAxis {
+            AxisMarks(values: .automatic) {
+                AxisValueLabel()
+                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                AxisGridLine()
+                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+            }
+        }
+        .frame(height: 200)
+        .padding()
+        .onAppear {
+            withAnimation() {
+                
+            }
+        }
+    }
+
+    private var savedGamesSection: some View {
+        Text("Saved games")
+            .font(AppFonts.amikoSemiBold(withSize: 24))
+            .foregroundStyle(AppColors.darkBlue)
+        return ScrollingCardsView(gameCards: viewModel.games) { index in
+            viewModel.isGameDialogActive = true
+            viewModel.currentlySelectedGame = viewModel.games[index]
+        }
+    }
+
+    private func statisticValueView(title: String, value: Int) -> some View {
+        VStack {
+            TextIncreasingValue(endValue: value, duration: 1)
+                .font(AppFonts.amikoSemiBold(withSize: 28))
+                .foregroundStyle(AppColors.darkBlue)
+            Text(title)
+                .font(AppFonts.amikoRegular(withSize: 14))
+                .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+        }
+        .padding(.horizontal)
+    }
+
+    private var timeframePicker: some View {
+        Picker("TimeFrame", selection: $viewModel.selectedTimeFrame) {
+            ForEach(TimeFrame.allCases, id: \.self) { timeFrame in
+                Text(timeFrame.rawValue.capitalized)
+            }
+        }
+        .background(RoundedRectangle(cornerRadius: 20, style: .circular).foregroundStyle(AppColors.lightBlue).opacity(0.1))
+        .tint(AppColors.darkBlue)
+        .padding()
+    }
+}
+
+
+#Preview {
+    UserHomeView()
+}
