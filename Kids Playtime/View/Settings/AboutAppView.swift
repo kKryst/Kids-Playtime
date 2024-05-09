@@ -23,11 +23,10 @@ struct AboutAppView: View {
                 Text("Kids Playtime")
                     .font(AppFonts.amikoBold(withSize: 24))
                     .foregroundStyle(AppColors.darkBlue)
-                
                 Text("Version 1.0")
                     .font(AppFonts.amikoSemiBold(withSize: 18))
                     .foregroundStyle(AppColors.darkBlue)
-                Text("Welcome to Kids Playtime. This simple mobile app is designed to help you ")
+                Text("Welcome to Kids Playtime. This simple mobile app is designed to help you find new ideas to spend some time with your children.")
                     .padding()
             }
         }

@@ -79,7 +79,7 @@ struct SettingsView: View {
     func openEmailApp(toEmail: String, subject: String, body: String) {
         guard
             let subject = subject.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
-            let body = "Just testing ...".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            let body = "Describe the bug here".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         else {
             print("Error: Can't encode subject or body.")
             return

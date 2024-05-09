@@ -17,9 +17,10 @@ struct UserHomeView: View {
             ZStack {
                 AppColors.white.ignoresSafeArea()
                 ScrollView {
+                    // main view of the app
                     contentView
                 }
-                if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil {
+                if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { //game dialog which appears when user taps on a game card
                     GameDialogView(
                         gameCard: viewModel.currentlySelectedGame!,
                         isActive: $viewModel.isGameDialogActive
@@ -36,7 +37,7 @@ struct UserHomeView: View {
             statisticsSection
             chartSection
             savedGamesSection
-            Rectangle() // bottom spacer to allow scrolling past 
+            Rectangle() // bottom spacer to allow scrolling past tabBar
                 .frame(height: 20)
                 .padding(20)
                 .background(Color.clear)
@@ -116,11 +117,6 @@ struct UserHomeView: View {
         }
         .frame(height: 200)
         .padding()
-        .onAppear {
-            withAnimation() {
-                
-            }
-        }
     }
 
     private var savedGamesSection: some View {
