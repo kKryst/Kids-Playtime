@@ -22,7 +22,7 @@ struct UserHomeView: View {
                 }
                 if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { //game dialog which appears when user taps on a game card
                     GameDialogView(
-                        gameCard: viewModel.currentlySelectedGame!,
+                        game: viewModel.currentlySelectedGame!,
                         isActive: $viewModel.isGameDialogActive
                     )
                 }
@@ -37,6 +37,9 @@ struct UserHomeView: View {
             statisticsSection
             chartSection
             savedGamesSection
+                .task {
+                    viewModel.fetchSavedGames()
+                }
             Rectangle() // bottom spacer to allow scrolling past tabBar
                 .frame(height: 20)
                 .padding(20)
@@ -123,7 +126,7 @@ struct UserHomeView: View {
         Text("Saved games")
             .font(AppFonts.amikoSemiBold(withSize: 24))
             .foregroundStyle(AppColors.darkBlue)
-        return ScrollingCardsView(gameCards: viewModel.games) { index in
+        return ScrollingCardsView(games: viewModel.games) { index in
             viewModel.isGameDialogActive = true
             viewModel.currentlySelectedGame = viewModel.games[index]
         }

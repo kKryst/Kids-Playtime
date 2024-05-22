@@ -30,23 +30,24 @@ struct DiscoverView: View {
                             Rectangle().frame(
                                 height: 0
                             ).padding(20).background(Color.clear).foregroundStyle(Color.clear)
-//                            if viewModel.valueFromFirebase != nil {
-//                                Text(viewModel.valueFromFirebase!)
-//                                    
-//                            } else {
-//                                
-//                            }
-                            Text("Draw a game")
+                            //                            if viewModel.valueFromFirebase != nil {
+                            Text(viewModel.valueFromFirebase ?? "")
                                 .font(AppFonts.bayonRegular(withSize: 48))
                                 .foregroundStyle(AppColors.darkBlue)
                                 .scaleEffect(viewModel.scale)
                                 .padding()
+                                .task {
+                                    viewModel.readDatabase()
+                                    viewModel.fetchAllGames()
+                                    
+                                }
                                 .onAppear {
                                     withAnimation(self.repeatingScaleAnimation) {
                                         viewModel.scale = 1.1
                                     }
                                 }
-                            WheelFortune(titles: viewModel.getTitles(), size: 320, onSpinEnd: { index in
+                            
+                            WheelFortune(titles: viewModel.gameTitles, size: 320, onSpinEnd: { index in
                                 viewModel.isGameDialogActive = true
                                 viewModel.currentlySelectedGame = viewModel.games[index]
                             }, colors: AppColors.wheelColors, onSpinStart: {
@@ -61,10 +62,8 @@ struct DiscoverView: View {
                                         .scaleEffect(viewModel.scale)
                                         .foregroundStyle(AppColors.darkBlue)
                                 }
+                                
                             }
-                        }
-                        .onAppear {
-                            viewModel.readValue()
                         }
                         Text("Games for today")
                             .font(AppFonts.bayonRegular(withSize: 30))
@@ -72,7 +71,7 @@ struct DiscoverView: View {
                             .padding()
                         
                         // autoscroller
-                        ScrollingCardsView(gameCards: viewModel.games)
+                        ScrollingCardsView(games: viewModel.games)
                         { index in
                             viewModel.isGameDialogActive = true
                             viewModel.currentlySelectedGame = viewModel.games[index]
@@ -88,7 +87,7 @@ struct DiscoverView: View {
                 .scrollIndicators(.hidden) // hides trailing scroll bar
                 if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { // pops off when a game is selected / drawn by the wheel
                     GameDialogView(
-                        gameCard: viewModel.currentlySelectedGame!, 
+                        game: viewModel.currentlySelectedGame!,
                         isActive: $viewModel.isGameDialogActive
                     )
                     

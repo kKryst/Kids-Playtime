@@ -67,7 +67,7 @@ struct WheelSpinView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .center) {
-                ForEach(0..<data.count) { index in
+                ForEach(0..<data.count, id: \.self) { index in
                     WheelSpinCell(startAngle: startAngle(for: index), endAngle: endAngle(for: index))
                         .fill(colors[index % colors.count])
                     Text("\(index+1)").foregroundColor(Color.white).fontWeight(.bold)
