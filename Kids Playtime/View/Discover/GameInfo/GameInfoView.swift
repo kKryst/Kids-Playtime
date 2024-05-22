@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameInfoView: View {
     
-    let gameDetails: GameDetails
+    let game: Game
     
     @EnvironmentObject var viewRouter: ViewRouter
     
@@ -21,7 +21,7 @@ struct GameInfoView: View {
     var body: some View {
         ZStack {
             // Background full-size image with blur effect
-            AsyncImage(url: URL(string: "\(gameDetails.imageUrl)")) { image in
+            AsyncImage(url: URL(string: "\(game.imageURL)")) { image in
                 image.resizable()
                 image.aspectRatio(contentMode: .fill)// Makes the image resizable, cached automatically
             } placeholder: {
@@ -36,10 +36,10 @@ struct GameInfoView: View {
             }
             if isDialogPresenting == false { // shows either game description or dialog
                 VStack (spacing: 20){
-                    Text(gameDetails.nameOfTheGame)
+                    Text(game.title)
                         .font(AppFonts.amikoSemiBold(withSize: 24))
                         .foregroundStyle(AppColors.darkBlue.opacity(0.9))
-                    Text(gameDetails.gameDescription)
+                    Text(game.longDescription)
                     .font(AppFonts.amikoRegular(withSize: 16))
                     .foregroundStyle(AppColors.darkBlue.opacity(0.7))
                     .multilineTextAlignment(.center)
@@ -92,7 +92,7 @@ struct GameInfoView: View {
 }
 
 #Preview {
-    GameInfoView(gameDetails: GameDetails(nameOfTheGame: "Game no 6", minNumberOfPlayers: 2, maxNumberOfPlayers: 3, estimatedTime: 100, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg", gameDescription: "This is a longer description of the game This is a longer description of the game This is a longer description of the game This is a longer description of the game This is a longer description of the game")).environmentObject({ () -> ViewRouter in
+    GameInfoView(game: Game(date: "202420051943", title: "Test game 1", imageURL: "", minNumberOfPlayers: 3, maxNumberOfPlayers: 6, longDescription: "This is a long desscription", estimatedTime: 40)).environmentObject({ () -> ViewRouter in
         let envObj = ViewRouter()
         envObj.shouldDisplayTabView = false
         return envObj

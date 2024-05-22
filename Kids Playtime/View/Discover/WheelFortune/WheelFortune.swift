@@ -60,6 +60,9 @@ public struct WheelFortune: View {
             }
             SpinWheelPointer(pointerColor: pointerColor).offset(x: 0, y: -25)
         }
+        .onChange(of: titles) { newTitles in
+                    viewModel.titles = newTitles
+        }
     }
 }
 

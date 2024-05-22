@@ -17,39 +17,49 @@ extension DiscoverView {
         @Published var isGameDialogActive = false
         @Published var scale: CGFloat = 1.0
         @Published var isWheelSpinning = false
-        @Published var games = [
-            GameCard(nameOfTheGame: "Game no 1", minNumberOfPlayers: 2, maxNumberOfPlayers: 4, estimatedTime: 45, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-            GameCard(nameOfTheGame: "Game no 2", minNumberOfPlayers: 3, maxNumberOfPlayers: 5, estimatedTime: 120, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-            GameCard(nameOfTheGame: "Game no 3", minNumberOfPlayers: 2, maxNumberOfPlayers: 2, estimatedTime: 20, imageUrl: "https://picsum.photos/id/237/200/300"),
-            GameCard(nameOfTheGame: "Game no 4", minNumberOfPlayers: 5, maxNumberOfPlayers: 10, estimatedTime: 240, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-            GameCard(nameOfTheGame: "Game no 5", minNumberOfPlayers: 1, maxNumberOfPlayers: 3, estimatedTime: 50, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-            GameCard(nameOfTheGame: "Game no 6", minNumberOfPlayers: 2, maxNumberOfPlayers: 3, estimatedTime: 100, imageUrl: "https://picsum.photos/id/237/200/300")]
-        @Published var valueFromFirebase: String? = nil
-        @Published var currentlySelectedGame: GameCard? = nil
+        @Published var games: [Game] = []
+        @Published var gameTitles: [String] = [""]
+        @Published var valueFromFirebase: String = ""
+        @Published var currentlySelectedGame: Game?
         
         
-        func readValue() {
+        func readDatabase() {
             // if we have this value cached
             if let safeValue = UserDefaults.standard.value(forKey: "value") as? String {
                 self.valueFromFirebase = safeValue
-                // fetch it from the Database
+//                // fetch it from the Database
             } else {
                 DatabaseManager.shared.readValue { [weak self] value in
                     DispatchQueue.main.async {
-                        self?.valueFromFirebase = value
-                        UserDefaults.standard.set(value, forKey: "value")
+                        if let value {
+                            self?.valueFromFirebase = value
+                            print(value)
+                            UserDefaults.standard.set(value, forKey: "value")
+                        }
                     }
                 }
             }
         }
         
-        func getTitles() -> [String] {
-            var titles: [String] = []
-            games.forEach { game in
-                titles.append(game.nameOfTheGame)
+        func fetchAllGames() {
+            DatabaseManager.shared.fetchAllGames { [weak self] games in
+                if let games {
+                    self?.games = games
+                    var tempTitles: [String] = []
+                    games.forEach { game in
+                        tempTitles.append(game.title)
+                    }
+                    self?.gameTitles = tempTitles
+                }
             }
-            
-            return titles
+        }
+        
+        func appendGameToDB() {
+            DatabaseManager.shared.addGame()
+        }
+        
+        func readGame() {
+            DatabaseManager.shared.fetchFirstGame()
         }
     }
 }
