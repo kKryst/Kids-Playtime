@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import FirebaseAuth
 
 extension UserHomeView {
     
@@ -24,6 +25,8 @@ extension UserHomeView {
     
     class ViewModel: ObservableObject {
         
+        
+        @Published var isUserLoggedIn: Bool = Auth.auth().currentUser != nil
         @Published var data: [UserStatsDataPerDay]
         @Published var minutesPlayed = 0
         @Published var gamesPlayed = 0
@@ -37,14 +40,11 @@ extension UserHomeView {
         @Published var timeFrameData: TimeFrameData?
         @Published var isGameDialogActive = false
         @Published var isLoginDialogActive = false
-        @Published var games = [
-            GameCard(nameOfTheGame: "Game no 1", minNumberOfPlayers: 2, maxNumberOfPlayers: 4, estimatedTime: 45, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-            GameCard(nameOfTheGame: "Game no 2", minNumberOfPlayers: 3, maxNumberOfPlayers: 5, estimatedTime: 120, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-            GameCard(nameOfTheGame: "Game no 3", minNumberOfPlayers: 2, maxNumberOfPlayers: 2, estimatedTime: 20, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-            GameCard(nameOfTheGame: "Game no 4", minNumberOfPlayers: 5, maxNumberOfPlayers: 10, estimatedTime: 240, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"),
-            GameCard(nameOfTheGame: "Game no 5", minNumberOfPlayers: 1, maxNumberOfPlayers: 3, estimatedTime: 50, imageUrl: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg")]
-        @Published var currentlySelectedGame: GameCard? = nil
-    
+        @Published var games: [Game] = []
+        @Published var currentlySelectedGame: Game? = nil
+        
+        private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
+        
         init() {
             self.data = [
                 UserStatsDataPerDay(day: "Mon", minutesPlayed: 30, numbersOfGamesPlayed: 2, date: Date()),
@@ -62,10 +62,30 @@ extension UserHomeView {
                 UserStatsDataPerDay(day: "Sat", minutesPlayed: 0, numbersOfGamesPlayed: 0, date: Date()),
                 UserStatsDataPerDay(day: "Sun", minutesPlayed: 53, numbersOfGamesPlayed: 2, date: Date()),
             ]
+            
+            
+            self.authStateDidChangeListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
+                self?.isUserLoggedIn = user != nil
+            }
+            
             calculateMinutesPlayedPerWeek()
             calculateGamesPlayedPerWeek()
             updateChartData()
-
+            
+        }
+        
+        deinit {
+                if let handle = authStateDidChangeListenerHandle {
+                    Auth.auth().removeStateDidChangeListener(handle)
+                }
+            }
+        
+        func fetchSavedGames() {
+            DatabaseManager.shared.fetchAllGames { [weak self] games in
+                if let games {
+                    self?.games = games
+                }
+            }
         }
         
         func calculateMinutesPlayedPerWeek() {
@@ -91,9 +111,9 @@ extension UserHomeView {
         }
         
         func updateChartData() {
-                self.timeFrameData = aggregateDataIntoWeeks()
-            }
-
+            self.timeFrameData = aggregateDataIntoWeeks()
+        }
+        
         private func aggregateDataIntoWeeks() -> TimeFrameData {
             switch selectedTimeFrame {
             case .week:

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Charts
+import FirebaseAuth
 
 struct UserHomeView: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -18,7 +19,11 @@ struct UserHomeView: View {
                 AppColors.white.ignoresSafeArea()
                 ScrollView {
                     // main view of the app
-                    contentView
+                    if viewModel.isUserLoggedIn {
+                        contentView
+                    } else {
+                        LoginView()
+                    }
                 }
                 if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { //game dialog which appears when user taps on a game card
                     GameDialogView(

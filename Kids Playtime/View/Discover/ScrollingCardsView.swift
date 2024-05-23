@@ -100,7 +100,7 @@ struct ScrollingCardsView: View { // find a better name for that
         // recieved each second
         .onReceive(timer) { _ in
             withAnimation(.default) {
-                if seconds == 4 {
+                if seconds == 4 && !games.isEmpty {
                     selectedImageIndex = (selectedImageIndex + 1) % games.count // swap card
                 } else {
                     seconds += 1 // increase seconds
