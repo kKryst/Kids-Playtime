@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import FirebaseAuth
 
 enum Gender: String, CaseIterable, Identifiable {
     case male, female, other
@@ -136,9 +137,9 @@ struct UserProfileView: View {
                 .padding()
                 
                 Button(action: {
-                    
+                    AuthManager.shared.logoutUser()
                 }, label: {
-                    Text("Delete account")
+                    Text("Logout")
                         .fontWeight(.bold)
                         .font(AppFonts.amikoRegular(withSize: 16))
                         .foregroundColor(AppColors.darkBlue)
@@ -149,7 +150,22 @@ struct UserProfileView: View {
                                 .stroke(AppColors.orange, lineWidth: 1)
                         )
                 })
-                .padding()
+                .padding(.vertical, 5)
+                .padding(.horizontal)
+                
+                Button(action: {
+                    // Action for deleting account
+                }, label: {
+                    Text("Delete account")
+                        .fontWeight(.bold)
+                        .font(AppFonts.amikoRegular(withSize: 16))
+                        .foregroundColor(AppColors.white) // Set the text color to white
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(AppColors.orange) // Set the background color to dark blue
+                        .cornerRadius(12) // Set the corner radius for rounded corners
+                })
+                .padding(.horizontal)
             }
             .onAppear {
                 viewRouter.shouldDisplayTabView = false

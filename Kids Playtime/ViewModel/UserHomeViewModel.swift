@@ -25,7 +25,6 @@ extension UserHomeView {
     
     class ViewModel: ObservableObject {
         
-        
         @Published var isUserLoggedIn: Bool = Auth.auth().currentUser != nil
         @Published var data: [UserStatsDataPerDay]
         @Published var minutesPlayed = 0

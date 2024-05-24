@@ -31,6 +31,14 @@ struct DiscoverView: View {
                                 height: 0
                             ).padding(20).background(Color.clear).foregroundStyle(Color.clear)
                             //                            if viewModel.valueFromFirebase != nil {
+                            #if DEBUG
+                            Button {
+                                viewModel.appendGameToDB()
+                            } label: {
+                                Text("Add game")
+                            }
+                            #endif
+
                             Text(viewModel.valueFromFirebase ?? "")
                                 .font(AppFonts.bayonRegular(withSize: 48))
                                 .foregroundStyle(AppColors.darkBlue)

@@ -12,18 +12,19 @@ import FirebaseAuth
 struct UserHomeView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @StateObject private var viewModel = ViewModel()
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 AppColors.white.ignoresSafeArea()
-                ScrollView {
-                    // main view of the app
-                    if viewModel.isUserLoggedIn {
+                
+                // main view of the app
+                if viewModel.isUserLoggedIn {
+                    ScrollView {
                         contentView
-                    } else {
-                        LoginView()
                     }
+                } else {
+                    LoginView()
                 }
                 if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { //game dialog which appears when user taps on a game card
                     GameDialogView(
@@ -69,7 +70,7 @@ struct UserHomeView: View {
                 .foregroundStyle(AppColors.darkBlue)
             Spacer()
             NavigationLink(destination: UserProfileView()) {
-                Text("Login")
+                Text("My Account")
                     .fontWeight(.bold)
                     .font(AppFonts.amikoRegular(withSize: 16))
                     .foregroundColor(.white)
