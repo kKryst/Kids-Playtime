@@ -13,9 +13,17 @@ import FirebaseDatabaseSwift
 /// database connection class Singleton
 public class DatabaseManager: ObservableObject {
     
+    
+    
     static let shared = DatabaseManager() // Singleton instance
     
     private var database = Database.database(url: Constants.databaseUrl).reference()
+    
+    static func safeEmail(emailAddress: String) -> String {
+        var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
+        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
+        return safeEmail
+    }
 
     
     func readValue(completion: @escaping (String?) -> Void) {
@@ -44,9 +52,87 @@ public class DatabaseManager: ObservableObject {
             }
         }
     
-    func addGame() {
+    /// Checks if user exists for given email
+    /// Parameters
+    /// - `email`:              Target email to be checked
+    /// - `completion`:   Async closure to return with result
+    public func userExists(with email: String,
+                           completion: @escaping ((Bool) -> Void)) {
         
-        #warning("TODO: zamienić to na obiekt i wprowadzić kilka takich do bazy danych, następnie swtorzyc metode do fetchowania i podpiac pod liste na GameCards")
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            guard let usersArray = snapshot.value as? [[String: Any]] else {
+                completion(false)
+                return
+            }
+            
+            for user in usersArray {
+                if let userEmail = user["email"] as? String, userEmail == safeEmail {
+                    completion(true)
+                    return
+                }
+            }
+            
+            // user does not exist
+            completion(false)
+        })
+        
+    }
+    
+    func insertUser(with user: User, completion: @escaping (Bool) -> Void) {
+        
+        // check if given user exists
+        userExists(with: user.emailAddress) { [weak self] exists in
+            guard !exists else {
+                return
+            }
+            
+            // create a strong referencec
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+                if var usersCollection = snapshot.value as? [[String: String]] {
+                    // append to user dictionary
+                    let newElement = [
+                        "name": user.firstName + " " + user.lastName,
+                        "email": DatabaseManager.safeEmail(emailAddress: user.emailAddress)
+                    ]
+                    usersCollection.append(newElement)
+                    
+                    strongSelf.database.child("users").setValue(usersCollection, withCompletionBlock: { error, _ in
+                        guard error == nil else {
+                            completion(false)
+                            return
+                        }
+                        
+                        completion(true)
+                    })
+                }
+                else {
+                    // create that array
+                    let newCollection: [[String: String]] = [
+                        [
+                            "name": user.firstName + " " + user.lastName,
+                            "email": DatabaseManager.safeEmail(emailAddress: user.emailAddress)
+                        ]
+                    ]
+                    strongSelf.database.child("users").setValue(newCollection, withCompletionBlock: { error, _ in
+                        guard error == nil else {
+                            completion(false)
+                            return
+                        }
+                        
+                        completion(true)
+                    })
+                }
+            })
+            
+        }
+    }
+    
+    func addGame() {
         let firstGame: [[String: Any]] = [[
             "date" : "20240520130855",
             "title": "Test game 3",

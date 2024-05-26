@@ -28,6 +28,8 @@ struct UserProfileView: View {
     
     @FocusState private var isFirstResponder :Bool
     
+    @Environment(\.dismiss) private var dismiss
+    
     
     init() {
         //style the Picker
@@ -138,6 +140,7 @@ struct UserProfileView: View {
                 
                 Button(action: {
                     AuthManager.shared.logoutUser()
+                    dismiss()
                 }, label: {
                     Text("Logout")
                         .fontWeight(.bold)

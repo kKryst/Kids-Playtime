@@ -49,9 +49,6 @@ public class AuthManager {
 
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { authResult, error in
                 guard authResult != nil, error == nil else {
-                    print("AUTHRESULT: \(authResult)")
-                    print("ERROR: \(error)")
-                    print("Error cureating user")
                     return
                 }
 
@@ -60,7 +57,6 @@ public class AuthManager {
                                           emailAddress: email)
                 DatabaseManager.shared.insertUser(with: user, completion: { success in
                     if success {
-                        // succesfully added user to Database
                         print("succesfully added user to Database")
                     }
                 })
@@ -75,7 +71,7 @@ public class AuthManager {
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         
-        // Start the sign in flow!
+        // Start the sign in flow
         GIDSignIn.sharedInstance.signIn(withPresenting: getRootViewController()) { result, error in
             guard error == nil else {
                 print("Error while starting the sign in process")
@@ -94,7 +90,35 @@ public class AuthManager {
             
             Auth.auth().signIn(with: credential) { result, error in
                 
-                #warning("TODO: ADD user to database")
+                guard let safeUserProfile = user.profile else {
+                    return
+                }
+                
+                DatabaseManager.shared.userExists(with: safeUserProfile.email, completion: { [weak self] exists in
+                    
+                    guard !exists else {
+                        print("user already exists in the database")
+                        return
+                    }
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    
+                    let fullName = safeUserProfile.name
+                    let components = fullName.split(separator: " ")
+                    let (firstName, lastName) = (String(components[0]), String(components[1]))
+                    
+                    let user = User(firstName: firstName,
+                                    lastName: lastName,
+                                    emailAddress: safeUserProfile.email)
+                
+                    DatabaseManager.shared.insertUser(with: user, completion: { success in
+                        if success {
+                            print("succesfully added user to Database")
+                        }
+                    })
+                    
+                })
             }
         }
     }
