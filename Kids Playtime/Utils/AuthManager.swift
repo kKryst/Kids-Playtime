@@ -18,9 +18,48 @@ public class AuthManager {
         let firebaseAuth = Auth.auth()
         do {
           try firebaseAuth.signOut()
+            UserDefaults.standard.setValue(nil, forKey: "name")
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)
         }
+    }
+    
+    func loginUser(email: String, password: String) {
+        
+        guard !email.isEmpty, !password.isEmpty, password.count >= 6 else {
+                return
+        }
+        
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authResult, error in
+
+            guard let result = authResult, error == nil else {
+                print("Failed to log in user with email: \(email)")
+                return
+            }
+
+            let user = result.user
+            let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+            DatabaseManager.shared.getDataFor(email: safeEmail, completion: { result in
+                switch result {
+                case .success(let data):
+                    print("Data result from getDataFor: \(data)")
+                    guard let userData = data as? [String: Any],
+                        let name = userData["name"] as? String else {
+                            return
+                    }
+                    let firstName = name.split(separator: " ").first.map(String.init) ?? name
+                    // save user's name to cachce
+                    UserDefaults.standard.set("\(firstName)", forKey: "name")
+                    
+                    print("Logged In User: \(user.email)")
+                    print("value saved as name in cache after logging in using email and password: \(UserDefaults.standard.value(forKey: "name"))")
+
+                case .failure(let error):
+                    print("Failed to read data with error \(error)")
+                }
+            })
+        })
+        
     }
     
     func registerUser(email: String,
@@ -61,6 +100,23 @@ public class AuthManager {
                     }
                 })
             })
+        })
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        DatabaseManager.shared.getDataFor(email: safeEmail, completion: { result in
+            switch result {
+            case .success(let data):
+                print("Data result from getDataFor: \(data)")
+                guard let userData = data as? [String: Any],
+                    let name = userData["name"] as? String else {
+                        return
+                }
+                let firstName = name.split(separator: " ").first.map(String.init) ?? name
+                // save user's name to cachce
+                UserDefaults.standard.set("\(firstName)", forKey: "name")
+
+            case .failure(let error):
+                print("Failed to read data with error \(error)")
+            }
         })
     }
     

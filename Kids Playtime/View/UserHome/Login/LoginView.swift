@@ -43,7 +43,7 @@ struct LoginView: View {
                     )
                     .padding(.top, 0)
                 Button(action: {
-//                    AuthManager.shared.
+                    AuthManager.shared.loginUser(email: emailText, password: passwordText)
                     dismiss()
                 }, label: {
                     Text("Login")

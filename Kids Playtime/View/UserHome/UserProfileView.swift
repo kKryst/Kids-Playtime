@@ -65,9 +65,15 @@ struct UserProfileView: View {
                             .shadow(radius: 3)
                     }
                     VStack {
-                        Text("user name")
-                            .font(AppFonts.amikoSemiBold(withSize: 24))
-                            .foregroundStyle(AppColors.darkBlue)
+                        if let userName = UserDefaults.standard.value(forKey: "name") as? String {
+                            Text("\(userName)")
+                                .font(AppFonts.amikoSemiBold(withSize: 24))
+                                .foregroundStyle(AppColors.darkBlue)
+                        } else {
+                            Text("User")
+                                .font(AppFonts.amikoSemiBold(withSize: 24))
+                                .foregroundStyle(AppColors.darkBlue)
+                        }
                         PhotosPicker(selection: $pickerItem, matching: .images) {
                             Label("Select a picture", systemImage: "photo")
                                 .foregroundStyle(AppColors.darkBlue)

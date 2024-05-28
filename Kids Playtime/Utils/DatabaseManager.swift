@@ -79,6 +79,25 @@ public class DatabaseManager: ObservableObject {
         
     }
     
+    func getDataFor(email: String, completion: @escaping (Result<Any, Error>) -> Void) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            guard let usersArray = snapshot.value as? [[String: Any]] else {
+                completion(.failure(DatabaseError.failedToFetch))
+                return
+            }
+            
+            for user in usersArray {
+                if let userEmail = user["email"] as? String, userEmail == safeEmail {
+                    completion(.success(user))
+                    return
+                }
+            }
+        })
+    }
+    
+    
+    
     func insertUser(with user: User, completion: @escaping (Bool) -> Void) {
         
         // check if given user exists
@@ -157,4 +176,18 @@ public class DatabaseManager: ObservableObject {
             print(games)
         }
     }
+    
+    public enum DatabaseError: Error {
+        case failedToFetch
+
+        public var localizedDescription: String {
+            switch self {
+            case .failedToFetch:
+                return "This means blah failed"
+            }
+        }
+    }
+    
 }
+
+
