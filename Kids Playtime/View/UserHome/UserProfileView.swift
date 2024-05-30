@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 import FirebaseAuth
+import CachedAsyncImage
 
 enum Gender: String, CaseIterable, Identifiable {
     case male, female, other
@@ -26,9 +27,13 @@ struct UserProfileView: View {
     
     @State private var selectedGender: Gender = .male
     
+    @State private var userProfileImageURL: String? = nil
+    
     @FocusState private var isFirstResponder :Bool
     
     @Environment(\.dismiss) private var dismiss
+    
+#warning("sprawdz co sie dzieje jak wybierasz zdjecia po dodaniu juz jednego jako ten user")
     
     
     init() {
@@ -43,11 +48,12 @@ struct UserProfileView: View {
         ZStack {
             AppColors.white.ignoresSafeArea()
                 .onTapGesture {
+                    // defocus text fields when clicking on the screen
                     isFirstResponder = false
                 }
             VStack {
                 HStack {
-                    if let selectedImage = selectedImage {
+                    if let selectedImage {
                         selectedImage
                             .resizable()
                             .clipShape(Circle())
@@ -55,14 +61,36 @@ struct UserProfileView: View {
                             .aspectRatio(contentMode: .fill)
                             .padding(8)
                             .shadow(radius: 3)
+                    }
+                    else if let userProfileImageURL = userProfileImageURL {
+                        CachedAsyncImage(url: URL(string:userProfileImageURL)) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: 64, height: 64)
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .clipShape(Circle())
+                                    .frame(width: 64, height: 64)
+                                    .aspectRatio(contentMode: .fill)
+                                    .padding(8)
+                                    .shadow(radius: 3)
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .clipShape(Circle())
+                                    .frame(width: 64, height: 64)
+                                    .aspectRatio(contentMode: .fill)
+                                    .padding(8)
+                                    .shadow(radius: 3)
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
                     } else {
-                        Image("imag")
-                            .resizable()
-                            .clipShape(Circle())
+                        ProgressView()
                             .frame(width: 64, height: 64)
-                            .aspectRatio(contentMode: .fill)
-                            .padding(8)
-                            .shadow(radius: 3)
                     }
                     VStack {
                         if let userName = UserDefaults.standard.value(forKey: "name") as? String {
@@ -82,12 +110,38 @@ struct UserProfileView: View {
                     }
                     .onChange(of: pickerItem, perform: { value in
                         Task {
-                            selectedImage = try await pickerItem?.loadTransferable(type: Image.self)
+                            if let pickerItem {
+                                // Load image data
+                                if let imageData = try? await pickerItem.loadTransferable(type: Data.self),
+                                   let uiImage = UIImage(data: imageData) {
+                                    selectedImage = Image(uiImage: uiImage)
+                                    if let userEmail = UserDefaults.standard.value(forKey: "userEmail") as? String {
+                                        let filename = StorageManager.getFileName(for: userEmail)
+                                        StorageManager.shared.uploadProfilePicture(with: imageData, fileName: filename) { result in
+                                            switch result {
+                                            case .success(let downloadURL):
+                                                print(downloadURL)
+                                            case .failure(let error):
+                                                print("Storage manager error: \(error)")
+                                            }
+                                        }
+                                    } else {
+                                        print("Error retrieving user email from UserDefaults")
+                                    }
+                                } else {
+                                    print("Error loading image data or converting to UIImage")
+                                }
+                            }
                         }
                     })
                     Spacer()
                 }
                 .background(RoundedRectangle(cornerRadius: 20, style: .circular).foregroundStyle(AppColors.orange).opacity(0.1))
+                .task {
+                    if userProfileImageURL == nil {
+                        getUserProfilePictureURL()
+                    }
+                }
                 
                 HStack {
                     Text("Email")
@@ -182,6 +236,25 @@ struct UserProfileView: View {
             .onDisappear(perform: {
                 viewRouter.shouldDisplayTabView = true
             })
+        }
+    }
+    
+    private func getUserProfilePictureURL() {
+        /*
+         /images/emailaddress123-gmail-com_profile_picture.png
+         */
+        if let loggedInUserEmail = UserDefaults.standard.value(forKey: "userEmail") as? String {
+            let pathToImage = StorageManager.getPathToImage(for: loggedInUserEmail)
+            StorageManager.shared.downloadURL(for: pathToImage) { result in
+                switch result {
+                case .success(let url):
+                    userProfileImageURL = url.absoluteString
+                case .failure(let error):
+                    print("failed to get img url: \(error)")
+                }
+            }
+        } else {
+            print("No userEmail in cache")
         }
     }
 }

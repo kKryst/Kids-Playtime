@@ -42,6 +42,8 @@ extension UserHomeView {
         @Published var games: [Game] = []
         @Published var currentlySelectedGame: Game? = nil
         
+        @Published var userProfilePictureURL: URL? = nil
+        
         private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
         
         init() {
@@ -84,6 +86,25 @@ extension UserHomeView {
                 if let games {
                     self?.games = games
                 }
+            }
+        }
+        
+        func getUserProfilePictureURL() {
+            /*
+             /images/emailaddress123-gmail-com_profile_picture.png
+             */
+            if let loggedInUserEmail = UserDefaults.standard.value(forKey: "userEmail") as? String {
+                let pathToImage = StorageManager.getPathToImage(for: loggedInUserEmail)
+                StorageManager.shared.downloadURL(for: pathToImage) { [weak self] result in
+                    switch result {
+                    case .success(let url):
+                        self?.userProfilePictureURL = url
+                    case .failure(let error):
+                        print("failed to get img url: \(error)")
+                    }
+                }
+            } else {
+                print("No userEmail in cache")
             }
         }
         

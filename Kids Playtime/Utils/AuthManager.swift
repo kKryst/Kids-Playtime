@@ -49,11 +49,9 @@ public class AuthManager {
                     }
                     let firstName = name.split(separator: " ").first.map(String.init) ?? name
                     // save user's name to cachce
+                    UserDefaults.standard.set("\(safeEmail)", forKey: "userEmail")
                     UserDefaults.standard.set("\(firstName)", forKey: "name")
                     
-                    print("Logged In User: \(user.email)")
-                    print("value saved as name in cache after logging in using email and password: \(UserDefaults.standard.value(forKey: "name"))")
-
                 case .failure(let error):
                     print("Failed to read data with error \(error)")
                 }
@@ -112,6 +110,7 @@ public class AuthManager {
                 }
                 let firstName = name.split(separator: " ").first.map(String.init) ?? name
                 // save user's name to cachce
+                UserDefaults.standard.set("\(safeEmail)", forKey: "userEmail")
                 UserDefaults.standard.set("\(firstName)", forKey: "name")
 
             case .failure(let error):
@@ -149,6 +148,12 @@ public class AuthManager {
                 guard let safeUserProfile = user.profile else {
                     return
                 }
+                
+                let firstName = safeUserProfile.name.split(separator: " ").first.map(String.init) ?? safeUserProfile.name
+                // save user's name to cachce
+                let safeEmail = DatabaseManager.safeEmail(emailAddress: safeUserProfile.email)
+                UserDefaults.standard.set("\(safeEmail)", forKey: "userEmail")
+                UserDefaults.standard.set("\(firstName)", forKey: "name")
                 
                 DatabaseManager.shared.userExists(with: safeUserProfile.email, completion: { [weak self] exists in
                     

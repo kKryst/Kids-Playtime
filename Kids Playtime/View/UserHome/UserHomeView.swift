@@ -8,6 +8,7 @@
 import SwiftUI
 import Charts
 import FirebaseAuth
+import CachedAsyncImage
 
 struct UserHomeView: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -57,17 +58,30 @@ struct UserHomeView: View {
 
     private var userHeader: some View {
         HStack {
-            Image(systemName: "person.circle")
-                .resizable()
+            if viewModel.userProfilePictureURL != nil {
+                AsyncImage(url: viewModel.userProfilePictureURL) { image in
+                    image.image?.resizable()
+                }
                 .foregroundStyle(AppColors.darkBlue)
                 .clipShape(Circle())
                 .frame(width: 64, height: 64)
                 .aspectRatio(contentMode: .fill)
                 .padding(8)
                 .shadow(radius: 3)
-            Text("Guest")
-                .font(AppFonts.amikoSemiBold(withSize: 16))
-                .foregroundStyle(AppColors.darkBlue)
+            } else {
+                ProgressView()
+                    .frame(width: 64, height: 64)
+            }
+            if let userName = UserDefaults.standard.value(forKey: "name") as? String {
+                Text("\(userName)")
+                    .font(AppFonts.amikoSemiBold(withSize: 16))
+                    .foregroundStyle(AppColors.darkBlue)
+            } else {
+                Text("User")
+                    .font(AppFonts.amikoSemiBold(withSize: 16))
+                    .foregroundStyle(AppColors.darkBlue)
+            }
+                
             Spacer()
             NavigationLink(destination: UserProfileView()) {
                 Text("My Account")
@@ -83,6 +97,11 @@ struct UserHomeView: View {
         }
         .background(RoundedRectangle(cornerRadius: 20, style: .circular).fill(AppColors.lightBlue.opacity(0.1)))
         .padding(.horizontal, -10)
+        .task {
+            if viewModel.userProfilePictureURL == nil {
+                viewModel.getUserProfilePictureURL()
+            }
+        }
     }
 
     private var statisticsSection: some View {
