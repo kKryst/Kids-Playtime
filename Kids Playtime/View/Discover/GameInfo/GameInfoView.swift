@@ -21,50 +21,77 @@ struct GameInfoView: View {
     var body: some View {
         ZStack {
             // Background full-size image with blur effect
-            AsyncImage(url: URL(string: "\(game.imageURL)")) { image in
-                image.resizable()
-                image.aspectRatio(contentMode: .fill)// Makes the image resizable, cached automatically
-            } placeholder: {
-                ProgressView() // Placeholder while the image is loading
-            }
-            .blur(radius: 10)
-            .ignoresSafeArea()
-            .onTapGesture { // allows user to be able to tap on the image to hide the dialog
-                if isDialogPresenting {
-                    isDialogPresenting = false
+            Image("imag")
+                .resizable()
+                .ignoresSafeArea()
+                .aspectRatio(contentMode: .fill)
+                .blur(radius: 10)
+                .ignoresSafeArea()
+                .onTapGesture { // allows user to be able to tap on the image to hide the dialog
+                    if isDialogPresenting {
+                        isDialogPresenting = false
+                    }
                 }
-            }
-            if isDialogPresenting == false { // shows either game description or dialog
+            
+            // shows either game description or dialog
                 VStack (spacing: 20){
-                    Text(game.title)
-                        .font(AppFonts.amikoSemiBold(withSize: 24))
-                        .foregroundStyle(AppColors.darkBlue.opacity(0.9))
+                    HStack {
+                        Text(game.title)
+                            .font(AppFonts.amikoSemiBold(withSize: 24))
+                            .foregroundStyle(AppColors.darkBlue.opacity(0.9))
+                        TimerView()
+                    }
                     Text(game.longDescription)
-                    .font(AppFonts.amikoRegular(withSize: 16))
-                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
+                        .font(AppFonts.amikoRegular(withSize: 16))
+                        .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
                     
-                    Button(action: {
-                        isDialogPresenting = true
-                    }, label: {
-                        Text("Done")
-                            .fontWeight(.bold)
-                            .font(AppFonts.amikoRegular(withSize: 16))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
+                    HStack {
+                        Button(action: {
+                            isDialogPresenting = true
+                        }, label: {
+                            HStack {
+                                Image(systemName: "heart")
+                                    .foregroundStyle(AppColors.pink)
+                                    .scaleEffect(1.5)
+                                Text("Save")
+                                    .fontWeight(.bold)
+                                    .font(AppFonts.amikoRegular(withSize: 18))
+                                    .foregroundColor(AppColors.lightBlue)
+                                
+                            }
                             .padding()
-                            .background(AppColors.lightBlue)
+                            .frame(width: 120)
                             .cornerRadius(12)
-                    })
+                            .background(AppColors.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(AppColors.lightBlue, lineWidth: 2)
+                            )
+                        })
+                        Button(action: {
+                            isDialogPresenting = true
+                        }, label: {
+                            Text("Done")
+                                .fontWeight(.bold)
+                                .font(AppFonts.amikoRegular(withSize: 18))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 120)
+                                .background(AppColors.lightBlue)
+                                .cornerRadius(12)
+                        })
+                    }
+                    .frame(maxWidth: .infinity)
                 }
                 .frame(width: 300)
                 .padding()
                 .background(AppColors.white)
                 .clipShape(RoundedRectangle(cornerRadius: 20.0))
                 .shadow(radius: 20)
-            }
-            else  { // shows either game description or dialog
+
+            if isDialogPresenting == true  { // shows either game description or dialog
                 GameInfoDialogView(isActive: $isDialogPresenting, shouldPresentOpinionSheet: $shouldPresentOpinionSheet)
                     .onDisappear(perform: {
                         isDialogPresenting = false
