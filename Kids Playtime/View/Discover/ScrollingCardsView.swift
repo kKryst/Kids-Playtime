@@ -112,5 +112,5 @@ struct ScrollingCardsView: View { // find a better name for that
 
 
 #Preview {
-    ScrollingCardsView(games: [Game(date: "20240250", title: "Title of game 1", imageURL: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg", minNumberOfPlayers: 3, maxNumberOfPlayers: 6, longDescription: "This is a long desc ", estimatedTime: 30)], onTapGesture:{_ in })
+    ScrollingCardsView(games: [Game(title: "Title of game 1", imageURL: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg", minNumberOfPlayers: 3, maxNumberOfPlayers: 6, longDescription: "This is a long desc ", estimatedTime: 30)], onTapGesture:{_ in })
 }

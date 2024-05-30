@@ -21,17 +21,19 @@ struct GameInfoView: View {
     var body: some View {
         ZStack {
             // Background full-size image with blur effect
-            Image("imag")
-                .resizable()
-                .ignoresSafeArea()
-                .aspectRatio(contentMode: .fill)
-                .blur(radius: 10)
-                .ignoresSafeArea()
-                .onTapGesture { // allows user to be able to tap on the image to hide the dialog
-                    if isDialogPresenting {
-                        isDialogPresenting = false
-                    }
+            AsyncImage(url: URL(string: game.imageURL)) { image in
+                image.resizable()
+                image.aspectRatio(contentMode: .fill)
+            } placeholder: {
+                AppColors.white
+            }
+            .blur(radius: 10)
+            .ignoresSafeArea()
+            .onTapGesture { // allows user to be able to tap on the image to hide the dialog
+                if isDialogPresenting {
+                    isDialogPresenting = false
                 }
+            }
             
             // shows either game description or dialog
                 VStack (spacing: 20){
@@ -119,7 +121,7 @@ struct GameInfoView: View {
 }
 
 #Preview {
-    GameInfoView(game: Game(date: "202420051943", title: "Test game 1", imageURL: "", minNumberOfPlayers: 3, maxNumberOfPlayers: 6, longDescription: "This is a long desscription", estimatedTime: 40)).environmentObject({ () -> ViewRouter in
+    GameInfoView(game: Game(title: "Test game 1", imageURL: "", minNumberOfPlayers: 3, maxNumberOfPlayers: 6, longDescription: "This is a long desscription", estimatedTime: 40)).environmentObject({ () -> ViewRouter in
         let envObj = ViewRouter()
         envObj.shouldDisplayTabView = false
         return envObj

@@ -113,5 +113,5 @@ struct GameDialogView: View {
 }
 
 #Preview {
-    GameDialogView(game: Game(date: "202405201945" ,title: "Test 1", imageURL: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg", minNumberOfPlayers: 5, maxNumberOfPlayers: 30, longDescription: "This is a long desc ", estimatedTime: 30), isActive: .constant(true))
+    GameDialogView(game: Game(title: "Test 1", imageURL: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg", minNumberOfPlayers: 5, maxNumberOfPlayers: 30, longDescription: "This is a long desc ", estimatedTime: 30), isActive: .constant(true))
 }

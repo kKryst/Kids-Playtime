@@ -40,19 +40,34 @@ extension DiscoverView {
                 }
             }
         }
+        // https://firebasestorage.googleapis.com/v0/b/kids-playtime.appspot.com/o/gameImages%2FBackyard-Camping-Adventure.jpg?alt=media&token=3b8d124e-f1eb-4da9-b60b-4dd92ac204ad
+        
+        // https://firebasestorage.googleapis.com/v0/b/kids/playtime.appspot.com/o/gameImages%2FBackyard/Camping/Adventure.jpg?alt=media&token=3b8d124e/f1eb/4da9/b60b/4dd92ac204ad
         
         func fetchAllGames() {
             DatabaseManager.shared.fetchAllGames { [weak self] games in
-                if let games {
-                    self?.games = games
-                    var tempTitles: [String] = []
+                if var games {
+                    var modifiedGames: [Game] = []
+                    
                     games.forEach { game in
+                        let modifiedImageURL = game.imageURL.replacingOccurrences(of: "!", with: "/")
+                                                            .replacingOccurrences(of: "_", with: ".")
+                        let modifiedGame = Game(title: game.title, imageURL: modifiedImageURL, minNumberOfPlayers: game.minNumberOfPlayers, maxNumberOfPlayers: game.maxNumberOfPlayers, longDescription: game.longDescription, estimatedTime: game.estimatedTime) // Add all necessary properties here
+                        modifiedGames.append(modifiedGame)
+                        print("modified game imageURL : \(modifiedImageURL)")
+                    }
+                    
+                    self?.games = modifiedGames
+                    var tempTitles: [String] = []
+                    modifiedGames.forEach { game in
                         tempTitles.append(game.title)
                     }
                     self?.gameTitles = tempTitles
                 }
             }
         }
+
+
         
         func appendGameToDB() {
             DatabaseManager.shared.addGame()
