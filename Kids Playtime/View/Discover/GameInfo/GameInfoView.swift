@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct GameInfoView: View {
     
@@ -15,6 +16,7 @@ struct GameInfoView: View {
     
     @State private var isDialogPresenting = false
     @State private var shouldPresentOpinionSheet = false
+    @State var isFavourite = false
     
     @Environment(\.dismiss) private var dismiss
     
@@ -36,63 +38,73 @@ struct GameInfoView: View {
             }
             
             // shows either game description or dialog
-                VStack (spacing: 20){
-                    HStack {
-                        Text(game.title)
-                            .font(AppFonts.amikoSemiBold(withSize: 24))
-                            .foregroundStyle(AppColors.darkBlue.opacity(0.9))
-                        TimerView()
-                    }
-                    Text(game.longDescription)
-                        .font(AppFonts.amikoRegular(withSize: 16))
-                        .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                    
-                    HStack {
-                        Button(action: {
-                            isDialogPresenting = true
-                        }, label: {
-                            HStack {
-                                Image(systemName: "heart")
-                                    .foregroundStyle(AppColors.pink)
-                                    .scaleEffect(1.5)
-                                Text("Save")
-                                    .fontWeight(.bold)
-                                    .font(AppFonts.amikoRegular(withSize: 18))
-                                    .foregroundColor(AppColors.lightBlue)
-                                
-                            }
-                            .padding()
-                            .frame(width: 120)
-                            .cornerRadius(12)
-                            .background(AppColors.white)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(AppColors.lightBlue, lineWidth: 2)
-                            )
-                        })
-                        Button(action: {
-                            isDialogPresenting = true
-                        }, label: {
-                            Text("Done")
+            VStack (spacing: 20){
+                HStack {
+                    Text(game.title)
+                        .font(AppFonts.amikoSemiBold(withSize: 24))
+                        .foregroundStyle(AppColors.darkBlue.opacity(0.9))
+                    TimerView()
+                }
+                Text(game.longDescription)
+                    .font(AppFonts.amikoRegular(withSize: 16))
+                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                
+                HStack {
+                    Button(action: {
+                        toggleFavourite()
+                    }, label: {
+                        HStack {
+                            Image(systemName: isFavourite ? "heart.fill" : "heart")
+                                .foregroundStyle(AppColors.pink)
+                                .scaleEffect(1.5)
+                            Text("Save")
                                 .fontWeight(.bold)
                                 .font(AppFonts.amikoRegular(withSize: 18))
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(width: 120)
-                                .background(AppColors.lightBlue)
-                                .cornerRadius(12)
-                        })
-                    }
-                    .frame(maxWidth: .infinity)
+                                .foregroundColor(AppColors.lightBlue)
+                            
+                        }
+                        .padding()
+                        .frame(width: 120)
+                        .cornerRadius(12)
+                        .background(AppColors.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(AppColors.lightBlue, lineWidth: 2)
+                        )
+                        .task {
+                            if Auth.auth().currentUser != nil {
+                                isGameFavourite { result in
+                                    isFavourite = result
+                                }
+                            }
+                        }
+                    })
+                    Button(action: {
+                        isDialogPresenting = true
+                    }, label: {
+                        Text("Done")
+                            .fontWeight(.bold)
+                            .font(AppFonts.amikoRegular(withSize: 18))
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 120)
+                            .background(AppColors.lightBlue)
+                            .cornerRadius(12)
+                    })
                 }
-                .frame(width: 300)
-                .padding()
-                .background(AppColors.white)
-                .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                .shadow(radius: 20)
-
+                .frame(maxWidth: .infinity)
+                .task {
+                    
+                }
+            }
+            .frame(width: 300)
+            .padding()
+            .background(AppColors.white)
+            .clipShape(RoundedRectangle(cornerRadius: 20.0))
+            .shadow(radius: 20)
+            
             if isDialogPresenting == true  { // shows either game description or dialog
                 GameInfoDialogView(isActive: $isDialogPresenting, shouldPresentOpinionSheet: $shouldPresentOpinionSheet)
                     .onDisappear(perform: {
@@ -118,12 +130,55 @@ struct GameInfoView: View {
         })
         
     }
+    
+    func isGameFavourite(completion: @escaping (Bool) -> Void) {
+        // Get user's email
+        guard let email = UserDefaults.standard.value(forKey: "userEmail") as? String else {
+            completion(false) // User is not logged in so game is not fav
+            return
+        }
+        
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        DatabaseManager.shared.isGameAlreadyAddedToFavorites(email: safeEmail, title: game.title) { result in
+            completion(result)
+        }
+    }
+    
+    func toggleFavourite() {
+        guard let email = UserDefaults.standard.value(forKey: "userEmail") as? String else {
+            return // user is not logged in so game is not fav
+        }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        isGameFavourite { isFavorite in
+            if isFavorite {
+                DatabaseManager.shared.removeGameFromFavorites(email: safeEmail, title: game.title) { result in
+                    switch result {
+                    case .success:
+                        print("succesfully removed game from favorites")
+                        isFavourite = false
+                    case .failure:
+                        print("failed to remove game from favorites")
+                    }
+                }
+            } else {
+                DatabaseManager.shared.addGameToFavoutires(for: safeEmail, title: game.title) { result in
+                    switch result {
+                    case .success:
+                        print("Succesfully added game to favourites")
+                        isFavourite = true
+                    case .failure:
+                        print("Failed to add game to favorites")
+                    }
+                }
+            }
+        }
+    }
 }
-
-#Preview {
-    GameInfoView(game: Game(title: "Test game 1", imageURL: "", minNumberOfPlayers: 3, maxNumberOfPlayers: 6, longDescription: "This is a long desscription", estimatedTime: 40)).environmentObject({ () -> ViewRouter in
-        let envObj = ViewRouter()
-        envObj.shouldDisplayTabView = false
-        return envObj
-    }() )
-}
+    
+    #Preview {
+        GameInfoView(game: Game(title: "Test game 1", imageURL: "", minNumberOfPlayers: 3, maxNumberOfPlayers: 6, longDescription: "This is a long desscription", estimatedTime: 40)).environmentObject({ () -> ViewRouter in
+            let envObj = ViewRouter()
+            envObj.shouldDisplayTabView = false
+            return envObj
+        }() )
+    }

@@ -8,7 +8,6 @@
 import Foundation
 
 struct Game: Codable {
-    let date: String
     let title: String
     let imageURL: String
     let minNumberOfPlayers: Int

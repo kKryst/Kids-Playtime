@@ -42,7 +42,7 @@ struct UserHomeView: View {
         VStack {
             userHeader
             statisticsSection
-            chartSection
+//            chartSection
             savedGamesSection
                 .task {
                     viewModel.fetchSavedGames()
@@ -106,9 +106,9 @@ struct UserHomeView: View {
 
     private var statisticsSection: some View {
         HStack(alignment: .top) {
-            statisticValueView(title: "Minutes", value: viewModel.minutesPlayed)
-            statisticValueView(title: "Games", value: viewModel.gamesPlayed)
-            timeframePicker
+            statisticValueView(title: "Minutes played", value: viewModel.minutesPlayed)
+            statisticValueView(title: "Games played", value: viewModel.gamesPlayed)
+//            timeframePicker
         }
     }
 
@@ -154,6 +154,7 @@ struct UserHomeView: View {
         return ScrollingCardsView(games: viewModel.games) { index in
             viewModel.isGameDialogActive = true
             viewModel.currentlySelectedGame = viewModel.games[index]
+            #warning("Po dodaniu / usunieciu z ulubonych null pointer leci")
         }
     }
 

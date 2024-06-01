@@ -24,6 +24,90 @@ public class DatabaseManager: ObservableObject {
         safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
         return safeEmail
     }
+    
+     func isGameAlreadyAddedToFavorites(email: String, title: String, completion: @escaping (Bool) -> Void) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        database.child(safeEmail).child("savedGames").observeSingleEvent(of: .value, with: { snapshot in
+            guard let savedGamesArray = snapshot.value as? [[String: Any]] else {
+                completion(false)
+                return
+            }
+            
+            for game in savedGamesArray {
+                if let savedGameTitle = game["title"] as? String, savedGameTitle == title {
+                    completion(true)
+                    return
+                }
+            }
+            // game does not exist in this user's saved games list
+            completion(false)
+        })
+    }
+    
+    func removeGameFromFavorites(email: String, title: String, completion: @escaping (Result<Any, Error>) -> Void) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        database.child(safeEmail).child("savedGames").observeSingleEvent(of: .value, with: { [weak self] snapshot in
+            guard let strongSelf = self else {
+                return
+            }
+            if var savedGamesCollection = snapshot.value as? [[String: Any]] {
+                // Filter out the game with the specified title
+                savedGamesCollection.removeAll { $0["title"] as? String == title }
+                
+                // Update the database with the filtered list
+                strongSelf.database.child(safeEmail).child("savedGames").setValue(savedGamesCollection, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(.failure(DatabaseError.failedToFetch))
+                        return
+                    }
+                    completion(.success("success"))
+                })
+            } else {
+                // If there are no saved games, return success as there's nothing to remove
+                completion(.success("success"))
+            }
+        })
+    }
+
+    
+    func addGameToFavoutires(for email: String, title: String, completion: @escaping (Result<Any, Error>) -> Void) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        database.child(safeEmail).child("savedGames").observeSingleEvent(of: .value, with: { [weak self] snapshot in
+           guard let strongSelf = self else {
+                return
+            }
+            if var savedGamesCollection = snapshot.value as? [[String: Any]] {
+                // append to savedGames dictionary
+                let newElement = [
+                    "title": title
+                ]
+                savedGamesCollection.append(newElement)
+                
+                strongSelf.database.child(safeEmail).child("savedGames").setValue(savedGamesCollection, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(.failure(DatabaseError.failedToFetch))
+                        return
+                    }
+                    completion(.success("success"))
+                })
+            }
+            else {
+                // create that array
+                let newSavedGamesCollection: [[String: String]] = [
+                    [
+                        "title": title
+                    ]
+                ]
+                strongSelf.database.child(safeEmail).child("savedGames").setValue(newSavedGamesCollection, withCompletionBlock: { error, _ in
+                    guard error == nil else {
+                        completion(.failure(DatabaseError.failedToFetch))
+                        return
+                    }
+                    completion(.success("success"))
+                })
+            }
+        })
+    }
 
     
     func readValue(completion: @escaping (String?) -> Void) {
@@ -34,6 +118,37 @@ public class DatabaseManager: ObservableObject {
             completion(value)
         }
     }
+    
+    func fetchSavedGames(for email: String, completion: @escaping ([Game]?) -> Void) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        database.child(safeEmail).child("savedGames").observeSingleEvent(of: .value) { snapshot in
+            guard let snapshotArray = snapshot.value as? [[String: Any]] else {
+                completion(nil)
+                return
+            }
+            
+            var gameTitles: [String] = []
+            for value in snapshotArray {
+                if let title = value["title"] as? String {
+                    gameTitles.append(title)
+                }
+            }
+            
+            DatabaseManager.shared.fetchAllGames { allGames in
+                guard let allGames = allGames else {
+                    completion(nil)
+                    return
+                }
+                
+                let savedGames = allGames.filter { game in
+                    gameTitles.contains(game.title)
+                }
+                
+                completion(savedGames)
+            }
+        }
+    }
+
     
     func fetchAllGames(completion: @escaping ([Game]?) -> Void) {
             database.child("games").observeSingleEvent(of: .value) { snapshot in
@@ -111,43 +226,50 @@ public class DatabaseManager: ObservableObject {
                 return
             }
             
-            strongSelf.database.child("users").observeSingleEvent(of: .value, with: { snapshot in
-                if var usersCollection = snapshot.value as? [[String: String]] {
-                    // append to user dictionary
-                    let newElement = [
-                        "name": user.firstName + " " + user.lastName,
-                        "email": DatabaseManager.safeEmail(emailAddress: user.emailAddress)
-                    ]
-                    usersCollection.append(newElement)
-                    
-                    strongSelf.database.child("users").setValue(usersCollection, withCompletionBlock: { error, _ in
-                        guard error == nil else {
-                            completion(false)
-                            return
-                        }
-                        
-                        completion(true)
-                    })
+            strongSelf.database.child(user.safeEmail).setValue([
+                "first_name": user.firstName,
+                "last_name": user.lastName
+            ]) { error, _ in
+                guard error == nil else {
+                    return
                 }
-                else {
-                    // create that array
-                    let newCollection: [[String: String]] = [
-                        [
+                strongSelf.database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+                    if var usersCollection = snapshot.value as? [[String: String]] {
+                        // append to user dictionary
+                        let newElement = [
                             "name": user.firstName + " " + user.lastName,
                             "email": DatabaseManager.safeEmail(emailAddress: user.emailAddress)
                         ]
-                    ]
-                    strongSelf.database.child("users").setValue(newCollection, withCompletionBlock: { error, _ in
-                        guard error == nil else {
-                            completion(false)
-                            return
-                        }
+                        usersCollection.append(newElement)
                         
-                        completion(true)
-                    })
-                }
-            })
-            
+                        strongSelf.database.child("users").setValue(usersCollection, withCompletionBlock: { error, _ in
+                            guard error == nil else {
+                                completion(false)
+                                return
+                            }
+                            
+                            completion(true)
+                        })
+                    }
+                    else {
+                        // create that array
+                        let newCollection: [[String: String]] = [
+                            [
+                                "name": user.firstName + " " + user.lastName,
+                                "email": DatabaseManager.safeEmail(emailAddress: user.emailAddress)
+                            ]
+                        ]
+                        strongSelf.database.child("users").setValue(newCollection, withCompletionBlock: { error, _ in
+                            guard error == nil else {
+                                completion(false)
+                                return
+                            }
+                            
+                            completion(true)
+                        })
+                    }
+                })
+            }
         }
     }
     

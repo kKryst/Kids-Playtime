@@ -82,9 +82,21 @@ extension UserHomeView {
             }
         
         func fetchSavedGames() {
-            DatabaseManager.shared.fetchAllGames { [weak self] games in
+            guard let userEmail = UserDefaults.standard.value(forKey: "userEmail") as? String else {
+                return
+            }
+            let safeEmail = DatabaseManager.safeEmail(emailAddress: userEmail)
+            DatabaseManager.shared.fetchSavedGames(for: safeEmail) { [weak self] games in
                 if let games {
-                    self?.games = games
+                    var modifiedGames: [Game] = []
+                    games.forEach { game in
+                        let modifiedImageURL = game.imageURL.replacingOccurrences(of: "!", with: "/")
+                                                            .replacingOccurrences(of: "_", with: ".")
+                        let modifiedGame = Game(title: game.title, imageURL: modifiedImageURL, minNumberOfPlayers: game.minNumberOfPlayers, maxNumberOfPlayers: game.maxNumberOfPlayers, longDescription: game.longDescription, estimatedTime: game.estimatedTime) // Add all necessary properties here
+                        modifiedGames.append(modifiedGame)
+                        print("modified game imageURL : \(modifiedImageURL)")
+                    }
+                    self?.games = modifiedGames
                 }
             }
         }
