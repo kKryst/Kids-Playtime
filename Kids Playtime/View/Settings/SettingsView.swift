@@ -26,10 +26,10 @@ struct SettingsView: View {
                                 .listRowSeparator(.hidden)
                                 .padding(.vertical, 8)
                             
-                            SettingsRow(title: "Notifications", imageName: "bell", isOn: $notificationsOn)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
-                                .padding(.vertical, 8)
+//                            SettingsRow(title: "Notifications", imageName: "bell", isOn: $notificationsOn)
+//                                .listRowInsets(EdgeInsets())
+//                                .listRowSeparator(.hidden)
+//                                .padding(.vertical, 8)
                         }
                         .scrollContentBackground(.hidden)
                         .background(AppColors.white)

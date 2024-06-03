@@ -21,32 +21,10 @@ extension DiscoverView {
         @Published var gameTitles: [String] = [""]
         @Published var valueFromFirebase: String = ""
         @Published var currentlySelectedGame: Game?
-        
-        
-        func readDatabase() {
-            // if we have this value cached
-            if let safeValue = UserDefaults.standard.value(forKey: "value") as? String {
-                self.valueFromFirebase = safeValue
-//                // fetch it from the Database
-            } else {
-                DatabaseManager.shared.readValue { [weak self] value in
-                    DispatchQueue.main.async {
-                        if let value {
-                            self?.valueFromFirebase = value
-                            print(value)
-                            UserDefaults.standard.set(value, forKey: "value")
-                        }
-                    }
-                }
-            }
-        }
-        // https://firebasestorage.googleapis.com/v0/b/kids-playtime.appspot.com/o/gameImages%2FBackyard-Camping-Adventure.jpg?alt=media&token=3b8d124e-f1eb-4da9-b60b-4dd92ac204ad
-        
-        // https://firebasestorage.googleapis.com/v0/b/kids/playtime.appspot.com/o/gameImages%2FBackyard/Camping/Adventure.jpg?alt=media&token=3b8d124e/f1eb/4da9/b60b/4dd92ac204ad
-        
+
         func fetchAllGames() {
             DatabaseManager.shared.fetchAllGames { [weak self] games in
-                if var games {
+                if let games {
                     var modifiedGames: [Game] = []
                     
                     games.forEach { game in
@@ -54,7 +32,6 @@ extension DiscoverView {
                                                             .replacingOccurrences(of: "_", with: ".")
                         let modifiedGame = Game(title: game.title, imageURL: modifiedImageURL, minNumberOfPlayers: game.minNumberOfPlayers, maxNumberOfPlayers: game.maxNumberOfPlayers, longDescription: game.longDescription, estimatedTime: game.estimatedTime) // Add all necessary properties here
                         modifiedGames.append(modifiedGame)
-                        print("modified game imageURL : \(modifiedImageURL)")
                     }
                     
                     self?.games = modifiedGames
@@ -71,10 +48,6 @@ extension DiscoverView {
         
         func appendGameToDB() {
             DatabaseManager.shared.addGame()
-        }
-        
-        func readGame() {
-            DatabaseManager.shared.fetchFirstGame()
         }
     }
 }

@@ -31,13 +31,12 @@ struct DiscoverView: View {
                                 height: 0
                             ).padding(20).background(Color.clear).foregroundStyle(Color.clear)
                             
-                            Text(viewModel.valueFromFirebase)
+                            Text("Spin the wheel")
                                 .font(AppFonts.bayonRegular(withSize: 48))
                                 .foregroundStyle(AppColors.darkBlue)
                                 .scaleEffect(viewModel.scale)
                                 .padding()
                                 .task {
-                                    viewModel.readDatabase()
                                     viewModel.fetchAllGames()
                                     
                                 }
@@ -90,6 +89,9 @@ struct DiscoverView: View {
                         game: viewModel.currentlySelectedGame!,
                         isActive: $viewModel.isGameDialogActive
                     )
+                    .onDisappear(perform: {
+                        viewModel.isGameDialogActive = false // hide the dialog when user leaves this view
+                    })
                     
                 }
             }

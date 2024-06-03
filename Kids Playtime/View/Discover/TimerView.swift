@@ -12,10 +12,6 @@ struct TimerView: View {
     
     var body: some View {
         HStack {
-//            Image(systemName: "clock")
-//                .resizable()
-//                .frame(width: 18, height: 18)
-//                .scaleEffect(1.5)
             Text(viewModel.getTimeString())
                 .font(AppFonts.amikoSemiBold(withSize: 24))
                 .padding(4)
@@ -30,9 +26,18 @@ struct TimerView: View {
     }
     
     private func saveElapsedTime(_ time: TimeInterval) {
-        // Implement your database saving logic here
-        print("Time elapsed: \(time) seconds")
-        // Example: DatabaseManager.shared.saveTime(time)
+        guard let userEmail = UserDefaults.standard.value(forKey: "userEmail") as? String else {
+            print("failed to fetch user email from cache")
+            return
+        }
+        print("Time elapsed: \(Double((time/60).rounded(.up))) minutes")
+        let timePlayed = Double((time/60).rounded(.up))
+        DatabaseManager.shared.addTimePlayed(for: userEmail, time: timePlayed)
+        if timePlayed >= 1 {
+            // if played long enough, adds number of games played
+            DatabaseManager.shared.addGamesPlayed(for: userEmail)
+        }
+        
     }
 }
 

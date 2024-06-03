@@ -19,7 +19,7 @@ struct UserHomeView: View {
             ZStack {
                 AppColors.white.ignoresSafeArea()
                 
-                // main view of the app
+                // main view
                 if viewModel.isUserLoggedIn {
                     ScrollView {
                         contentView
@@ -37,12 +37,16 @@ struct UserHomeView: View {
             .tint(AppColors.darkBlue)
         }
     }
-
+    
     private var contentView: some View {
         VStack {
             userHeader
             statisticsSection
-//            chartSection
+                .task {
+                    viewModel.getTimePlayed()
+                    viewModel.getGamesPlayed()
+                }
+            //            chartSection
             savedGamesSection
                 .task {
                     viewModel.fetchSavedGames()
@@ -55,7 +59,7 @@ struct UserHomeView: View {
         }
         .padding()
     }
-
+    
     private var userHeader: some View {
         HStack {
             if viewModel.userProfilePictureURL != nil {
@@ -81,7 +85,7 @@ struct UserHomeView: View {
                     .font(AppFonts.amikoSemiBold(withSize: 16))
                     .foregroundStyle(AppColors.darkBlue)
             }
-                
+            
             Spacer()
             NavigationLink(destination: UserProfileView()) {
                 Text("My Account")
@@ -103,61 +107,30 @@ struct UserHomeView: View {
             }
         }
     }
-
+    
     private var statisticsSection: some View {
         HStack(alignment: .top) {
             statisticValueView(title: "Minutes played", value: viewModel.minutesPlayed)
             statisticValueView(title: "Games played", value: viewModel.gamesPlayed)
-//            timeframePicker
         }
-    }
-
-    private var chartSection: some View {
-        Chart {
-            ForEach(Array(zip(viewModel.timeFrameData?.xValues ?? [], viewModel.timeFrameData?.yValues.map(String.init) ?? [])), id: \.0) { (xValue, yValue) in
-                BarMark(
-                    x: .value("Day", xValue),
-                    y: .value("Minutes", Int(yValue) ?? 0)
-                )
-                .cornerRadius(8)
-                .foregroundStyle(AppColors.lightBlue)
-                .annotation {
-                    Text(yValue)
-                        .foregroundStyle(AppColors.darkBlue)
-                }
-            }
-        }
-        .chartXAxis {
-            AxisMarks(values: .automatic) {
-                AxisValueLabel()
-                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                AxisGridLine()
-                    .foregroundStyle(Color.clear)
-            }
-        }
-        .chartYAxis {
-            AxisMarks(values: .automatic) {
-                AxisValueLabel()
-                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-                AxisGridLine()
-                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
-            }
-        }
-        .frame(height: 200)
         .padding()
     }
-
+    
+    //
+    
     private var savedGamesSection: some View {
-        Text("Saved games")
-            .font(AppFonts.amikoSemiBold(withSize: 24))
-            .foregroundStyle(AppColors.darkBlue)
-        return ScrollingCardsView(games: viewModel.games) { index in
-            viewModel.isGameDialogActive = true
-            viewModel.currentlySelectedGame = viewModel.games[index]
-            #warning("Po dodaniu / usunieciu z ulubonych null pointer leci")
+        return VStack {
+            Text("Saved games")
+                .font(AppFonts.amikoSemiBold(withSize: 24))
+                .foregroundStyle(AppColors.darkBlue)
+            ScrollingCardsView(games: viewModel.games) { index in
+                viewModel.isGameDialogActive = true
+                viewModel.currentlySelectedGame = viewModel.games[index]
+#warning("Po dodaniu / usunieciu z ulubonych null pointer leci")
+            }
         }
     }
-
+    
     private func statisticValueView(title: String, value: Int) -> some View {
         VStack {
             TextIncreasingValue(endValue: value, duration: 1)
@@ -169,18 +142,53 @@ struct UserHomeView: View {
         }
         .padding(.horizontal)
     }
-
-    private var timeframePicker: some View {
-        Picker("TimeFrame", selection: $viewModel.selectedTimeFrame) {
-            ForEach(TimeFrame.allCases, id: \.self) { timeFrame in
-                Text(timeFrame.rawValue.capitalized)
-            }
-        }
-        .background(RoundedRectangle(cornerRadius: 20, style: .circular).foregroundStyle(AppColors.lightBlue).opacity(0.1))
-        .tint(AppColors.darkBlue)
-        .padding()
-    }
 }
+//    private var timeframePicker: some View {
+//        Picker("TimeFrame", selection: $viewModel.selectedTimeFrame) {
+//            ForEach(TimeFrame.allCases, id: \.self) { timeFrame in
+//                Text(timeFrame.rawValue.capitalized)
+//            }
+//        }
+//        .background(RoundedRectangle(cornerRadius: 20, style: .circular).foregroundStyle(AppColors.lightBlue).opacity(0.1))
+//        .tint(AppColors.darkBlue)
+//        .padding()
+//    }
+
+//    private var chartSection: some View {
+//        Chart {
+//            ForEach(Array(zip(viewModel.timeFrameData?.xValues ?? [], viewModel.timeFrameData?.yValues.map(String.init) ?? [])), id: \.0) { (xValue, yValue) in
+//                BarMark(
+//                    x: .value("Day", xValue),
+//                    y: .value("Minutes", Int(yValue) ?? 0)
+//                )
+//                .cornerRadius(8)
+//                .foregroundStyle(AppColors.lightBlue)
+//                .annotation {
+//                    Text(yValue)
+//                        .foregroundStyle(AppColors.darkBlue)
+//                }
+//            }
+//        }
+//        .chartXAxis {
+//            AxisMarks(values: .automatic) {
+//                AxisValueLabel()
+//                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+//                AxisGridLine()
+//                    .foregroundStyle(Color.clear)
+//            }
+//        }
+//        .chartYAxis {
+//            AxisMarks(values: .automatic) {
+//                AxisValueLabel()
+//                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+//                AxisGridLine()
+//                    .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+//            }
+//        }
+//        .frame(height: 200)
+//        .padding()
+//    }
+
 
 
 #Preview {

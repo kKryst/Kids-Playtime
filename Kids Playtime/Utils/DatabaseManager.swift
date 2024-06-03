@@ -13,8 +13,6 @@ import FirebaseDatabaseSwift
 /// database connection class Singleton
 public class DatabaseManager: ObservableObject {
     
-    
-    
     static let shared = DatabaseManager() // Singleton instance
     
     private var database = Database.database(url: Constants.databaseUrl).reference()
@@ -23,6 +21,131 @@ public class DatabaseManager: ObservableObject {
         var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
         safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
         return safeEmail
+    }
+    
+    func addGameRate(for email: String, title: String, rate: GameRate) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+            
+            // Find all games
+            DatabaseManager.shared.fetchAllGames { [weak self] allGames in
+                guard var allGames = allGames else {
+                    return
+                }
+                
+                var gameToRate: Game? = nil
+                // Search for a game with title == title
+                var gameIndex = 0
+                for index in 0..<allGames.count {
+                    if allGames[index].title == title {
+                        gameToRate = allGames[index]
+                        gameIndex = index
+//                        return
+                    }
+                }
+                
+                guard var gameToRate else {
+                    return
+                }
+                
+                // Add rate to it
+                var existingRates = gameToRate.rates ?? []
+                existingRates.append(rate)
+                gameToRate.rates = existingRates
+                
+                // Remove the old game and add the updated one
+                allGames.removeAll(where: { $0.title == title })
+                allGames.insert(gameToRate, at: gameIndex)
+                
+                // Convert all games to dictionaries
+                let gamesDictionaries = allGames.map { $0.toDictionary() }
+                
+                // Update the games in the database
+                self?.database.child("games").setValue(gamesDictionaries) { error, _ in
+                    if let error = error {
+                        print("Failed to update games: \(error)")
+                        return
+                    }
+                }
+            }
+            
+        
+        
+        database.child(safeEmail).child("ratedGames").observeSingleEvent(of: .value) { snapshot in
+            if var ratedGamesCollection = snapshot.value as? [[String: Any]] {
+                // append to savedGames dictionary
+                let newElement = [
+                    "title": title
+                ]
+                ratedGamesCollection.append(newElement)
+                
+                self.database.child(safeEmail).child("ratedGames").setValue(ratedGamesCollection)
+            }
+            else {
+                // create that array
+                let newRatedGamesCollection: [[String: String]] = [
+                    [
+                        "title": title
+                    ]
+                ]
+                self.database.child(safeEmail).child("ratedGames").setValue(newRatedGamesCollection)
+            }
+        }
+       
+    }
+    
+    func addGamesPlayed(for email: String) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        let gamesPlayedRef = database.child(safeEmail).child("gamesPlayed")
+        gamesPlayedRef.observeSingleEvent(of: .value) { snapshot in
+            if let gamesPlayed = snapshot.value as? Int {
+                let tempGamesPlayed = gamesPlayed + 1
+                gamesPlayedRef.setValue(tempGamesPlayed)
+            } else {
+                gamesPlayedRef.setValue(1)
+            }
+        }
+        
+    }
+    
+    func getGamesPlayed(for email: String, completion: @escaping (Int) -> Void) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        let gamesPlayedRef = database.child(safeEmail).child("gamesPlayed")
+        
+        gamesPlayedRef.observeSingleEvent(of: .value) { snapshot in
+            guard let gamesPlayed = snapshot.value as? Int else {
+                completion(0)
+                return
+            }
+            
+            completion(gamesPlayed)
+        }
+    }
+    
+    func addTimePlayed(for email: String, time: Double) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        let timePlayedRef = database.child(safeEmail).child("gamesPlayed")
+        
+        timePlayedRef.observeSingleEvent(of: .value) { snapshot in
+            if let timeSpend = snapshot.value as? Double {
+                //value already exsists. Add to it
+                let tempTimeSpend = timeSpend + time
+                timePlayedRef.setValue(tempTimeSpend)
+            } else {
+                timePlayedRef.setValue(time)
+            }
+        }
+    }
+    
+    func getTimePlayed(for email: String, completion: @escaping (Double) -> Void) {
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        database.child(safeEmail).child("timePlayed").observeSingleEvent(of: .value) { snapshot in
+            guard let time = snapshot.value as? Double else {
+                completion(0.0)
+                return
+            }
+            
+            completion(time)
+        }
     }
     
      func isGameAlreadyAddedToFavorites(email: String, title: String, completion: @escaping (Bool) -> Void) {
@@ -109,16 +232,6 @@ public class DatabaseManager: ObservableObject {
         })
     }
 
-    
-    func readValue(completion: @escaping (String?) -> Void) {
-        let child = database.child("value")
-        
-        child.observeSingleEvent(of: .value) { snapshot in
-            let value = snapshot.value as? String
-            completion(value)
-        }
-    }
-    
     func fetchSavedGames(for email: String, completion: @escaping ([Game]?) -> Void) {
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         database.child(safeEmail).child("savedGames").observeSingleEvent(of: .value) { snapshot in
@@ -274,29 +387,22 @@ public class DatabaseManager: ObservableObject {
     }
     
     func addGame() {
-        let firstGame: [[String: Any]] = [[
+        let game: [[String: Any]] = [[
             "date" : "20240520130855",
-            "title": "Test game 3",
+            "title": "Test game",
             "imageURL" : "https://picsum.photos/id/237/200/300",
             "minNumberOfPlayers" : 4,
             "maxNumberOfPlayers": 8,
-            "longDescription": "This is a long desc for game 3 This is a long desc for game 3 This is a long desc for game 1 This is a long desc for game 1 This is a long desc for game 1 This is a long desc for game 1 This is a long desc for game 1 ",
+            "longDescription": "This is a long desc for game This is a long desc for game 3 This is a long desc for game 1 This is a long desc for game 1 This is a long desc for game 1 This is a long desc for game 1 This is a long desc for game 1 ",
             "estimatedTime": 90,
             
         ]]
         database.child("games").observeSingleEvent(of: .value, with: { [weak self] snapshot in
             if var  games = snapshot.value as? [[String: Any]] {
-                games.append(contentsOf: firstGame)
+                games.append(contentsOf: game)
                 self?.database.child("games").setValue(games)
             }
         })
-    }
-    
-    func fetchFirstGame() {
-        database.child("games").observeSingleEvent(of: .value) { snapshot in
-            let games = snapshot.value as? [[String : Any]]
-            print(games)
-        }
     }
     
     public enum DatabaseError: Error {

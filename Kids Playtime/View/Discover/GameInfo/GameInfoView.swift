@@ -113,7 +113,7 @@ struct GameInfoView: View {
             }
         }
         .sheet(isPresented: $shouldPresentOpinionSheet, content: {
-            GameOpinionView()
+            GameOpinionView(gameTitle: game.title)
                 .onDisappear(perform: {
                     if viewRouter.shouldNavigateBackTwice {
                         viewRouter.shouldNavigateBackTwice = false

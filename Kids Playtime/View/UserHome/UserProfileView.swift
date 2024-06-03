@@ -119,8 +119,8 @@ struct UserProfileView: View {
                                         let filename = StorageManager.getFileName(for: userEmail)
                                         StorageManager.shared.uploadProfilePicture(with: imageData, fileName: filename) { result in
                                             switch result {
-                                            case .success(let downloadURL):
-                                                print(downloadURL)
+                                            case .success:
+                                                print("")
                                             case .failure(let error):
                                                 print("Storage manager error: \(error)")
                                             }

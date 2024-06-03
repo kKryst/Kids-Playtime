@@ -9,18 +9,15 @@ import SwiftUI
 
 struct GameOpinionView: View {
     
-    @State var additionalNote: String = ""
-    @State var rate = 1
-    
-    @State var kidEngagementButton = false
-    @State var fitToAgeButton = false
-    @State var wasFunGameButton = false
-    @State var willPlayAganButton = false
+    @StateObject private var viewModel = ViewModel()
     
     @FocusState private var isFirstResponder :Bool
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var viewRouter: ViewRouter
+    
+    let gameTitle: String
+    
     
     var body: some View {
         ZStack {
@@ -44,7 +41,7 @@ struct GameOpinionView: View {
                     }
                     .padding(.horizontal)
                     
-                    StarRatingView(rating: $rate)
+                    StarRatingView(rating: $viewModel.rate)
                     
                     Divider()
                         .padding()
@@ -59,17 +56,17 @@ struct GameOpinionView: View {
                     .padding(.vertical, 4)
                     
                     HStack {
-                        FeedbackButton(buttonTapped: $kidEngagementButton, title: "Kids liked it")
-                        FeedbackButton(buttonTapped: $fitToAgeButton, title: "Fit to age")
+                        FeedbackButton(buttonTapped: $viewModel.kidEngagementButton, title: "Kids liked it")
+                        FeedbackButton(buttonTapped: $viewModel.fitToAgeButton, title: "Fit to age")
                     }
                     HStack {
-                        FeedbackButton(buttonTapped: $wasFunGameButton, title: "Game was fun")
-                        FeedbackButton(buttonTapped: $willPlayAganButton, title: "Will play again")
+                        FeedbackButton(buttonTapped: $viewModel.wasFunGameButton, title: "Game was fun")
+                        FeedbackButton(buttonTapped: $viewModel.willPlayAganButton, title: "Will play again")
                     }
                     Divider()
                         .padding()
                     
-                    TextField("Tell us more about this game...", text: $additionalNote)
+                    TextField("Tell us more about this game...", text: $viewModel.additionalNote)
                         .font(AppFonts.amikoRegular(withSize: 16))
                         .foregroundColor(AppColors.darkBlue)
                         .frame(maxWidth: .infinity)
@@ -78,6 +75,7 @@ struct GameOpinionView: View {
                         .focused($isFirstResponder)
                     
                     Button{
+                        viewModel.addGameRating(gameTitle: gameTitle)
                         viewRouter.shouldNavigateBackTwice = true
                         dismiss()
                         
@@ -101,7 +99,7 @@ struct GameOpinionView: View {
 }
 
 #Preview {
-    GameOpinionView()
+    GameOpinionView(gameTitle: "Test")
 }
 
 

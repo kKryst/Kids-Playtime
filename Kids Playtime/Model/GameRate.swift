@@ -14,5 +14,18 @@ struct GameRate: Codable {
     let wasFunGameButton: Bool
     let willPlayAganButton: Bool
     let additionalNote: String
+    let ratingUserEmail: String
     
+    func toDictionary() -> [String: Any] {
+        return [
+            "rate": rate,
+            "kidEngagementButton": kidEngagementButton,
+            "fitToAgeButton": fitToAgeButton,
+            "wasFunGameButton": wasFunGameButton,
+            "willPlayAganButton": willPlayAganButton,
+            "additionalNote": additionalNote,
+            "ratingUserEmail": ratingUserEmail
+        ]
+    }
 }
+
