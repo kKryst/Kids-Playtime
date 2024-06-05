@@ -46,22 +46,27 @@ struct DiscoverView: View {
                                     }
                                 }
                             
-                            WheelFortune(titles: viewModel.gameTitles, size: 320, onSpinEnd: { index in
-                                viewModel.isGameDialogActive = true
-                                viewModel.currentlySelectedGame = viewModel.games[index]
-                            }, colors: AppColors.wheelColors, onSpinStart: {
-                            })
-                            .padding()
-                            .overlay {
-                                // adds icon on the wheel
-                                VStack {
-                                    Image(systemName: "hand.tap.fill")
-                                        .resizable()
-                                        .frame(width: 64, height: 64)
-                                        .scaleEffect(viewModel.scale)
-                                        .foregroundStyle(AppColors.darkBlue)
+                            if viewModel.gameTitles != nil && viewModel.games != nil {
+                                WheelFortune(titles: viewModel.gameTitles!, size: 320, onSpinEnd: { index in
+                                    viewModel.isGameDialogActive = true
+                                    viewModel.currentlySelectedGame = viewModel.games![index]
+                                }, colors: AppColors.wheelColors, onSpinStart: {
+                                })
+                                .padding()
+                                .overlay {
+                                    // adds icon on the wheel
+                                    VStack {
+                                        Image(systemName: "hand.tap.fill")
+                                            .resizable()
+                                            .frame(width: 64, height: 64)
+                                            .scaleEffect(viewModel.scale)
+                                            .foregroundStyle(AppColors.darkBlue)
+                                    }
+                                    
                                 }
-                                
+                            } else {
+                                ProgressView()
+                                    .frame(width: 320 ,height: 320)
                             }
                         }
                         Text("Games for today")
@@ -70,11 +75,17 @@ struct DiscoverView: View {
                             .padding()
                         
                         // autoscroller
-                        ScrollingCardsView(games: viewModel.games)
-                        { index in
-                            viewModel.isGameDialogActive = true
-                            viewModel.currentlySelectedGame = viewModel.games[index]
+                        if viewModel.games != nil {
+                            ScrollingCardsView(games: viewModel.games!)
+                            { index in
+                                viewModel.isGameDialogActive = true
+                                viewModel.currentlySelectedGame = viewModel.games![index]
+                            }
+                        } else {
+                            ProgressView()
+                                .frame(width: 320, height: 320)
                         }
+                        
                         // spacer to allow scrolling below TabBar
                         Rectangle()
                             .frame(height:20)

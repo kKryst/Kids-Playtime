@@ -19,12 +19,15 @@ struct HomeView: View {
             UserHomeView()
                 .tag(1)
                 .toolbarBackground(.hidden, for: .tabBar)
+                .toolbar(.hidden, for: .tabBar)
             DiscoverView()
-                .toolbarBackground(.hidden, for: .tabBar)
                 .tag(2)
+                .toolbarBackground(.hidden, for: .tabBar)
+                .toolbar(.hidden, for: .tabBar)
             SettingsView()
                 .tag(3)
                 .toolbarBackground(.hidden, for: .tabBar)
+                .toolbar(.hidden, for: .tabBar)
         }
         
         .overlay(alignment: .bottom) { // overlays this view with currently selected TabItem

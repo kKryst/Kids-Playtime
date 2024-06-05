@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct GameDialogView: View {
     
     let game: Game
     @State private var offset: CGFloat = 1000
     @State private var isImageVisible: Bool = false
+    @State var isFavourite = false
     @Binding var isActive: Bool
     
     var body: some View {
@@ -34,10 +36,10 @@ struct GameDialogView: View {
                 .padding(8)
                 .frame(width: 200, height: 200)
                 .opacity(isImageVisible ? 1.0 : 0.0)  // Control visibility based on state
-                .offset(y: offset)
+//                .offset(y: offset)
                 .onAppear {
                     withAnimation(.easeOut(duration: 1.0)) {
-                        offset = 0  // Animate offset to 0
+                        offset = -30  // Animate offset to 0
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         isImageVisible = true  // Make the image visible after the offset animation
@@ -48,30 +50,59 @@ struct GameDialogView: View {
                     Text(game.title).font(AppFonts.amikoSemiBold(withSize: 24)).foregroundStyle(AppColors.darkBlue.opacity(0.9))
                     Spacer()
                 }
+                HStack {
+                    //                    Spacer()
+                    ScrollView(showsIndicators: true) {
+                        Text(game.longDescription)
+                            .font(AppFonts.amikoRegular(withSize: 16))
+                            .foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                    }
+                    //                    Spacer()
+                }
+                .frame(maxWidth: .infinity, maxHeight: 150)
                 HStack (spacing: 30){
                     VStack {
-                        Text("players").font(AppFonts.amikoSemiBold(withSize: 18)).foregroundStyle(AppColors.darkBlue.opacity(0.9))
-                        Text("\(game.minNumberOfPlayers)-\(game.maxNumberOfPlayers)").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                        Text("players")
+                            .font(AppFonts.amikoSemiBold(withSize: 18))
+                            .foregroundStyle(AppColors.darkBlue.opacity(0.9))
+                        Text("\(game.minNumberOfPlayers)-\(game.maxNumberOfPlayers)")
+                            .font(AppFonts.amikoRegular(withSize: 16))
+                            .foregroundStyle(AppColors.darkBlue.opacity(0.7))
                     }
                     VStack {
                         Text("est. time").font(AppFonts.amikoSemiBold(withSize: 18)).foregroundStyle(AppColors.darkBlue)
-                        Text("\(game.estimatedTime)").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
+                        Text("\(game.estimatedTime) min").font(AppFonts.amikoRegular(withSize: 16)).foregroundStyle(AppColors.darkBlue.opacity(0.7))
                     }
                 }
                 HStack {
                     Button(action: {
-                        close()
+                        toggleFavourite()
                     }, label: {
-                        Text("Cancel")
-                            .fontWeight(.bold)
-                            .font(AppFonts.amikoRegular(withSize: 16))
-                            .foregroundColor(AppColors.lightBlue)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(AppColors.lightBlue, lineWidth: 1)
-                            )
+                        HStack {
+                            Image(systemName: isFavourite ? "heart.fill" : "heart")
+                                .foregroundStyle(AppColors.pink)
+                                .scaleEffect(1.5)
+                            Text("Save")
+                                .fontWeight(.bold)
+                                .font(AppFonts.amikoRegular(withSize: 18))
+                                .foregroundColor(AppColors.lightBlue)
+                            
+                        }
+                        .padding()
+                        .frame(width: 120)
+                        .cornerRadius(12)
+                        .background(AppColors.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(AppColors.lightBlue, lineWidth: 2)
+                        )
+                        .task {
+                            if Auth.auth().currentUser != nil {
+                                isGameFavourite { result in
+                                    isFavourite = result
+                                }
+                            }
+                        }
                     })
                     NavigationLink {
                         GameInfoView(game: game) // navigate to GameInfoView
@@ -88,7 +119,7 @@ struct GameDialogView: View {
                     }
                 }
             }
-            .fixedSize(horizontal: false, vertical: true)
+            //            .fixedSize(horizontal: false, vertical: true)
             .padding()
             .background(AppColors.white)
             .clipShape(RoundedRectangle(cornerRadius: 20.0))
@@ -97,7 +128,7 @@ struct GameDialogView: View {
             .offset(x: 0, y: offset)
             .onAppear {
                 withAnimation(.spring) {
-                    offset = 0
+                    offset = -30
                 }
             }
         }
@@ -110,8 +141,51 @@ struct GameDialogView: View {
             offset = 1000
         }
     }
+    
+    func isGameFavourite(completion: @escaping (Bool) -> Void) {
+        // Get user's email
+        guard let email = UserDefaults.standard.value(forKey: "userEmail") as? String else {
+            completion(false) // User is not logged in so game is not fav
+            return
+        }
+        
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        DatabaseManager.shared.isGameAlreadyAddedToFavorites(email: safeEmail, title: game.title) { result in
+            completion(result)
+        }
+    }
+    
+    func toggleFavourite() {
+        guard let email = UserDefaults.standard.value(forKey: "userEmail") as? String else {
+            return // user is not logged in so game is not fav
+        }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        isGameFavourite { isFavorite in
+            if isFavorite {
+                DatabaseManager.shared.removeGameFromFavorites(email: safeEmail, title: game.title) { result in
+                    switch result {
+                    case .success:
+                        print("succesfully removed game from favorites")
+                        isFavourite = false
+                    case .failure:
+                        print("failed to remove game from favorites")
+                    }
+                }
+            } else {
+                DatabaseManager.shared.addGameToFavoutires(for: safeEmail, title: game.title) { result in
+                    switch result {
+                    case .success:
+                        print("Succesfully added game to favourites")
+                        isFavourite = true
+                    case .failure:
+                        print("Failed to add game to favorites")
+                    }
+                }
+            }
+        }
+    }
 }
 
 #Preview {
-    GameDialogView(game: Game(title: "Test 1", imageURL: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg", minNumberOfPlayers: 5, maxNumberOfPlayers: 30, longDescription: "This is a long desc ", estimatedTime: 30), isActive: .constant(true))
+    GameDialogView(game: Game(title: "Test 1", imageURL: "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg", minNumberOfPlayers: 5, maxNumberOfPlayers: 30, longDescription: "This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc This is a long desc ", estimatedTime: 30), isActive: .constant(true))
 }

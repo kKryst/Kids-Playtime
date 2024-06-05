@@ -62,42 +62,19 @@ struct UserHomeView: View {
     
     private var userHeader: some View {
         HStack {
-            if viewModel.userProfilePictureURL != nil {
-                AsyncImage(url: viewModel.userProfilePictureURL) { image in
-                    image.image?.resizable()
-                }
-                .foregroundStyle(AppColors.darkBlue)
-                .clipShape(Circle())
-                .frame(width: 64, height: 64)
-                .aspectRatio(contentMode: .fill)
-                .padding(8)
-                .shadow(radius: 3)
-            } else {
-                ProgressView()
-                    .frame(width: 64, height: 64)
+            NavigationLink(destination: UserProfileView()) {
+                userProfilePicture(url: viewModel.userProfilePictureURL)
             }
             if let userName = UserDefaults.standard.value(forKey: "name") as? String {
                 Text("\(userName)")
-                    .font(AppFonts.amikoSemiBold(withSize: 16))
+                    .font(AppFonts.amikoSemiBold(withSize: 18))
                     .foregroundStyle(AppColors.darkBlue)
             } else {
                 Text("User")
-                    .font(AppFonts.amikoSemiBold(withSize: 16))
+                    .font(AppFonts.amikoSemiBold(withSize: 18))
                     .foregroundStyle(AppColors.darkBlue)
             }
-            
             Spacer()
-            NavigationLink(destination: UserProfileView()) {
-                Text("My Account")
-                    .fontWeight(.bold)
-                    .font(AppFonts.amikoRegular(withSize: 16))
-                    .foregroundColor(.white)
-                    .padding(.vertical, 5)
-                    .padding(.horizontal, 15)
-                    .background(AppColors.orange)
-                    .cornerRadius(30)
-                    .padding()
-            }
         }
         .background(RoundedRectangle(cornerRadius: 20, style: .circular).fill(AppColors.lightBlue.opacity(0.1)))
         .padding(.horizontal, -10)
@@ -142,6 +119,45 @@ struct UserHomeView: View {
         }
         .padding(.horizontal)
     }
+    
+    private func userProfilePicture(url: URL?) -> some View {
+        if let url = url {
+            return AnyView(
+                CachedAsyncImage(url: url) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .frame(width: 64, height: 64)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .foregroundStyle(AppColors.darkBlue)
+                            .clipShape(Circle())
+                            .frame(width: 64, height: 64)
+                            .aspectRatio(contentMode: .fill)
+                            .padding(8)
+                            .shadow(radius: 3)
+                    case .failure:
+                        Image(systemName: "photo")
+                            .resizable()
+                            .clipShape(Circle())
+                            .frame(width: 64, height: 64)
+                            .aspectRatio(contentMode: .fill)
+                            .padding(8)
+                            .shadow(radius: 3)
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+            )
+        } else {
+            return AnyView(
+                ProgressView()
+                    .frame(width: 64, height: 64)
+            )
+        }
+    }
+
 }
 //    private var timeframePicker: some View {
 //        Picker("TimeFrame", selection: $viewModel.selectedTimeFrame) {

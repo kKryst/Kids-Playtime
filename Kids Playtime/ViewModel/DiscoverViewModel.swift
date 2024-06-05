@@ -17,9 +17,8 @@ extension DiscoverView {
         @Published var isGameDialogActive = false
         @Published var scale: CGFloat = 1.0
         @Published var isWheelSpinning = false
-        @Published var games: [Game] = []
-        @Published var gameTitles: [String] = [""]
-        @Published var valueFromFirebase: String = ""
+        @Published var games: [Game]? = nil
+        @Published var gameTitles: [String]? = nil
         @Published var currentlySelectedGame: Game?
 
         func fetchAllGames() {
