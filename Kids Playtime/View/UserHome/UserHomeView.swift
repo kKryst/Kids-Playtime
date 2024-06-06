@@ -36,6 +36,7 @@ struct UserHomeView: View {
             }
             .tint(AppColors.darkBlue)
         }
+        .tint(AppColors.darkBlue)
     }
     
     private var contentView: some View {
@@ -103,7 +104,6 @@ struct UserHomeView: View {
             ScrollingCardsView(games: viewModel.games) { index in
                 viewModel.isGameDialogActive = true
                 viewModel.currentlySelectedGame = viewModel.games[index]
-#warning("Po dodaniu / usunieciu z ulubonych null pointer leci")
             }
         }
     }
@@ -131,18 +131,17 @@ struct UserHomeView: View {
                     case .success(let image):
                         image
                             .resizable()
-                            .foregroundStyle(AppColors.darkBlue)
+                            .aspectRatio(contentMode: .fit)
                             .clipShape(Circle())
                             .frame(width: 64, height: 64)
-                            .aspectRatio(contentMode: .fill)
                             .padding(8)
                             .shadow(radius: 3)
                     case .failure:
                         Image(systemName: "photo")
                             .resizable()
+                            .aspectRatio(contentMode: .fit)
                             .clipShape(Circle())
                             .frame(width: 64, height: 64)
-                            .aspectRatio(contentMode: .fill)
                             .padding(8)
                             .shadow(radius: 3)
                     @unknown default:

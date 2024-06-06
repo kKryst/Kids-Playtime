@@ -58,8 +58,6 @@ struct SettingsView: View {
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                             .padding(.vertical, 8)
-                        
-                            
                         }
                         
                         .scrollContentBackground(.hidden)

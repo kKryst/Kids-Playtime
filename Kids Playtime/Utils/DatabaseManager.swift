@@ -39,7 +39,6 @@ public class DatabaseManager: ObservableObject {
                     if allGames[index].title == title {
                         gameToRate = allGames[index]
                         gameIndex = index
-//                        return
                     }
                 }
                 

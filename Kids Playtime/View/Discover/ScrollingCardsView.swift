@@ -28,7 +28,7 @@ struct ScrollingCardsView: View { // find a better name for that
                         ForEach(0..<games.count, id: \.self) { index in
                             ZStack(alignment: .center) {
                                 VStack (alignment: .center){
-                                    CachedAsyncImage(url: URL(string: "\(games[index].imageURL)")) { image in
+                                    AsyncImage(url: URL(string: "\(games[index].imageURL)")) { image in
                                         image.resizable() // Makes the image resizable, cached automatically
                                     } placeholder: {
                                         ProgressView() // Placeholder while the image is loading

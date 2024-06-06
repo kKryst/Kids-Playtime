@@ -58,7 +58,7 @@ struct UserProfileView: View {
                             .resizable()
                             .clipShape(Circle())
                             .frame(width: 64, height: 64)
-                            .aspectRatio(contentMode: .fill)
+                            .aspectRatio(contentMode: .fit)
                             .padding(8)
                             .shadow(radius: 3)
                     }
@@ -71,17 +71,17 @@ struct UserProfileView: View {
                             case .success(let image):
                                 image
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .clipShape(Circle())
                                     .frame(width: 64, height: 64)
-                                    .aspectRatio(contentMode: .fill)
                                     .padding(8)
                                     .shadow(radius: 3)
                             case .failure:
                                 Image(systemName: "photo")
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .clipShape(Circle())
                                     .frame(width: 64, height: 64)
-                                    .aspectRatio(contentMode: .fill)
                                     .padding(8)
                                     .shadow(radius: 3)
                             @unknown default:
