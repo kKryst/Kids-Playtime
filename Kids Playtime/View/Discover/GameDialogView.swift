@@ -107,6 +107,10 @@ struct GameDialogView: View {
                     NavigationLink {
                         GameInfoView(game: game) // navigate to GameInfoView
                             .navigationBarBackButtonHidden()
+                            .onAppear {
+                                NotificationManager.shared.askForPermissionToSendNotifications()
+                                NotificationManager.shared.createNotification(gameTitle: game.title)
+                            }
                     } label: {
                         Text("Start playing")
                             .fontWeight(.bold)
@@ -119,7 +123,6 @@ struct GameDialogView: View {
                     }
                 }
             }
-            //            .fixedSize(horizontal: false, vertical: true)
             .padding()
             .background(AppColors.white)
             .clipShape(RoundedRectangle(cornerRadius: 20.0))

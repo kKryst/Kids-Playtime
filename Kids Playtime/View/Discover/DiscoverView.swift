@@ -100,16 +100,16 @@ struct DiscoverView: View {
                         scrollReader.scrollTo(1) // scrolls to top when user enters this view
                     }
                     .scrollIndicators(.hidden) // hides trailing scroll bar
-                    if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { // pops off when a game is selected / drawn by the wheel
-                        GameDialogView(
-                            game: viewModel.currentlySelectedGame!,
-                            isActive: $viewModel.isGameDialogActive
-                        )
-                        .onDisappear(perform: {
-                            viewModel.isGameDialogActive = false // hide the dialog when user leaves this view
-                        })
-                        
-                    }
+                }
+                if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { // pops off when a game is selected / drawn by the wheel
+                    GameDialogView(
+                        game: viewModel.currentlySelectedGame!,
+                        isActive: $viewModel.isGameDialogActive
+                    )
+                    .onDisappear(perform: {
+                        viewModel.isGameDialogActive = false // hide the dialog when user leaves this view
+                    })
+                    
                 }
             }
         }

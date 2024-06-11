@@ -126,6 +126,7 @@ struct GameInfoView: View {
             viewRouter.shouldDisplayTabView = false
         }
         .onDisappear(perform: {
+            NotificationManager.shared.removeNotificationFromQueue()
             viewRouter.shouldDisplayTabView = true
         })
         
