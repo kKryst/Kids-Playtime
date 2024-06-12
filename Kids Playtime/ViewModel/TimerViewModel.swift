@@ -37,6 +37,20 @@ extension TimerView {
                     return String(format: "%02d:%02d", minutes, seconds)
                 }
             }
+        
+        func saveElapsedTime() {
+            guard let userEmail = UserDefaults.standard.value(forKey: "userEmail") as? String else {
+                print("failed to fetch user email from cache")
+                return
+            }
+            let timePlayed = Double((timeElapsed/60).rounded(.up))
+            if timePlayed >= 5 {
+                // if played for long enough, adds number of games played and minutes
+                DatabaseManager.shared.addTimePlayed(for: userEmail, time: timePlayed)
+                DatabaseManager.shared.addGamesPlayed(for: userEmail)
+            }
+            
+        }
     }
     
 }

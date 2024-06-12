@@ -14,6 +14,8 @@ extension UserHomeView {
     class ViewModel: ObservableObject {
         
         @Published var isUserLoggedIn: Bool = Auth.auth().currentUser != nil
+        @Published var currentlyLoggedInUser = Auth.auth().currentUser?.email
+        @Published var userName = "User"
         @Published var minutesPlayed = 0
         @Published var gamesPlayed = 0
         @Published var isGameDialogActive = false
@@ -21,6 +23,7 @@ extension UserHomeView {
         @Published var currentlySelectedGame: Game? = nil
         
         @Published var userProfilePictureURL: URL? = nil
+        @Published var currentlyLoggedInUserEmail: String?
         
         private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
         
@@ -36,6 +39,17 @@ extension UserHomeView {
                 }
             }
         
+        func getUserName() {
+            if let cachedUserName = UserDefaults.standard.value(forKey: "name") as? String {
+                userName = cachedUserName
+            } else if var userNameFromAuthProvider = Auth.auth().currentUser?.displayName {
+                userNameFromAuthProvider =  userNameFromAuthProvider.split(separator: " ").first.map(String.init) ?? userNameFromAuthProvider
+                userName = userNameFromAuthProvider
+            } else {
+                userName = "User"
+            }
+        }
+        
         func getTimePlayed() {
             guard let userEmail = UserDefaults.standard.value(forKey: "userEmail") as? String else {
                 return
@@ -45,6 +59,22 @@ extension UserHomeView {
                     self?.minutesPlayed = Int(value)
                 }
             }
+        }
+        
+        func checkIfUserHasChanged() -> Bool {
+            let userEmail = UserDefaults.standard.value(forKey: "userEmail") as? String
+            let userEmailFromAuthProvider = Auth.auth().currentUser?.email
+            if let userEmail, let userEmailFromAuthProvider {
+                let safeUserEmail = DatabaseManager.safeEmail(emailAddress: userEmail)
+                let safeUserEmailFromAuthProvider = DatabaseManager.safeEmail(emailAddress: userEmailFromAuthProvider)
+                print("safeEmail: \(safeUserEmail) vs safeEmailFromAuth: \(safeUserEmailFromAuthProvider)")
+                if safeUserEmail != safeUserEmailFromAuthProvider {
+                    print("User has changed...")
+                    return true
+                }
+            }
+            print("User has not changed...")
+            return false
         }
         
         func getGamesPlayed() {

@@ -66,23 +66,16 @@ struct UserHomeView: View {
             NavigationLink(destination: UserProfileView()) {
                 userProfilePicture(url: viewModel.userProfilePictureURL)
             }
-            if let userName = UserDefaults.standard.value(forKey: "name") as? String {
-                Text("\(userName)")
-                    .font(AppFonts.amikoSemiBold(withSize: 18))
-                    .foregroundStyle(AppColors.darkBlue)
-            } else {
-                Text("User")
-                    .font(AppFonts.amikoSemiBold(withSize: 18))
-                    .foregroundStyle(AppColors.darkBlue)
-            }
+            Text(viewModel.userName)
+                .font(AppFonts.amikoSemiBold(withSize: 18))
+                .foregroundStyle(AppColors.darkBlue)
             Spacer()
         }
         .background(RoundedRectangle(cornerRadius: 20, style: .circular).fill(AppColors.lightBlue.opacity(0.1)))
         .padding(.horizontal, -10)
         .task {
-            if viewModel.userProfilePictureURL == nil {
-                viewModel.getUserProfilePictureURL()
-            }
+            viewModel.getUserName()
+            viewModel.getUserProfilePictureURL()
         }
     }
     
@@ -151,8 +144,13 @@ struct UserHomeView: View {
             )
         } else {
             return AnyView(
-                ProgressView()
+                Image(systemName: "photo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .clipShape(Circle())
                     .frame(width: 64, height: 64)
+                    .padding(8)
+                    .shadow(radius: 3)
             )
         }
     }

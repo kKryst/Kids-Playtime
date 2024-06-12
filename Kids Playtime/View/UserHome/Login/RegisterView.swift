@@ -24,6 +24,7 @@ struct RegisterView: View {
                 .font(AppFonts.amikoRegular(withSize: 18))
                 .foregroundStyle(AppColors.darkBlue)
                 .padding()
+                .autocapitalization(.none)
                 .background(Color.white)
                 .cornerRadius(10)
                 .overlay(
