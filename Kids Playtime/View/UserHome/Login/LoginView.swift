@@ -137,9 +137,6 @@ struct LoginView: View {
             .onTapGesture {
                 showAlert = false
             }
-            .onAppear(perform: {
-                UserDefaults.standard.setValue(nil, forKey: "userEmail")
-            })
         }
     }
 }

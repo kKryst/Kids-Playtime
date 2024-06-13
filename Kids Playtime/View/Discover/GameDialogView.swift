@@ -8,8 +8,9 @@
 import SwiftUI
 import FirebaseAuth
 
+
+// animations disabled due to problem with gamecardView not appearing when user disables card when the animation is still running
 struct GameDialogView: View {
-    
     let game: Game
     @State private var offset: CGFloat = 1000
     @State private var isImageVisible: Bool = false
@@ -35,29 +36,23 @@ struct GameDialogView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 17.0))
                 .padding(8)
                 .frame(width: 200, height: 200)
-                .opacity(isImageVisible ? 1.0 : 0.0)  // Control visibility based on state
-//                .offset(y: offset)
-                .onAppear {
-                    withAnimation(.easeOut(duration: 1.0)) {
-                        offset = -30  // Animate offset to 0
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        isImageVisible = true  // Make the image visible after the offset animation
-                    }
-                }
+//                .opacity(isImageVisible ? 1.0 : 0.0)  // Control visibility based on state
+//                .onAppear {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+//                        isImageVisible = true  // Make the image visible after the offset animation
+//                    }
+//                }
                 HStack {
                     Spacer()
                     Text(game.title).font(AppFonts.amikoSemiBold(withSize: 24)).foregroundStyle(AppColors.darkBlue.opacity(0.9))
                     Spacer()
                 }
                 HStack {
-                    //                    Spacer()
                     ScrollView(showsIndicators: true) {
                         Text(game.longDescription)
                             .font(AppFonts.amikoRegular(withSize: 16))
                             .foregroundStyle(AppColors.darkBlue.opacity(0.7))
                     }
-                    //                    Spacer()
                 }
                 .frame(maxWidth: .infinity, maxHeight: 150)
                 HStack (spacing: 30){
@@ -130,19 +125,28 @@ struct GameDialogView: View {
             .padding(30)
             .offset(x: 0, y: offset)
             .onAppear {
-                withAnimation(.spring) {
-                    offset = -30
+                resetOffset()
+            }
+            .onChange(of: isActive) { newValue in
+                if newValue {
+                    resetOffset()
                 }
             }
         }
         .ignoresSafeArea()
     }
     
+    private func resetOffset(){
+//        withAnimation(.spring) {
+            offset = -30
+//        }
+    }
+    
     func close() {
-        withAnimation(.spring) {
+//        withAnimation(.spring) {
             isActive = false
             offset = 1000
-        }
+//        }
     }
     
     func isGameFavourite(completion: @escaping (Bool) -> Void) {

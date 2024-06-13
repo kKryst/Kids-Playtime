@@ -16,6 +16,7 @@ struct ScrollingCardsView: View { // find a better name for that
     @State var seconds = 0
     let games: [Game]
     let onTapGesture: (Int) -> Void
+    @State private var isImageLoading = true
     
     @State private var selectedImageIndex: Int = 0 //holds currently displayed card's id.
     
@@ -30,8 +31,15 @@ struct ScrollingCardsView: View { // find a better name for that
                                 VStack (alignment: .center){
                                     AsyncImage(url: URL(string: "\(games[index].imageURL)")) { image in
                                         image.resizable() // Makes the image resizable, cached automatically
+                                            .onAppear {
+                                                isImageLoading = false
+                                            }
+                                        
                                     } placeholder: {
                                         ProgressView() // Placeholder while the image is loading
+                                            .onAppear {
+                                                isImageLoading = true
+                                            }
                                     }
                                     .tag(index)
                                     .frame(width: 200, height: 200)
@@ -41,6 +49,7 @@ struct ScrollingCardsView: View { // find a better name for that
                                     .onTapGesture {
                                         onTapGesture(index)
                                     }
+                                    
                                     HStack(alignment: .center) {
                                         Spacer()
                                         Text("\(games[index].title)").font(AppFonts.amikoSemiBold(withSize: 24)).foregroundStyle(AppColors.darkBlue)
@@ -100,7 +109,7 @@ struct ScrollingCardsView: View { // find a better name for that
         // recieved each second
         .onReceive(timer) { _ in
             withAnimation(.default) {
-                if seconds == 4 && !games.isEmpty {
+                if seconds % 4 == 0 && seconds != 0 && !games.isEmpty && isImageLoading == false {
                     selectedImageIndex = (selectedImageIndex + 1) % games.count // swap card
                 } else {
                     seconds += 1 // increase seconds

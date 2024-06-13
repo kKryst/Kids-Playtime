@@ -18,7 +18,6 @@ struct UserHomeView: View {
         NavigationStack {
             ZStack {
                 AppColors.white.ignoresSafeArea()
-                
                 // main view
                 if viewModel.isUserLoggedIn {
                     ScrollView {
@@ -116,7 +115,7 @@ struct UserHomeView: View {
     private func userProfilePicture(url: URL?) -> some View {
         if let url = url {
             return AnyView(
-                CachedAsyncImage(url: url) { phase in
+                AsyncImage(url: url) { phase in
                     switch phase {
                     case .empty:
                         ProgressView()
@@ -130,7 +129,7 @@ struct UserHomeView: View {
                             .padding(8)
                             .shadow(radius: 3)
                     case .failure:
-                        Image(systemName: "photo")
+                        Image(systemName: "person.circle.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .clipShape(Circle())
@@ -144,7 +143,7 @@ struct UserHomeView: View {
             )
         } else {
             return AnyView(
-                Image(systemName: "photo")
+                Image(systemName: "person.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(Circle())

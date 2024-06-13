@@ -61,22 +61,6 @@ extension UserHomeView {
             }
         }
         
-        func checkIfUserHasChanged() -> Bool {
-            let userEmail = UserDefaults.standard.value(forKey: "userEmail") as? String
-            let userEmailFromAuthProvider = Auth.auth().currentUser?.email
-            if let userEmail, let userEmailFromAuthProvider {
-                let safeUserEmail = DatabaseManager.safeEmail(emailAddress: userEmail)
-                let safeUserEmailFromAuthProvider = DatabaseManager.safeEmail(emailAddress: userEmailFromAuthProvider)
-                print("safeEmail: \(safeUserEmail) vs safeEmailFromAuth: \(safeUserEmailFromAuthProvider)")
-                if safeUserEmail != safeUserEmailFromAuthProvider {
-                    print("User has changed...")
-                    return true
-                }
-            }
-            print("User has not changed...")
-            return false
-        }
-        
         func getGamesPlayed() {
             guard let userEmail = UserDefaults.standard.value(forKey: "userEmail") as? String else {
                 return

@@ -25,7 +25,6 @@ struct SettingsView: View {
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
                                 .padding(.vertical, 8)
-                            
 //                            SettingsRow(title: "Notifications", imageName: "bell", isOn: $notificationsOn)
 //                                .listRowInsets(EdgeInsets())
 //                                .listRowSeparator(.hidden)
@@ -37,7 +36,6 @@ struct SettingsView: View {
                         Section(
                             header: Text("Other").font(AppFonts.amikoSemiBold(withSize: 20)).foregroundStyle(AppColors.darkBlue))
                         {
-                            
                             SettingsRow(title: "About App", imageName: "info.circle", destinationView: {
                                 AnyView(AboutAppView())
                             })
