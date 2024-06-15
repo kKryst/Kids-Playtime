@@ -42,11 +42,10 @@ extension DiscoverView {
                 }
             }
         }
-
-
-        
-        func appendGameToDB() {
+        #if DEBUG
+        func appendGameToDB() { // for debug purpouse only
             DatabaseManager.shared.addGame()
         }
+        #endif
     }
 }

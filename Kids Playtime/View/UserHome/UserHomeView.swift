@@ -31,6 +31,9 @@ struct UserHomeView: View {
                         game: viewModel.currentlySelectedGame!,
                         isActive: $viewModel.isGameDialogActive
                     )
+                    .onDisappear(perform: {
+                        viewModel.isGameDialogActive = false // hide the dialog when user leaves this view
+                    })
                 }
             }
             .tint(AppColors.darkBlue)
