@@ -25,72 +25,74 @@ public class DatabaseManager: ObservableObject {
     
     func addGameRate(for email: String, title: String, rate: GameRate) {
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
-            
-            // Find all games
-            DatabaseManager.shared.fetchAllGames { [weak self] allGames in
-                guard var allGames = allGames else {
-                    return
-                }
-                
-                var gameToRate: Game? = nil
-                // Search for a game with title == title
-                var gameIndex = 0
-                for index in 0..<allGames.count {
-                    if allGames[index].title == title {
-                        gameToRate = allGames[index]
-                        gameIndex = index
-                    }
-                }
-                
-                guard var gameToRate else {
-                    return
-                }
-                
-                // Add rate to it
-                var existingRates = gameToRate.rates ?? []
-                existingRates.append(rate)
-                gameToRate.rates = existingRates
-                
-                // Remove the old game and add the updated one
-                allGames.removeAll(where: { $0.title == title })
-                allGames.insert(gameToRate, at: gameIndex)
-                
-                // Convert all games to dictionaries
-                let gamesDictionaries = allGames.map { $0.toDictionary() }
-                
-                // Update the games in the database
-                self?.database.child("games").setValue(gamesDictionaries) { error, _ in
-                    if let error = error {
-                        print("Failed to update games: \(error)")
-                        return
-                    }
-                }
+        
+        // Query the specific game by title
+        database.child("games").queryOrdered(byChild: "title").queryEqual(toValue: title).observeSingleEvent(of: .value) { [weak self] snapshot in
+            guard let self = self else {
+                return
             }
             
+            if !snapshot.exists() {
+                print("Game with title \(title) not found.")
+                return
+            }
+            
+            if let gameSnapshot = snapshot.children.allObjects.first as? DataSnapshot,
+               var gameDictionary = gameSnapshot.value as? [String: Any] {
+                // Create a game object from the snapshot dictionary
+                guard let jsonData = try? JSONSerialization.data(withJSONObject: gameDictionary),
+                      var game = try? JSONDecoder().decode(Game.self, from: jsonData) else {
+                    print("Failed to decode game")
+                    return
+                }
+                
+                // Add rate to the game
+                var existingRates = game.rates ?? []
+                existingRates.append(rate)
+                game.rates = existingRates
+                
+                // Update the game in the database
+                gameDictionary = game.toDictionary()
+                self.database.child("games").child(gameSnapshot.key).setValue(gameDictionary) { error, _ in
+                    if let error = error {
+                        print("Failed to update game: \(error)")
+                        return
+                    } else {
+                        print("Successfully updated game with new rate.")
+                    }
+                }
+            } else {
+                print("Game with title \(title) not found.")
+            }
+        }
         
-        
+        // Update user's rated games only if the title is not already added
         database.child(safeEmail).child("ratedGames").observeSingleEvent(of: .value) { snapshot in
-            if var ratedGamesCollection = snapshot.value as? [[String: Any]] {
-                // append to savedGames dictionary
+            var ratedGamesCollection = snapshot.value as? [[String: Any]] ?? []
+            
+            // Check if the title already exists
+            let titleExists = ratedGamesCollection.contains { $0["title"] as? String == title }
+            
+            if !titleExists {
+                // Append to ratedGames dictionary
                 let newElement = [
                     "title": title
                 ]
                 ratedGamesCollection.append(newElement)
                 
-                self.database.child(safeEmail).child("ratedGames").setValue(ratedGamesCollection)
-            }
-            else {
-                // create that array
-                let newRatedGamesCollection: [[String: String]] = [
-                    [
-                        "title": title
-                    ]
-                ]
-                self.database.child(safeEmail).child("ratedGames").setValue(newRatedGamesCollection)
+                self.database.child(safeEmail).child("ratedGames").setValue(ratedGamesCollection) { error, _ in
+                    if let error = error {
+                        print("Failed to update ratedGames: \(error)")
+                    } else {
+                        print("Successfully updated ratedGames with new title.")
+                    }
+                }
+            } else {
+                print("Title \(title) already exists in ratedGames.")
             }
         }
-       
     }
+
     
     func addGamesPlayed(for email: String) {
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
@@ -263,7 +265,7 @@ public class DatabaseManager: ObservableObject {
 
     
     func fetchAllGames(completion: @escaping ([Game]?) -> Void) {
-            database.child("games").observeSingleEvent(of: .value) { snapshot in
+        database.child("games").queryLimited(toFirst: 20).observeSingleEvent(of: .value) { snapshot in
                 guard let snapshotArray = snapshot.value as? [[String: Any]] else {
                     completion(nil)
                     return

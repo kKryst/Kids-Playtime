@@ -13,7 +13,7 @@ import GoogleSignInSwift
 struct LoginView: View {
     
     @State var emailText = "test@test.com"
-    @State var passwordText = "123456"
+    @State var passwordText =    "123456"
     @State var errorMessage = ""
     @State var emailResetText = ""
     @State var showAlert = false
