@@ -19,12 +19,8 @@ struct UserHomeView: View {
             ZStack {
                 AppColors.white.ignoresSafeArea()
                 // main view
-                if viewModel.isUserLoggedIn {
-                    ScrollView {
-                        contentView
-                    }
-                } else {
-                    LoginView()
+                ScrollView {
+                    contentView
                 }
                 if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { //game dialog which appears when user taps on a game card
                     GameDialogView(
@@ -36,6 +32,9 @@ struct UserHomeView: View {
                     })
                 }
             }
+            .onAppear(perform: {
+                viewRouter.shouldDisplayTabView = true
+            })
             .tint(AppColors.darkBlue)
         }
         .tint(AppColors.darkBlue)
@@ -44,16 +43,45 @@ struct UserHomeView: View {
     private var contentView: some View {
         VStack {
             userHeader
-            statisticsSection
-                .task {
-                    viewModel.getTimePlayed()
-                    viewModel.getGamesPlayed()
+            VStack {
+                if viewModel.isUserLoggedIn {
+                    statisticsSection
+                    .task {
+                        viewModel.getTimePlayed()
+                        viewModel.getGamesPlayed()
                 }
+                } else {
+                    statisticsSection
+                        .onAppear(perform: {
+                            viewModel.gamesPlayed = 0
+                            viewModel.minutesPlayed = 0
+                        })
+                }
+            }
             //            chartSection
-            savedGamesSection
-                .task {
-                    viewModel.fetchSavedGames()
+            if viewModel.isUserLoggedIn {
+                savedGamesSection
+                    .task {
+                        viewModel.fetchSavedGames()
                 }
+            } else {
+                VStack {
+                    Text("Log in to see your saved games")
+                        .font(AppFonts.amikoSemiBold(withSize: 16))
+                    .foregroundStyle(AppColors.darkBlue)
+                    NavigationLink(destination: LoginView().accentColor(AppColors.white)) {
+                        Text("Log in")
+                            .fontWeight(.bold)
+                            .font(AppFonts.amikoRegular(withSize: 16))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(AppColors.lightBlue)
+                            .cornerRadius(12)
+                    }
+                    
+                }
+            }
             Rectangle() // bottom spacer to allow scrolling past tabBar
                 .frame(height: 20)
                 .padding(20)
@@ -65,20 +93,40 @@ struct UserHomeView: View {
     
     private var userHeader: some View {
         HStack {
-            NavigationLink(destination: UserProfileView()) {
-                userProfilePicture(url: viewModel.userProfilePictureURL)
+            if viewModel.isUserLoggedIn {
+                NavigationLink(destination: UserProfileView()) {
+                    userProfilePicture(url: viewModel.userProfilePictureURL)
+                        .task {
+                            viewModel.getUserProfilePictureURL()
+                        }
+                }
+            } else {
+                NavigationLink(destination: LoginView()) {
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(Circle())
+                        .frame(width: 64, height: 64)
+                        .padding(8)
+                        .shadow(radius: 3)
+                }
             }
-            Text(viewModel.userName)
-                .font(AppFonts.amikoSemiBold(withSize: 18))
-                .foregroundStyle(AppColors.darkBlue)
+            if viewModel.isUserLoggedIn {
+                Text(viewModel.userName)
+                    .font(AppFonts.amikoSemiBold(withSize: 18))
+                    .foregroundStyle(AppColors.darkBlue)
+                    .task {
+                        viewModel.getUserName()
+                    }
+            } else {
+                Text("User")
+                    .font(AppFonts.amikoSemiBold(withSize: 18))
+                    .foregroundStyle(AppColors.darkBlue)
+            }
             Spacer()
         }
         .background(RoundedRectangle(cornerRadius: 20, style: .circular).fill(AppColors.lightBlue.opacity(0.1)))
         .padding(.horizontal, -10)
-        .task {
-            viewModel.getUserName()
-            viewModel.getUserProfilePictureURL()
-        }
     }
     
     private var statisticsSection: some View {

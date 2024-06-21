@@ -49,8 +49,6 @@ extension TimerView {
                 DatabaseManager.shared.addTimePlayed(for: userEmail, time: timePlayed)
                 DatabaseManager.shared.addGamesPlayed(for: userEmail)
             }
-            
         }
     }
-    
 }

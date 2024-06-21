@@ -12,28 +12,41 @@ import GoogleSignInSwift
 
 struct LoginView: View {
     
-    @State var emailText = "test@test.com"
-    @State var passwordText =    "123456"
+    @State var emailText = ""
+    @State var passwordText = ""
     @State var errorMessage = ""
     @State var emailResetText = ""
     @State var showAlert = false
+    
+    @FocusState private var isFirstResponder :Bool
+    
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
         NavigationView {
             ZStack {
-                AppColors.white
+                Image("loginBackground")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
+                    
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        isFirstResponder = false
+                    }
                 VStack {
                     Text("Log in")
                         .font(AppFonts.amikoRegular(withSize: 48))
-                        .foregroundStyle(AppColors.darkBlue)
+                        .foregroundStyle(AppColors.white)
                         .padding()
-                    VStack(spacing: 1) {
+                    
+                    VStack(spacing: 16) {
                         HStack {
                             Text("Enter your email")
-                                .font(AppFonts.amikoRegular(withSize: 16))
-                                .foregroundStyle(AppColors.darkBlue)
+                                .font(AppFonts.amikoSemiBold(withSize: 16))
+                                .foregroundStyle(AppColors.white)
                             Spacer()
                         }
                         TextField("Email", text: $emailText)
@@ -43,27 +56,32 @@ struct LoginView: View {
                             .autocapitalization(.none)
                             .background(AppColors.white)
                             .cornerRadius(10)
+                            .focused($isFirstResponder)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(AppColors.darkBlue, lineWidth: 1)
                             )
-                            .padding(.bottom, 16)
+                            .frame(maxWidth: .infinity)
+                        
                         HStack {
                             Text("Enter your password")
-                                .font(AppFonts.amikoRegular(withSize: 16))
-                                .foregroundStyle(AppColors.darkBlue)
+                                .font(AppFonts.amikoSemiBold(withSize: 16))
+                                .foregroundStyle(AppColors.white)
                             Spacer()
                         }
                         SecureField("Password", text: $passwordText)
                             .font(AppFonts.amikoRegular(withSize: 18))
                             .foregroundStyle(AppColors.darkBlue)
                             .padding()
+                            .focused($isFirstResponder)
                             .background(AppColors.white)
                             .cornerRadius(10)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(AppColors.darkBlue, lineWidth: 1)
                             )
+                            .frame(maxWidth: .infinity)
+                        
                         HStack {
                             Text("\(errorMessage)")
                                 .font(AppFonts.amikoRegular(withSize: 16))
@@ -73,21 +91,22 @@ struct LoginView: View {
                                 showAlert = true
                             }, label: {
                                 Text("Forgot password?")
-                                    .font(AppFonts.amikoRegular(withSize: 16))
-                                    .foregroundStyle(AppColors.darkBlue)
+                                    .font(AppFonts.amikoSemiBold(withSize: 16))
+                                    .foregroundStyle(AppColors.white)
                             })
-                            
                         }
                         .padding(8)
                     }
+                    .padding(.horizontal)
                     
                     Button(action: {
                         AuthManager.shared.loginUser(email: emailText, password: passwordText) { errorResponse in
                             if errorResponse != "" {
                                 errorMessage = errorResponse
+                            } else {
+                                dismiss()
                             }
                         }
-                        dismiss()
                     }, label: {
                         Text("Login")
                             .font(AppFonts.amikoRegular(withSize: 18))
@@ -98,24 +117,25 @@ struct LoginView: View {
                             .cornerRadius(20)
                     })
                     Text("or")
-                        .font(AppFonts.amikoRegular(withSize: 18))
-                        .foregroundStyle(AppColors.darkBlue)
+                        .font(AppFonts.amikoSemiBold(withSize: 18))
+                        .foregroundStyle(AppColors.white)
                     HStack {
                         GoogleSignInButton(scheme: .dark, style: .icon, state: .normal) {
                             AuthManager.shared.signInWithGoogle()
+                            dismiss()
                         }
                     }
                     
                     HStack {
-                        Text("Don't have an acoount?")
+                        Text("Don't have an account?")
                             .font(AppFonts.amikoSemiBold(withSize: 16))
-                            .foregroundStyle(AppColors.darkBlue)
+                            .foregroundStyle(AppColors.white)
                         NavigationLink(destination: {
                             RegisterView()
                         }, label: {
                             Text("Register here")
                                 .font(AppFonts.amikoBold(withSize: 16))
-                                .foregroundStyle(AppColors.darkBlue)
+                                .foregroundStyle(AppColors.white)
                         })
                     }
                     .padding()
@@ -138,8 +158,17 @@ struct LoginView: View {
                 showAlert = false
             }
         }
+        .onAppear {
+            viewRouter.shouldDisplayTabView = false
+            if viewRouter.shouldNavigateBackTwice {
+                viewRouter.shouldNavigateBackTwice = false
+                dismiss()
+            }
+        }
+        
     }
 }
+
 #Preview {
     LoginView()
 }

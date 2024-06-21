@@ -17,6 +17,7 @@ struct GameDialogView: View {
     @State var isFavourite = false
     @Binding var isActive: Bool
     
+    @State var shouldDisplayUserNotLoggedInAlert = false
     var body: some View {
         ZStack {
             Color.black.opacity(0.5)
@@ -71,7 +72,12 @@ struct GameDialogView: View {
                 }
                 HStack {
                     Button(action: {
-                        toggleFavourite()
+                        if Auth.auth().currentUser != nil {
+                            toggleFavourite()
+                        }  else {
+                            shouldDisplayUserNotLoggedInAlert = true
+                        }
+                        
                     }, label: {
                         HStack {
                             Image(systemName: isFavourite ? "heart.fill" : "heart")
@@ -134,6 +140,12 @@ struct GameDialogView: View {
             }
         }
         .ignoresSafeArea()
+        .alert("Log in to save games", isPresented: $shouldDisplayUserNotLoggedInAlert) {
+            Button("Ok", action: {
+                shouldDisplayUserNotLoggedInAlert = false
+            })
+        }
+
     }
     
     private func resetOffset(){

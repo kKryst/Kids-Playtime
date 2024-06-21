@@ -59,6 +59,7 @@ public class AuthManager {
             
             guard let result = authResult, error == nil else {
                 print("Failed to log in user with email: \(email)")
+                completion("Wrong email or password")
                 return
             }
             let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
@@ -196,7 +197,15 @@ public class AuthManager {
         }
     }
     
-    
+    func deleteUser(email: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+            Auth.auth().currentUser?.delete { error in
+                if let error = error {
+                    print("Failed to delete user from Auth: \(error)")
+                    completion(.failure(error))
+                    return
+                }
+            }
+        }
     
     private func getRootViewController() -> UIViewController {
         guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else {

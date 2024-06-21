@@ -10,40 +10,19 @@ import PhotosUI
 import FirebaseAuth
 import CachedAsyncImage
 
-enum Gender: String, CaseIterable, Identifiable {
-    case male, female, other
-    var id: Self { self }
-}
-
 struct UserProfileView: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
     
-    @State private var userEmail = ""
-    @State private var userName = ""
-    
     @State private var pickerItem: PhotosPickerItem?
     @State private var selectedImage: Image?
-    
-    @State private var selectedGender: Gender = .male
     
     @State private var userProfileImageURL: String? = nil
     
     @FocusState private var isFirstResponder :Bool
     
     @Environment(\.dismiss) private var dismiss
-    
-#warning("sprawdz co sie dzieje jak wybierasz zdjecia po dodaniu juz jednego jako ten user")
-    
-    
-    init() {
-        //style the Picker
-        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(AppColors.orange.opacity(0.7))
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(AppColors.darkBlue)], for: .selected)
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(AppColors.darkBlue)], for: .normal)
-        UISegmentedControl.appearance().backgroundColor = UIColor(AppColors.orange.opacity(0.1))
-    }
-    
+
     var body: some View {
         ZStack {
             AppColors.white.ignoresSafeArea()
@@ -143,60 +122,44 @@ struct UserProfileView: View {
                     }
                 }
                 
-                HStack {
-                    Text("Email")
-                        .font(AppFonts.amikoRegular(withSize: 18))
-                        .foregroundStyle(AppColors.darkBlue)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                TextField("Email", text: $userEmail)
-                    .font(AppFonts.amikoRegular(withSize: 24))
-                    .focused($isFirstResponder)
-                    .cornerRadius(20)
-                    .padding()
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(AppColors.darkBlue, lineWidth: 1)
+                VStack {
+                    HStack {
+                        Text("Email")
+                            .font(AppFonts.amikoRegular(withSize: 18))
+                            .foregroundStyle(AppColors.darkBlue)
+                        Spacer()
                     }
                     .padding(.horizontal)
-                
-                HStack {
-                    Text("Username")
-                        .font(AppFonts.amikoRegular(withSize: 18))
-                        .foregroundStyle(AppColors.darkBlue)
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                TextField("Username", text: $userName)
-                    .focused($isFirstResponder)
-                    .font(AppFonts.amikoRegular(withSize: 24))
-                    .cornerRadius(20)
-                    .padding()
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(AppColors.darkBlue, lineWidth: 1)
-                    }
-                    .padding(.horizontal)
-                
-                HStack {
-                    Text("Gender")
-                        .font(AppFonts.amikoRegular(withSize: 16))
-                        .foregroundStyle(AppColors.darkBlue)
-                    
-                    Picker("TimeFrame", selection: $selectedGender) {
-                        ForEach(Gender.allCases) { gender in
-                            Text(gender.rawValue.capitalized)
-                                .font(AppFonts.amikoSemiBold(withSize: 16))
+                    if let email = Auth.auth().currentUser?.email as? String {
+                        HStack {
+                            Text("\(email)")
+                                .font(AppFonts.amikoRegular(withSize: 24))
+                                .foregroundStyle(AppColors.darkBlue)
+                            .padding(.horizontal)
+                            Spacer()
                         }
                     }
-                    .pickerStyle(.segmented)
-                    .tint(AppColors.darkBlue)
-                    .padding()
+                    
+                    HStack {
+                        Text("Username")
+                            .font(AppFonts.amikoRegular(withSize: 18))
+                            .foregroundStyle(AppColors.darkBlue)
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    
+                    if let userName = UserDefaults.standard.value(forKey: "name") as? String {
+                        HStack {
+                            Text("\(userName)")
+                                .font(AppFonts.amikoSemiBold(withSize: 24))
+                                .foregroundStyle(AppColors.darkBlue)
+                            .padding(.horizontal)
+                            Spacer()
+                        }
+                    }
                 }
-                .padding()
+                .padding(.vertical, 30)
+                Spacer()
                 
                 Button(action: {
                     AuthManager.shared.logoutUser()
@@ -217,7 +180,7 @@ struct UserProfileView: View {
                 .padding(.horizontal)
                 
                 Button(action: {
-                    // Action for deleting account
+                    deleteUser()
                 }, label: {
                     Text("Delete account")
                         .fontWeight(.bold)
@@ -256,6 +219,21 @@ struct UserProfileView: View {
         } else {
             print("No userEmail in cache")
         }
+    }
+    
+    private func deleteUser() {
+        guard let userEmail = UserDefaults.standard.value(forKey: "userEmail") as? String else {
+            return
+        }
+        AuthManager.shared.deleteUser(email: userEmail) { result in
+            switch result {
+            case .success(_):
+                print("Succesfully deleted user")
+            case .failure(_):
+                print("Failed to delete user")
+            }
+        }
+        dismiss()
     }
 }
 

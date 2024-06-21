@@ -105,7 +105,6 @@ public class DatabaseManager: ObservableObject {
                 gamesPlayedRef.setValue(1)
             }
         }
-        
     }
     
     func getGamesPlayed(for email: String, completion: @escaping (Int) -> Void) {
@@ -386,6 +385,7 @@ public class DatabaseManager: ObservableObject {
             }
         }
     }
+
     
     func addGame() {
         let game: [[String: Any]] = [[
