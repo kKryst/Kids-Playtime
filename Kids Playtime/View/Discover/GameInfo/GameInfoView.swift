@@ -13,7 +13,9 @@ struct GameInfoView: View {
     let game: Game
     
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var networkManager: NetworkManager
     
+    @State private var noInternetAlert = false
     @State private var isDialogPresenting = false
     @State private var shouldPresentOpinionSheet = false
     @State var isFavourite = false
@@ -112,23 +114,27 @@ struct GameInfoView: View {
                     })
             }
         }
-        .sheet(isPresented: $shouldPresentOpinionSheet, content: {
-            GameOpinionView(gameTitle: game.title)
-                .onDisappear(perform: {
-                    if viewRouter.shouldNavigateBackTwice {
-                        viewRouter.shouldNavigateBackTwice = false
-                        dismiss()
-                    }
-                })
-            
-        })
-        .onAppear {
-            viewRouter.shouldDisplayTabView = false
-        }
-        .onDisappear(perform: {
-            NotificationManager.shared.removeNotificationFromQueue()
-            viewRouter.shouldDisplayTabView = true
-        })
+        .alert(
+            "Could not save this game. Please check your Internet connection.",
+            isPresented: $noInternetAlert
+        ) {}
+            .sheet(isPresented: $shouldPresentOpinionSheet, content: {
+                GameOpinionView(gameTitle: game.title)
+                    .onDisappear(perform: {
+                        if viewRouter.shouldNavigateBackTwice {
+                            viewRouter.shouldNavigateBackTwice = false
+                            dismiss()
+                        }
+                    })
+                
+            })
+            .onAppear {
+                viewRouter.shouldDisplayTabView = false
+            }
+            .onDisappear(perform: {
+                NotificationManager.shared.removeNotificationFromQueue()
+                viewRouter.shouldDisplayTabView = true
+            })
         
     }
     
@@ -146,9 +152,16 @@ struct GameInfoView: View {
     }
     
     func toggleFavourite() {
+        
+        guard networkManager.isConnected else {
+            noInternetAlert = true
+            return
+        }
+        
         guard let email = UserDefaults.standard.value(forKey: "userEmail") as? String else {
             return // user is not logged in so game is not fav
         }
+        
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         isGameFavourite { isFavorite in
             if isFavorite {
@@ -175,11 +188,11 @@ struct GameInfoView: View {
         }
     }
 }
-    
-    #Preview {
-        GameInfoView(game: Game(title: "Test game 1", imageURL: "", minNumberOfPlayers: 3, maxNumberOfPlayers: 6, longDescription: "This is a long desscription", estimatedTime: 40)).environmentObject({ () -> ViewRouter in
-            let envObj = ViewRouter()
-            envObj.shouldDisplayTabView = false
-            return envObj
-        }() )
-    }
+
+#Preview {
+    GameInfoView(game: Game(title: "Test game 1", imageURL: "", minNumberOfPlayers: 3, maxNumberOfPlayers: 6, longDescription: "This is a long desscription", estimatedTime: 40)).environmentObject({ () -> ViewRouter in
+        let envObj = ViewRouter()
+        envObj.shouldDisplayTabView = false
+        return envObj
+    }() )
+}

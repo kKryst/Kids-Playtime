@@ -106,19 +106,17 @@ public class AuthManager {
         
         let lowerCasedEmail = email.lowercased()
         // Firebase Log In
-
-        DatabaseManager.shared.userExists(with: lowerCasedEmail, completion: { exists in
-
-            guard !exists else {
-                // user already exists
+        FirebaseAuth.Auth.auth().createUser(withEmail: lowerCasedEmail, password: password, completion: { authResult, error in
+            guard authResult != nil, error == nil else {
                 return
             }
+            
+            DatabaseManager.shared.userExists(with: lowerCasedEmail, completion: { exists in
 
-            FirebaseAuth.Auth.auth().createUser(withEmail: lowerCasedEmail, password: password, completion: { authResult, error in
-                guard authResult != nil, error == nil else {
+                guard !exists else {
+                    // user already exists
                     return
                 }
-                
                 let safeEmail = DatabaseManager.safeEmail(emailAddress: lowerCasedEmail)
                 UserDefaults.standard.set("\(safeEmail)", forKey: "userEmail")
                 UserDefaults.standard.set("\(firstName)", forKey: "name")

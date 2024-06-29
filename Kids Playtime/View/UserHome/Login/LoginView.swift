@@ -12,16 +12,21 @@ import GoogleSignInSwift
 
 struct LoginView: View {
     
-    @State var emailText = ""
-    @State var passwordText = ""
-    @State var errorMessage = ""
-    @State var emailResetText = ""
-    @State var showAlert = false
+    @State private var alertText = ""
+    
+    @State private var emailText = ""
+    @State private var passwordText = ""
+    @State private var errorMessage = ""
+    @State private var emailResetText = ""
+    @State private var showAlert = false
+    
+    @State private var noInternetAlert = false
     
     @FocusState private var isFirstResponder :Bool
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var networkManager: NetworkManager
     
     var body: some View {
         NavigationView {
@@ -100,6 +105,11 @@ struct LoginView: View {
                     .padding(.horizontal)
                     
                     Button(action: {
+                        guard networkManager.isConnected else {
+                            alertText = "Failed to log in. Please check your Internet connection."
+                            noInternetAlert = true
+                            return
+                        }
                         AuthManager.shared.loginUser(email: emailText, password: passwordText) { errorResponse in
                             if errorResponse != "" {
                                 errorMessage = errorResponse
@@ -142,6 +152,10 @@ struct LoginView: View {
                 }
                 .padding()
             }
+            .alert(
+                "\(alertText)",
+                isPresented: $noInternetAlert
+            ) {}
             .alert("Enter your email", isPresented: $showAlert) {
                 TextField("Enter your email", text: $emailResetText)
                     .foregroundStyle(Color.white)
@@ -149,6 +163,11 @@ struct LoginView: View {
                     showAlert = false
                 })
                 Button("Send", action: {
+                    guard networkManager.isConnected else {
+                        alertText = "Failed to send the email. Check your internet connection"
+                        noInternetAlert = true
+                        return
+                    }
                     if emailResetText != "" {
                         AuthManager.shared.resetPassword(for: emailResetText)
                     }

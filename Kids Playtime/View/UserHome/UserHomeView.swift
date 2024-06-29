@@ -30,7 +30,7 @@ struct UserHomeView: View {
                 
                 if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil && networkManager.isConnected { //game dialog which appears when user taps on a game card
                     GameDialogView(
-                        game: viewModel.currentlySelectedGame!,
+                        game: viewModel.currentlySelectedGame!, //checked for null in if statement
                         isActive: $viewModel.isGameDialogActive
                     )
                     .onDisappear(perform: {

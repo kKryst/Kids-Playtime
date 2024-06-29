@@ -42,34 +42,15 @@ struct UserProfileView: View {
                             .shadow(radius: 3)
                     }
                     else if let userProfileImageURL = userProfileImageURL {
-                        CachedAsyncImage(url: URL(string:userProfileImageURL)) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                                    .frame(width: 64, height: 64)
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .clipShape(Circle())
-                                    .frame(width: 64, height: 64)
-                                    .padding(8)
-                                    .shadow(radius: 3)
-                            case .failure:
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .clipShape(Circle())
-                                    .frame(width: 64, height: 64)
-                                    .padding(8)
-                                    .shadow(radius: 3)
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
+                       userProfilePicture(url: URL(string: userProfileImageURL))
                     } else {
-                        ProgressView()
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
                             .frame(width: 64, height: 64)
+                            .padding(8)
+                            .shadow(radius: 3)
                     }
                     VStack {
                         if let userName = UserDefaults.standard.value(forKey: "name") as? String {
@@ -234,6 +215,47 @@ struct UserProfileView: View {
             }
         }
         dismiss()
+    }
+    private func userProfilePicture(url: URL?) -> some View {
+        if let url = url {
+            return AnyView(
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .frame(width: 64, height: 64)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .frame(width: 64, height: 64)
+                            .padding(8)
+                            .shadow(radius: 3)
+                    case .failure:
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .frame(width: 64, height: 64)
+                            .padding(8)
+                            .shadow(radius: 3)
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+            )
+        } else {
+            return AnyView(
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .clipShape(Circle())
+                    .frame(width: 64, height: 64)
+                    .padding(8)
+                    .shadow(radius: 3)
+            )
+        }
     }
 }
 

@@ -15,6 +15,9 @@ struct GameOpinionView: View {
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var networkManager: NetworkManager
+    
+    @State private var noInternetAlert = false
     
     let gameTitle: String
     
@@ -75,10 +78,7 @@ struct GameOpinionView: View {
                         .focused($isFirstResponder)
                     
                     Button{
-                        viewModel.addGameRating(gameTitle: gameTitle)
-                        viewRouter.shouldNavigateBackTwice = true
-                        dismiss()
-                        
+                        addGameRating()
                     } label: {
                         Text("Submit")
                             .fontWeight(.bold)
@@ -92,9 +92,23 @@ struct GameOpinionView: View {
                 }
             }
         }
+        .alert(
+            "Could not rate this game. Please check your Internet connection.",
+            isPresented: $noInternetAlert
+        ) {}
         .onTapGesture {
             isFirstResponder = false
         }
+    }
+    
+    func addGameRating() {
+        guard networkManager.isConnected else {
+            noInternetAlert = true
+            return
+        }
+        viewModel.addGameRating(gameTitle: gameTitle)
+        viewRouter.shouldNavigateBackTwice = true
+        dismiss()
     }
 }
 

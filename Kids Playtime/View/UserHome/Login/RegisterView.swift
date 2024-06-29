@@ -9,15 +9,18 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @State var firstNameText = ""
-    @State var lastNameText = ""
-    @State var emailText = ""
-    @State var passwordText = ""
+    @State private var firstNameText = ""
+    @State private var lastNameText = ""
+    @State private var emailText = ""
+    @State private var passwordText = ""
+    
+    @State private var noInternetAlert = false
     
     @FocusState private var isFirstResponder :Bool
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var networkManager: NetworkManager
     
     var body: some View {
         ZStack {
@@ -107,6 +110,10 @@ struct RegisterView: View {
                     )
                     .padding(.top, 0)
                 Button(action: {
+                    guard networkManager.isConnected else {
+                        noInternetAlert = true
+                        return
+                    }
                     AuthManager.shared.registerUser(email: emailText, firstName: firstNameText, lastName: lastNameText, password: passwordText)
                     viewRouter.shouldNavigateBackTwice = true
                     dismiss()
@@ -121,12 +128,15 @@ struct RegisterView: View {
                 })
                 .padding()
             }
+            .alert(
+                "Failed to register. Please check your Internet connection.",
+                isPresented: $noInternetAlert
+            ) {}
             .padding(40)
         }
         .onAppear {
             viewRouter.shouldDisplayTabView = false
         }
-       
     }
 }
 
