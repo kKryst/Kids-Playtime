@@ -21,6 +21,8 @@ struct AppColors {
     static let pink = Color("AppPink")
     static let tabColor = Color("AppTabColor")
     static let tabForegroundColor = Color("AppTabForegroundColor")
+    static let permanentWhite = Color("AppPermanentWhite")
+    static let permanentDarkBlue = Color("AppPermanentDarkBlue")
     
     static let wheelColors = [AppColors.pink, AppColors.lightBlue, AppColors.orange, AppColors.white]
 }

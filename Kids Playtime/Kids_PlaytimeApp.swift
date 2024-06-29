@@ -30,6 +30,7 @@ struct Kids_PlaytimeApp: App {
     
     @AppStorage("isDarkMode") private var isDarkMode = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var networkMonitor = NetworkManager()
 //    @StateObject var databaseManager = DatabaseManager()
 //    var databaseManager = DatabaseManager()
     
@@ -39,6 +40,7 @@ struct Kids_PlaytimeApp: App {
         WindowGroup {
             HomeView()
                 .environmentObject(viewRouter)
+                .environmentObject(networkMonitor)
 //                .environmentObject(databaseManager)
                 .preferredColorScheme(isDarkMode ? .dark : .light)
             
