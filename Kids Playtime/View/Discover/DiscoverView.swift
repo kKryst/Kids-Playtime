@@ -103,7 +103,7 @@ struct DiscoverView: View {
                             }
                             .scrollIndicators(.hidden) // hides trailing scroll bar
                         }
-                        if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { // pops off when a game is selected / drawn by the wheel
+                        if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil && networkManager.isConnected { // pops off when a game is selected / drawn by the wheel
                             GameDialogView(
                                 game: viewModel.currentlySelectedGame!,
                                 isActive: $viewModel.isGameDialogActive

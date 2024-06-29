@@ -12,6 +12,7 @@ import CachedAsyncImage
 
 struct UserHomeView: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var networkManager: NetworkManager
     @StateObject private var viewModel = ViewModel()
     
     var body: some View {
@@ -19,10 +20,15 @@ struct UserHomeView: View {
             ZStack {
                 AppColors.white.ignoresSafeArea()
                 // main view
-                ScrollView {
-                    contentView
+                if networkManager.isConnected {
+                    ScrollView {
+                        contentView
+                    }
+                } else {
+                    NoInternetView()
                 }
-                if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil { //game dialog which appears when user taps on a game card
+                
+                if viewModel.isGameDialogActive && viewModel.currentlySelectedGame != nil && networkManager.isConnected { //game dialog which appears when user taps on a game card
                     GameDialogView(
                         game: viewModel.currentlySelectedGame!,
                         isActive: $viewModel.isGameDialogActive
