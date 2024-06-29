@@ -115,7 +115,7 @@ struct UserProfileView: View {
                     })
                     Spacer()
                 }
-                .background(RoundedRectangle(cornerRadius: 20, style: .circular).foregroundStyle(AppColors.orange).opacity(0.1))
+                .background(RoundedRectangle(cornerRadius: 20, style: .circular).foregroundStyle(AppColors.lightBlue).opacity(0.1))
                 .task {
                     if userProfileImageURL == nil {
                         getUserProfilePictureURL()
@@ -173,7 +173,7 @@ struct UserProfileView: View {
                         .padding()
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(AppColors.orange, lineWidth: 1)
+                                .stroke(AppColors.lightBlue, lineWidth: 1)
                         )
                 })
                 .padding(.vertical, 5)
@@ -188,7 +188,7 @@ struct UserProfileView: View {
                         .foregroundColor(AppColors.white) // Set the text color to white
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(AppColors.orange) // Set the background color to dark blue
+                        .background(AppColors.lightBlue) // Set the background color to dark blue
                         .cornerRadius(12) // Set the corner radius for rounded corners
                 })
                 .padding(.horizontal)
