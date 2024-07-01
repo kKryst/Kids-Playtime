@@ -14,6 +14,8 @@ public class AuthManager {
     
     static let shared = AuthManager() // Singleton instance
     
+    private init() {}
+    
     func logoutUser() {
         let firebaseAuth = Auth.auth()
         do {

@@ -15,6 +15,8 @@ public class DatabaseManager: ObservableObject {
     
     static let shared = DatabaseManager() // Singleton instance
     
+    private init() {}
+    
     private var database = Database.database(url: Constants.databaseUrl).reference()
     
     static func safeEmail(emailAddress: String) -> String {
